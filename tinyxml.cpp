@@ -403,7 +403,7 @@ void TiXmlElement::SetAttribute( const std::string& name, const std::string& val
 	else
 	{
 		TiXmlDocument* document = GetDocument();
-		if ( document ) document->SetError( ERROR_OUT_OF_MEMORY );
+		if ( document ) document->SetError( TIXML_ERROR_OUT_OF_MEMORY );
 	}
 }
 
@@ -529,14 +529,14 @@ bool TiXmlDocument::LoadFile( const std::string& filename )
 		fclose( fp );
 		
 		Parse( buf );
-		delete buf;
+		delete [] buf;
 
 		if ( !Error() )
 			return true;
 	}
 	else
 	{
-		SetError( ERROR_OPENING_FILE );
+		SetError( TIXML_ERROR_OPENING_FILE );
 	}
 	return false;
 }
