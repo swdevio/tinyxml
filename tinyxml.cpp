@@ -82,6 +82,23 @@ void TiXmlBase::PutString( const TIXML_STRING& str, TIXML_STRING* outString )
 }
 
 
+// Strange class for a bug fix. Search for STL_STRING_BUG
+TiXmlBase::StringToBuffer::StringToBuffer( const TIXML_STRING& str )
+{
+	buffer = new char[ str.length()+1 ];
+	if ( buffer )
+	{
+		strcpy( buffer, str.c_str() );
+	}
+}
+
+
+TiXmlBase::StringToBuffer::~StringToBuffer()
+{
+	delete [] buffer;
+}
+
+
 TiXmlNode::TiXmlNode( NodeType _type )
 {
 	parent = 0;
@@ -435,13 +452,16 @@ const char * TiXmlElement::Attribute( const char * name ) const
 }
 
 
-const char * TiXmlElement::Attribute( const char * name, int & i ) const
+const char * TiXmlElement::Attribute( const char * name, int* i ) const
 {
 	const char * s = Attribute( name );
-	if ( s )
-		i = atoi( s );
-	else
-		i = 0;
+	if ( i )
+	{
+		if ( s )
+			*i = atoi( s );
+		else
+			*i = 0;
+	}
 	return s;
 }
 
@@ -597,21 +617,43 @@ TiXmlDocument::TiXmlDocument( const char * documentName ) : TiXmlNode( TiXmlNode
 
 bool TiXmlDocument::LoadFile()
 {
-	return LoadFile( value . c_str ());
+	// See STL_STRING_BUG below.
+	StringToBuffer buf( value );
+
+	if ( buf.buffer && LoadFile( buf.buffer ) )
+		return true;
+
+	return false;
 }
+
 
 bool TiXmlDocument::SaveFile() const
 {
-	return SaveFile( value . c_str ());
+	// See STL_STRING_BUG below.
+	StringToBuffer buf( value );
+
+	if ( buf.buffer && SaveFile( buf.buffer ) )
+		return true;
+
+	return false;
 }
 
-bool TiXmlDocument::LoadFile( const char * filename )
+bool TiXmlDocument::LoadFile( const char* filename )
 {
 	// Delete the existing data:
 	Clear();
+
+	// There was a really terrifying little bug here. The code:
+	//		value = filename
+	// in the STL case, cause the assignment method of the std::string to
+	// be called. What is strange, is that the std::string had the same
+	// address as it's c_str() method, and so bad things happen. Looks
+	// like a bug in the Microsoft STL implementation.
+	// See STL_STRING_BUG above.
+	// Fixed with the StringToBuffer class.
 	value = filename;
 
-	FILE* file = fopen( value . c_str (), "r" );
+	FILE* file = fopen( value.c_str (), "r" );
 
 	if ( file )
 	{
@@ -674,7 +716,7 @@ TiXmlNode* TiXmlDocument::Clone() const
 
 	CopyToClone( clone );
 	clone->error = error;
-	clone->errorDesc = errorDesc . c_str ();
+	clone->errorDesc = errorDesc.c_str ();
 
 	TiXmlNode* node = 0;
 	for ( node = firstChild; node; node = node->NextSibling() )
@@ -732,7 +774,7 @@ TiXmlAttribute* TiXmlAttribute::Previous() const
 
 void TiXmlAttribute::Print( FILE* cfile, int /*depth*/ ) const
 {
-	if (value . find ('\"') == TIXML_STRING::npos)
+	if (value.find ('\"') == TIXML_STRING::npos)
 		fprintf (cfile, "%s=\"%s\"", Name (), Value ());
 	else
 		fprintf (cfile, "%s='%s'", Name (), Value ());
@@ -772,12 +814,12 @@ void TiXmlAttribute::SetDoubleValue( double value )
 
 const int TiXmlAttribute::IntValue() const
 {
-	return atoi (value . c_str ());
+	return atoi (value.c_str ());
 }
 
 const double  TiXmlAttribute::DoubleValue() const
 {
-	return atof (value . c_str ());
+	return atof (value.c_str ());
 }
 
 void TiXmlComment::Print( FILE* cfile, int depth ) const
@@ -851,11 +893,11 @@ void TiXmlDeclaration::Print( FILE* cfile, int /*depth*/ ) const
 	fprintf (cfile, "<?xml ");
 
 	if ( !version.empty() )
-		fprintf (cfile, "version=\"%s\" ", version . c_str ());
+		fprintf (cfile, "version=\"%s\" ", version.c_str ());
 	if ( !encoding.empty() )
-		fprintf (cfile, "encoding=\"%s\" ", encoding . c_str ());
+		fprintf (cfile, "encoding=\"%s\" ", encoding.c_str ());
 	if ( !standalone.empty() )
-		fprintf (cfile, "standalone=\"%s\" ", standalone . c_str ());
+		fprintf (cfile, "standalone=\"%s\" ", standalone.c_str ());
 	fprintf (cfile, "?>");
 }
 

@@ -63,7 +63,7 @@
 00055     }
 00056 
 00057     <font class="comment">// TiXmlString copy constructor</font>
-00058     TiXmlString (<font class="keyword">const</font> TiXmlString &amp; copy);
+00058     TiXmlString (<font class="keyword">const</font> TiXmlString&amp; copy);
 00059 
 00060     <font class="comment">// TiXmlString destructor</font>
 00061     ~ TiXmlString ()<font class="keyword"></font>
@@ -119,120 +119,122 @@
 00111     }
 00112 
 00113     <font class="comment">// Checks if a TiXmlString contains only whitespace (same rules as isspace)</font>
-00114     <font class="keywordtype">bool</font> isblank () <font class="keyword">const</font>;
-00115 
-00116     <font class="comment">// single char extraction</font>
-00117     <font class="keyword">const</font> <font class="keywordtype">char</font>&amp; at (<font class="keywordtype">unsigned</font> index)<font class="keyword"> const</font>
-00118 <font class="keyword">    </font>{
-00119         assert( index &lt; length ());
-00120         <font class="keywordflow">return</font> cstring [index];
-00121     }
-00122 
-00123     <font class="comment">// find a char in a string. Return TiXmlString::notfound if not found</font>
-00124     <font class="keywordtype">unsigned</font> find (<font class="keywordtype">char</font> lookup)<font class="keyword"> const</font>
-00125 <font class="keyword">    </font>{
-00126         <font class="keywordflow">return</font> find (lookup, 0);
-00127     }
-00128 
-00129     <font class="comment">// find a char in a string from an offset. Return TiXmlString::notfound if not found</font>
-00130     <font class="keywordtype">unsigned</font> find (<font class="keywordtype">char</font> tofind, <font class="keywordtype">unsigned</font> offset) <font class="keyword">const</font>;
-00131 
-00132     <font class="comment">/*  Function to reserve a big amount of data when we know we'll need it. Be aware that this</font>
-00133 <font class="comment">        function clears the content of the TiXmlString if any exists.</font>
-00134 <font class="comment">    */</font>
-00135     <font class="keywordtype">void</font> reserve (<font class="keywordtype">unsigned</font> size)<font class="keyword"></font>
-00136 <font class="keyword">    </font>{
-00137         empty_it ();
-00138         <font class="keywordflow">if</font> (size)
-00139         {
-00140             allocated = size;
-00141             cstring = <font class="keyword">new</font> <font class="keywordtype">char</font> [size];
-00142             cstring [0] = 0;
-00143         }
-00144     }
-00145 
-00146     <font class="comment">// [] operator </font>
-00147     <font class="keywordtype">char</font>&amp; operator [] (<font class="keywordtype">unsigned</font> index)<font class="keyword"> const</font>
-00148 <font class="keyword">    </font>{
-00149         assert( index &lt; length ());
-00150         <font class="keywordflow">return</font> cstring [index];
-00151     }
-00152 
-00153     <font class="comment">// Error value for find primitive </font>
-00154     <font class="keyword">enum</font> {  notfound = 0xffffffff,
-00155             npos = notfound };
-00156 
-00157     <font class="keywordtype">void</font> append (<font class="keyword">const</font> <font class="keywordtype">char</font> *str, <font class="keywordtype">int</font> len );
+00114     <font class="comment">// Not actually used in tinyxml. Conflicts with a C macro, "isblank",</font>
+00115     <font class="comment">// which is a problem. Commenting out. -lee</font>
+00116 <font class="comment">//    bool isblank () const;</font>
+00117 
+00118     <font class="comment">// single char extraction</font>
+00119     <font class="keyword">const</font> <font class="keywordtype">char</font>&amp; at (<font class="keywordtype">unsigned</font> index)<font class="keyword"> const</font>
+00120 <font class="keyword">    </font>{
+00121         assert( index &lt; length ());
+00122         <font class="keywordflow">return</font> cstring [index];
+00123     }
+00124 
+00125     <font class="comment">// find a char in a string. Return TiXmlString::notfound if not found</font>
+00126     <font class="keywordtype">unsigned</font> find (<font class="keywordtype">char</font> lookup)<font class="keyword"> const</font>
+00127 <font class="keyword">    </font>{
+00128         <font class="keywordflow">return</font> find (lookup, 0);
+00129     }
+00130 
+00131     <font class="comment">// find a char in a string from an offset. Return TiXmlString::notfound if not found</font>
+00132     <font class="keywordtype">unsigned</font> find (<font class="keywordtype">char</font> tofind, <font class="keywordtype">unsigned</font> offset) <font class="keyword">const</font>;
+00133 
+00134     <font class="comment">/*  Function to reserve a big amount of data when we know we'll need it. Be aware that this</font>
+00135 <font class="comment">        function clears the content of the TiXmlString if any exists.</font>
+00136 <font class="comment">    */</font>
+00137     <font class="keywordtype">void</font> reserve (<font class="keywordtype">unsigned</font> size)<font class="keyword"></font>
+00138 <font class="keyword">    </font>{
+00139         empty_it ();
+00140         <font class="keywordflow">if</font> (size)
+00141         {
+00142             allocated = size;
+00143             cstring = <font class="keyword">new</font> <font class="keywordtype">char</font> [size];
+00144             cstring [0] = 0;
+00145         }
+00146     }
+00147 
+00148     <font class="comment">// [] operator </font>
+00149     <font class="keywordtype">char</font>&amp; operator [] (<font class="keywordtype">unsigned</font> index)<font class="keyword"> const</font>
+00150 <font class="keyword">    </font>{
+00151         assert( index &lt; length ());
+00152         <font class="keywordflow">return</font> cstring [index];
+00153     }
+00154 
+00155     <font class="comment">// Error value for find primitive </font>
+00156     <font class="keyword">enum</font> {  notfound = 0xffffffff,
+00157             npos = notfound };
 00158 
-00159   <font class="keyword">protected</font> :
+00159     <font class="keywordtype">void</font> append (<font class="keyword">const</font> <font class="keywordtype">char</font> *str, <font class="keywordtype">int</font> len );
 00160 
-00161     <font class="comment">// The base string</font>
-00162     <font class="keywordtype">char</font> * cstring;
-00163     <font class="comment">// Number of chars allocated</font>
-00164     <font class="keywordtype">unsigned</font> allocated;
-00165 
-00166     <font class="comment">// New size computation. It is simplistic right now : it returns twice the amount</font>
-00167     <font class="comment">// we need</font>
-00168     <font class="keywordtype">unsigned</font> assign_new_size (<font class="keywordtype">unsigned</font> minimum_to_allocate)<font class="keyword"></font>
-00169 <font class="keyword">    </font>{
-00170         <font class="keywordflow">return</font> minimum_to_allocate * 2;
-00171     }
-00172 
-00173     <font class="comment">// Internal function that clears the content of a TiXmlString</font>
-00174     <font class="keywordtype">void</font> empty_it ()<font class="keyword"></font>
-00175 <font class="keyword">    </font>{
-00176         <font class="keywordflow">if</font> (cstring)
-00177             <font class="keyword">delete</font> [] cstring;
-00178         cstring = NULL;
-00179         allocated = 0;
-00180     }
-00181 
-00182     <font class="keywordtype">void</font> append (<font class="keyword">const</font> <font class="keywordtype">char</font> *suffix );
+00161   <font class="keyword">protected</font> :
+00162 
+00163     <font class="comment">// The base string</font>
+00164     <font class="keywordtype">char</font> * cstring;
+00165     <font class="comment">// Number of chars allocated</font>
+00166     <font class="keywordtype">unsigned</font> allocated;
+00167 
+00168     <font class="comment">// New size computation. It is simplistic right now : it returns twice the amount</font>
+00169     <font class="comment">// we need</font>
+00170     <font class="keywordtype">unsigned</font> assign_new_size (<font class="keywordtype">unsigned</font> minimum_to_allocate)<font class="keyword"></font>
+00171 <font class="keyword">    </font>{
+00172         <font class="keywordflow">return</font> minimum_to_allocate * 2;
+00173     }
+00174 
+00175     <font class="comment">// Internal function that clears the content of a TiXmlString</font>
+00176     <font class="keywordtype">void</font> empty_it ()<font class="keyword"></font>
+00177 <font class="keyword">    </font>{
+00178         <font class="keywordflow">if</font> (cstring)
+00179             <font class="keyword">delete</font> [] cstring;
+00180         cstring = NULL;
+00181         allocated = 0;
+00182     }
 00183 
-00184     <font class="comment">// append function for another TiXmlString</font>
-00185     <font class="keywordtype">void</font> append (<font class="keyword">const</font> TiXmlString &amp; suffix)<font class="keyword"></font>
-00186 <font class="keyword">    </font>{
-00187         append (suffix . c_str ());
-00188     }
-00189 
-00190     <font class="comment">// append for a single char. This could be improved a lot if needed</font>
-00191     <font class="keywordtype">void</font> append (<font class="keywordtype">char</font> single)<font class="keyword"></font>
-00192 <font class="keyword">    </font>{
-00193         <font class="keywordtype">char</font> smallstr [2];
-00194         smallstr [0] = single;
-00195         smallstr [1] = 0;
-00196         append (smallstr);
-00197     }
-00198 
-00199 } ;
+00184     <font class="keywordtype">void</font> append (<font class="keyword">const</font> <font class="keywordtype">char</font> *suffix );
+00185 
+00186     <font class="comment">// append function for another TiXmlString</font>
+00187     <font class="keywordtype">void</font> append (<font class="keyword">const</font> TiXmlString &amp; suffix)<font class="keyword"></font>
+00188 <font class="keyword">    </font>{
+00189         append (suffix . c_str ());
+00190     }
+00191 
+00192     <font class="comment">// append for a single char. This could be improved a lot if needed</font>
+00193     <font class="keywordtype">void</font> append (<font class="keywordtype">char</font> single)<font class="keyword"></font>
+00194 <font class="keyword">    </font>{
+00195         <font class="keywordtype">char</font> smallstr [2];
+00196         smallstr [0] = single;
+00197         smallstr [1] = 0;
+00198         append (smallstr);
+00199     }
 00200 
-00201 <font class="comment">/* </font>
-00202 <font class="comment">   TiXmlOutStream is an emulation of std::ostream. It is based on TiXmlString.</font>
-00203 <font class="comment">   Only the operators that we need for TinyXML have been developped.</font>
-00204 <font class="comment">*/</font>
-00205 <font class="keyword">class </font>TiXmlOutStream : <font class="keyword">public</font> TiXmlString
-00206 {
-00207 <font class="keyword">public</font> :
-00208     TiXmlOutStream () : TiXmlString () {}
-00209 
-00210     <font class="comment">// TiXmlOutStream &lt;&lt; operator. Maps to TiXmlString::append</font>
-00211     TiXmlOutStream &amp; operator &lt;&lt; (<font class="keyword">const</font> <font class="keywordtype">char</font> * in)<font class="keyword"></font>
-00212 <font class="keyword">    </font>{
-00213         append (in);
-00214         <font class="keywordflow">return</font> (* this);
-00215     }
-00216 
-00217     <font class="comment">// TiXmlOutStream &lt;&lt; operator. Maps to TiXmlString::append</font>
-00218     TiXmlOutStream &amp; operator &lt;&lt; (<font class="keyword">const</font> TiXmlString &amp; in)<font class="keyword"></font>
-00219 <font class="keyword">    </font>{
-00220         append (in . c_str ());
-00221         <font class="keywordflow">return</font> (* this);
-00222     }
-00223 } ;
-00224 
-00225 <font class="preprocessor">#endif  // TIXML_STRING_INCLUDED</font>
-00226 <font class="preprocessor"></font><font class="preprocessor">#endif  // TIXML_USE_STL</font>
-</font></pre></div><hr><address><small>Generated on Fri May 24 21:14:57 2002 for TinyXml by
+00201 } ;
+00202 
+00203 <font class="comment">/* </font>
+00204 <font class="comment">   TiXmlOutStream is an emulation of std::ostream. It is based on TiXmlString.</font>
+00205 <font class="comment">   Only the operators that we need for TinyXML have been developped.</font>
+00206 <font class="comment">*/</font>
+00207 <font class="keyword">class </font>TiXmlOutStream : <font class="keyword">public</font> TiXmlString
+00208 {
+00209 <font class="keyword">public</font> :
+00210     TiXmlOutStream () : TiXmlString () {}
+00211 
+00212     <font class="comment">// TiXmlOutStream &lt;&lt; operator. Maps to TiXmlString::append</font>
+00213     TiXmlOutStream &amp; operator &lt;&lt; (<font class="keyword">const</font> <font class="keywordtype">char</font> * in)<font class="keyword"></font>
+00214 <font class="keyword">    </font>{
+00215         append (in);
+00216         <font class="keywordflow">return</font> (* this);
+00217     }
+00218 
+00219     <font class="comment">// TiXmlOutStream &lt;&lt; operator. Maps to TiXmlString::append</font>
+00220     TiXmlOutStream &amp; operator &lt;&lt; (<font class="keyword">const</font> TiXmlString &amp; in)<font class="keyword"></font>
+00221 <font class="keyword">    </font>{
+00222         append (in . c_str ());
+00223         <font class="keywordflow">return</font> (* this);
+00224     }
+00225 } ;
+00226 
+00227 <font class="preprocessor">#endif  // TIXML_STRING_INCLUDED</font>
+00228 <font class="preprocessor"></font><font class="preprocessor">#endif  // TIXML_USE_STL</font>
+</font></pre></div><hr><address><small>Generated on Wed Jun 5 17:42:05 2002 for TinyXml by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.gif" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.2.11.1 written by <a href="mailto:dimitri@stack.nl">Dimitri van Heesch</a>,

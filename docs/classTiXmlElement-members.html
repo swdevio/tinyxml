@@ -8,9 +8,9 @@
 <a class="qindex" href="index.html">Main Page</a> &nbsp; <a class="qindex" href="hierarchy.html">Class Hierarchy</a> &nbsp; <a class="qindex" href="annotated.html">Compound List</a> &nbsp; <a class="qindex" href="files.html">File List</a> &nbsp; <a class="qindex" href="functions.html">Compound Members</a> &nbsp; </center>
 <hr><h1>TiXmlElement Member List</h1>This is the complete list of members for <a class="el" href="classTiXmlElement.html">TiXmlElement</a>, including all inherited members.<ul>
 <li><a class="el" href="classTiXmlElement.html#a3">Attribute</a>(const char *name) const
-<li><a class="el" href="classTiXmlElement.html#a4">Attribute</a>(const char *name, int &amp;i) const
+<li><a class="el" href="classTiXmlElement.html#a4">Attribute</a>(const char *name, int *i) const
 <li><a class="el" href="classTiXmlNode.html#a4">Clear</a>()
-<li><a class="el" href="classTiXmlElement.html#a11">FirstAttribute</a>() const
+<li><a class="el" href="classTiXmlElement.html#a13">FirstAttribute</a>() const
 <code> [inline]</code><li><a class="el" href="classTiXmlNode.html#a6">FirstChild</a>() const
 <code> [inline]</code><li><a class="el" href="classTiXmlNode.html#a7">FirstChild</a>(const char *value) const
 <li><a class="el" href="classTiXmlNode.html#a10">FirstChild</a>(const std::string &amp;value) const
@@ -25,7 +25,7 @@
 <code> [inline, static]</code><li><a class="el" href="classTiXmlNode.html#a12">IterateChildren</a>(TiXmlNode *previous) const
 <li><a class="el" href="classTiXmlNode.html#a13">IterateChildren</a>(const char *value, TiXmlNode *previous) const
 <li><a class="el" href="classTiXmlNode.html#a14">IterateChildren</a>(const std::string &amp;value, TiXmlNode *previous) const
-<code> [inline]</code><li><a class="el" href="classTiXmlElement.html#a12">LastAttribute</a>() const
+<code> [inline]</code><li><a class="el" href="classTiXmlElement.html#a14">LastAttribute</a>() const
 <code> [inline]</code><li><a class="el" href="classTiXmlNode.html#a9">LastChild</a>(const char *value) const
 <li><a class="el" href="classTiXmlNode.html#a11">LastChild</a>(const std::string &amp;value) const
 <code> [inline]</code><li><a class="el" href="classTiXmlNode.html#a23">NextSibling</a>(const std::string &amp;value) const
@@ -42,15 +42,14 @@
 <code> [inline]</code><li><a class="el" href="classTiXmlNode.html#a20">PreviousSibling</a>() const
 <code> [inline]</code><li><a class="el" href="classTiXmlNode.html#a21">PreviousSibling</a>(const char *) const
 <li><a class="el" href="classTiXmlNode.html#a22">PreviousSibling</a>(const std::string &amp;value) const
-<code> [inline]</code><li><a class="el" href="classTiXmlElement.html#a14">Print</a>(FILE *cfile, int depth) const
-<code> [virtual]</code><li><a class="el" href="classTiXmlElement.html#a9">RemoveAttribute</a>(const char *name)
-<li><a class="el" href="classTiXmlElement.html#a10">RemoveAttribute</a>(const std::string &amp;name)
+<code> [inline]</code><li><a class="el" href="classTiXmlElement.html#a16">Print</a>(FILE *cfile, int depth) const
+<code> [virtual]</code><li><a class="el" href="classTiXmlElement.html#a11">RemoveAttribute</a>(const char *name)
+<li><a class="el" href="classTiXmlElement.html#a12">RemoveAttribute</a>(const std::string &amp;name)
 <code> [inline]</code><li><a class="el" href="classTiXmlNode.html#a19">RemoveChild</a>(TiXmlNode *removeThis)
 <li><a class="el" href="classTiXmlNode.html#a18">ReplaceChild</a>(TiXmlNode *replaceThis, const TiXmlNode &amp;withThis)
 <li><a class="el" href="classTiXmlElement.html#a5">SetAttribute</a>(const char *name, const char *value)
-<li><a class="el" href="classTiXmlElement.html#a6">SetAttribute</a>(const std::string &amp;name, const std::string &amp;value)
-<code> [inline]</code><li><a class="el" href="classTiXmlElement.html#a7">SetAttribute</a>(const std::string &amp;name, int value)
-<code> [inline]</code><li><a class="el" href="classTiXmlElement.html#a8">SetAttribute</a>(const char *name, int value)
+<li><a class="el" href="classTiXmlElement.html#a8">SetAttribute</a>(const std::string &amp;name, const std::string &amp;value)
+<code> [inline]</code><li><a class="el" href="classTiXmlElement.html#a10">SetAttribute</a>(const char *name, int value)
 <li><a class="el" href="classTiXmlBase.html#d0">SetCondenseWhiteSpace</a>(bool condense)
 <code> [inline, static]</code><li><a class="el" href="classTiXmlNode.html#a2">SetValue</a>(const char *_value)
 <code> [inline]</code><li><a class="el" href="classTiXmlNode.html#a3">SetValue</a>(const std::string &amp;value)
@@ -65,7 +64,7 @@
 <code> [inline]</code><li><a class="el" href="classTiXmlNode.html#a32">Type</a>() const
 <code> [inline, virtual]</code><li><a class="el" href="classTiXmlNode.html#a1">Value</a>() const
 <code> [inline]</code></ul>
-<hr><address><small>Generated on Fri May 24 21:14:57 2002 for TinyXml by
+<hr><address><small>Generated on Wed Jun 5 17:42:06 2002 for TinyXml by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.gif" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.2.11.1 written by <a href="mailto:dimitri@stack.nl">Dimitri van Heesch</a>,

@@ -18,9 +18,9 @@ static int gPass = 0;
 static int gFail = 0;
 
 
-bool XmlTest (const char * testString, const char * expected, const char * found, bool noEcho = false)
+bool XmlTest (const char* testString, const char* expected, const char* found, bool noEcho = false)
 {
-	bool pass = ! strcmp (expected, found);
+	bool pass = !strcmp( expected, found );
 	if ( pass )
 		printf ("[pass]");
 	else
@@ -394,17 +394,41 @@ int main()
 		XmlTest( "Test InsertAfterChild on empty node. ", ( childNode1 == parent.LastChild() ), true );
 	}
 
+	// Reports of missing constructors, irregular string problems.
 	{
 		// Missing constructor implementation. No test -- just compiles.
 		TiXmlText text( "Missing" );
 
 		#ifdef TIXML_USE_STL
-		// Missing implementation:
-		TiXmlDocument doc;
-		string name = "missing";
-		doc.LoadFile( name );
+			// Missing implementation:
+			TiXmlDocument doc;
+			string name = "missing";
+			doc.LoadFile( name );
+
+			TiXmlText textSTL( name );
+		#else
+			// verifing some basic string functions:
+			TiXmlString a;
+			TiXmlString b = "Hello";
+			TiXmlString c = "ooga";
+
+			c = " World!";
+			a = b;
+			a += c;
+			a = a;
+
+			XmlTest( "Basic TiXmlString test. ", "Hello World!", a.c_str() );
 		#endif
  	}
+
+	// Long filenames crashing STL version
+	{
+		TiXmlDocument doc( "midsummerNightsDreamWithAVeryLongFilenameToConfuseTheStringHandlingRoutines.xml" );
+		bool loadOkay = doc.LoadFile();
+		loadOkay = true;	// get rid of compiler warning.
+		// Won't pass on non-dev systems. Just a "no crash" check.
+		//XmlTest( "Long filename. ", true, loadOkay );
+	}
 
 	printf ("\nPass %d, Fail %d\n", gPass, gFail);
 	return gFail;
