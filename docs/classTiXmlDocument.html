@@ -44,7 +44,7 @@ bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a7"
 bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a9">SaveFile</a> (const std::string &amp;filename) const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>&lt; STL std::string version.</em></font><br><br></td></tr>
 <tr><td nowrap align=right valign=top><a name="a10" doxytag="TiXmlDocument::Parse"></a>
-virtual const char *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a10">Parse</a> (const char *p, const TiXmlParsingData *data=0)</td></tr>
+virtual const char *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a10">Parse</a> (const char *p, TiXmlParsingData *data=0)</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Parse the given null terminated block of xml data.</em></font><br><br></td></tr>
 <tr><td nowrap align=right valign=top><a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a11">RootElement</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Get the root element -- the only top level element -- of the document.</em> <a href="#a11">More...</a><em></em></font><br><br></td></tr>
@@ -371,7 +371,7 @@ By calling this method, with a tab size greater than 0, the row and column of ea
 <p>
 Very useful for tracking the DOM back in to the source file.
 <p>
-The tab size is required for calculating the location of nodes. If not set, the default of 4 is used. The tabsize is set per document. Setting the tabsize to 0 disables row/column tracking (which has a minor performance cost.)
+The tab size is required for calculating the location of nodes. If not set, the default of 4 is used. The tabsize is set per document. Setting the tabsize to 0 disables row/column tracking.
 <p>
 Note that row and column tracking is not supported when using operator&gt;&gt;.
 <p>
@@ -388,7 +388,7 @@ See also: </b><dd>
 </table>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="tinyxml_8h-source.html">tinyxml.h</a></ul>
-<hr><address><small>Generated on Fri Dec 5 21:19:55 2003 for TinyXml by
+<hr><address><small>Generated on Fri Dec 19 18:28:21 2003 for TinyXml by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.gif" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.2.11.1 written by <a href="mailto:dimitri@stack.nl">Dimitri van Heesch</a>,
