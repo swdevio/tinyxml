@@ -550,8 +550,93 @@ int main()
 			fclose( verify );
 		}
 		XmlTest( "UTF-8: Verified multi-language round trip.", 1, okay );
+
+		// On most Western machines, this is an element that contains
+		// the word "resume" with the correct accents, in a latin encoding.
+		// It will be something else comletely on non-wester machines,
+		// which is why TinyXml is switching to UTF-8.
+		const char latin[] = "<element>r\x82sum\x82</element>";
+
+		TiXmlDocument latinDoc;
+		latinDoc.Parse( latin, 0, TIXML_ENCODING_LEGACY );
+
+		text = latinDoc.FirstChildElement()->FirstChild()->ToText();
+		XmlTest( "Legacy encoding: Verify text element.", "r\x82sum\x82", text->Value() );
 	}
 	
+
+	//////////////////////
+	// Copy and assignment
+	//////////////////////
+	printf ("\n** Copy and Assignment **\n");
+	{
+		TiXmlElement element( "foo" );
+		element.Parse( "<element name='value' />", 0, TIXML_ENCODING_UNKNOWN );
+
+		TiXmlElement elementCopy( element );
+		TiXmlElement elementAssign( "foo" );
+		elementAssign.Parse( "<incorrect foo='bar'/>", 0, TIXML_ENCODING_UNKNOWN );
+		elementAssign = element;
+
+		XmlTest( "Copy/Assign: element copy #1.", "element", elementCopy.Value() );
+		XmlTest( "Copy/Assign: element copy #2.", "value", elementCopy.Attribute( "name" ) );
+		XmlTest( "Copy/Assign: element assign #1.", "element", elementAssign.Value() );
+		XmlTest( "Copy/Assign: element assign #2.", "value", elementAssign.Attribute( "name" ) );
+		XmlTest( "Copy/Assign: element assign #3.", 0, (int) elementAssign.Attribute( "foo" ) );
+
+		TiXmlComment comment;
+		comment.Parse( "<!--comment-->", 0, TIXML_ENCODING_UNKNOWN );
+		TiXmlComment commentCopy( comment );
+		TiXmlComment commentAssign;
+		commentAssign = commentCopy;
+		XmlTest( "Copy/Assign: comment copy.", "comment", commentCopy.Value() );
+		XmlTest( "Copy/Assign: comment assign.", "comment", commentAssign.Value() );
+
+		TiXmlUnknown unknown;
+		unknown.Parse( "<[unknown]>", 0, TIXML_ENCODING_UNKNOWN );
+		TiXmlUnknown unknownCopy( unknown );
+		TiXmlUnknown unknownAssign;
+		unknownAssign.Parse( "incorrect", 0, TIXML_ENCODING_UNKNOWN );
+		unknownAssign = unknownCopy;
+		XmlTest( "Copy/Assign: unknown copy.", "[unknown]", unknownCopy.Value() );
+		XmlTest( "Copy/Assign: unknown assign.", "[unknown]", unknownAssign.Value() );
+		
+		TiXmlText text( "TextNode" );
+		TiXmlText textCopy( text );
+		TiXmlText textAssign( "incorrect" );
+		textAssign = text;
+		XmlTest( "Copy/Assign: text copy.", "TextNode", textCopy.Value() );
+		XmlTest( "Copy/Assign: text assign.", "TextNode", textAssign.Value() );
+
+		TiXmlDeclaration dec;
+		dec.Parse( "<?xml version='1.0' encoding='UTF-8'?>", 0, TIXML_ENCODING_UNKNOWN );
+		TiXmlDeclaration decCopy( dec );
+		TiXmlDeclaration decAssign;
+		decAssign = dec;
+
+		XmlTest( "Copy/Assign: declaration copy.", "UTF-8", decCopy.Encoding() );
+		XmlTest( "Copy/Assign: text assign.", "UTF-8", decAssign.Encoding() );
+
+		TiXmlDocument doc;
+		elementCopy.InsertEndChild( textCopy );
+		doc.InsertEndChild( decAssign );
+		doc.InsertEndChild( elementCopy );
+		doc.InsertEndChild( unknownAssign );
+
+		TiXmlDocument docCopy( doc );
+		TiXmlDocument docAssign;
+		docAssign = docCopy;
+
+		#ifdef TIXML_USE_STL
+		std::string original, copy, assign;
+		original << doc;
+		copy << docCopy;
+		assign << docAssign;
+		XmlTest( "Copy/Assign: document copy.", original.c_str(), copy.c_str(), true );
+		XmlTest( "Copy/Assign: document assign.", original.c_str(), assign.c_str(), true );
+
+		#endif
+	}	
 
 	//////////////////////////////////////////////////////
 #ifdef TIXML_USE_STL
@@ -798,6 +883,34 @@ int main()
 		
 		XmlTest( "Parsing repeated attributes.", 0, (int)doc.Error() );	// not an  error to tinyxml
 		XmlTest( "Parsing repeated attributes.", "blue", doc.FirstChildElement( "element" )->Attribute( "attr" ) );
+	}
+
+	{
+		// Embedded null in stream.
+		const char* doctype = "<element att\0r='red' attr='blue' />";
+
+		TiXmlDocument doc;
+		doc.Parse( doctype );
+		XmlTest( "Embedded null throws error.", true, doc.Error() );
+
+		#ifdef TIXML_USE_STL
+		istringstream strm( doctype );
+		doc.Clear();
+		doc.ClearError();
+		strm >> doc;
+		XmlTest( "Embedded null throws error.", true, doc.Error() );
+		#endif
+	}
+
+	{
+		// Bad encoding.
+		// TinyXML reads *everything* as UTF-8. The "encoding" flag is ignored.
+		const char* doctype = "<?xml version='1.0' encoding='ISO-8859-1'?><!--\x88-->";
+
+		TiXmlDocument doc;
+		doc.Parse( doctype );
+		// It should pass through.
+		XmlTest( "Pass through bad text encoding.", false, doc.Error() );
 	}
 
 	#if defined( WIN32 ) && defined( TUNE )

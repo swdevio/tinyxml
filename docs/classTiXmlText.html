@@ -26,8 +26,13 @@
 <tr><td nowrap align=right valign=top><a name="a2" doxytag="TiXmlText::TiXmlText"></a>
 &nbsp;</td><td valign=bottom><a class="el" href="classTiXmlText.html#a2">TiXmlText</a> (const std::string &amp;initValue)</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Constructor.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top>virtual void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlText.html#a3">Print</a> (FILE *cfile, int depth) const</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>All TinyXml classes can print themselves to a filestream.</em> <a href="#a3"></a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a5" doxytag="TiXmlText::Print"></a>
+virtual void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlText.html#a5">Print</a> (FILE *cfile, int depth) const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Write this text object to a FILE stream.</em></font><br><br></td></tr>
+<tr><td colspan=2><br><h2>Protected Methods</h2></td></tr>
+<tr><td nowrap align=right valign=top><a name="b0" doxytag="TiXmlText::Clone"></a>
+virtual <a class="el" href="classTiXmlNode.html">TiXmlNode</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlText.html#b0">Clone</a> () const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>[internal use] Creates a new Element and returns it.</em></font><br><br></td></tr>
 <tr><td colspan=2><br><h2>Friends</h2></td></tr>
 <tr><td nowrap align=right valign=top><a name="l0" doxytag="TiXmlText::TiXmlElement"></a>
 class&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlElement.html#l0">TiXmlElement</a></td></tr>
@@ -37,54 +42,9 @@ XML text.
 <p>
 Contained in an element. 
 <p>
-<hr><h2>Member Function Documentation</h2>
-<a name="a3" doxytag="TiXmlText::Print"></a><p>
-<table width="100%" cellpadding="2" cellspacing="0" border="0">
-  <tr>
-    <td class="md">
-      <table cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td class="md" nowrap valign="top"> virtual void TiXmlText::Print </td>
-          <td class="md" valign="top">(&nbsp;</td>
-          <td class="md" nowrap valign="top">FILE *&nbsp;</td>
-          <td class="mdname" nowrap>&nbsp; <em>cfile</em>, </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td class="md" nowrap>int&nbsp;</td>
-          <td class="mdname" nowrap>&nbsp; <em>depth</em></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td class="md">)&nbsp;</td>
-          <td class="md" colspan="2"> const<code> [virtual]</code></td>
-        </tr>
-
-      </table>
-    </td>
-  </tr>
-</table>
-<table cellspacing=5 cellpadding=0 border=0>
-  <tr>
-    <td>
-      &nbsp;
-    </td>
-    <td>
-
-<p>
-All TinyXml classes can print themselves to a filestream.
-<p>
-This is a formatted print, and will insert tabs and newlines.
-<p>
-(For an unformatted stream, use the &lt;&lt; operator.) 
-<p>
-Implements <a class="el" href="classTiXmlBase.html#a2">TiXmlBase</a>.    </td>
-  </tr>
-</table>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="tinyxml_8h-source.html">tinyxml.h</a></ul>
-<hr><address style="align: right;"><small>Generated on Sat May 22 22:12:26 2004 for TinyXml by
+<hr><address style="align: right;"><small>Generated on Wed Jun 30 10:06:37 2004 for TinyXml by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.2.18 </small></address>

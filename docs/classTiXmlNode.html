@@ -136,6 +136,8 @@ bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a35">No
 <tr><td nowrap align=right valign=top><a name="a41" doxytag="TiXmlNode::ToDeclaration"></a>
 <a class="el" href="classTiXmlDeclaration.html">TiXmlDeclaration</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a41">ToDeclaration</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Cast to a more defined type. Will return null not of the requested type.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top>virtual TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a42">Clone</a> () const=0</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Create an exact duplicate of this node and return it.</em> <a href="#a42"></a><em></em></font><br><br></td></tr>
 <tr><td colspan=2><br><h2>Friends</h2></td></tr>
 <tr><td nowrap align=right valign=top><a name="l0" doxytag="TiXmlNode::TiXmlDocument"></a>
 class&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#l0">TiXmlDocument</a></td></tr>
@@ -180,6 +182,38 @@ The types of XML nodes supported by TinyXml.
   </tr>
 </table>
 <hr><h2>Member Function Documentation</h2>
+<a name="a42" doxytag="TiXmlNode::Clone"></a><p>
+<table width="100%" cellpadding="2" cellspacing="0" border="0">
+  <tr>
+    <td class="md">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="md" nowrap valign="top"> virtual TiXmlNode* TiXmlNode::Clone </td>
+          <td class="md" valign="top">(&nbsp;</td>
+          <td class="mdname1" valign="top" nowrap>&nbsp;          </td>
+          <td class="md" valign="top">)&nbsp;</td>
+          <td class="md" nowrap><code> [pure virtual]</code></td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+<table cellspacing=5 cellpadding=0 border=0>
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+
+<p>
+Create an exact duplicate of this node and return it.
+<p>
+The memory must be deleted by the caller. 
+<p>
+Implemented in <a class="el" href="classTiXmlElement.html#a24">TiXmlElement</a>, <a class="el" href="classTiXmlComment.html#a4">TiXmlComment</a>, <a class="el" href="classTiXmlText.html#b0">TiXmlText</a>, <a class="el" href="classTiXmlDeclaration.html#a9">TiXmlDeclaration</a>, <a class="el" href="classTiXmlUnknown.html#a4">TiXmlUnknown</a>, and <a class="el" href="classTiXmlDocument.html#b1">TiXmlDocument</a>.    </td>
+  </tr>
+</table>
 <a name="a34" doxytag="TiXmlNode::GetDocument"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
@@ -692,7 +726,7 @@ Tolerant of newlines and formatting, but doesn't expect them.     </td>
 </table>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="tinyxml_8h-source.html">tinyxml.h</a></ul>
-<hr><address style="align: right;"><small>Generated on Sat May 22 22:12:26 2004 for TinyXml by
+<hr><address style="align: right;"><small>Generated on Wed Jun 30 10:06:37 2004 for TinyXml by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.2.18 </small></address>

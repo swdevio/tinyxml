@@ -148,12 +148,20 @@ Changes in version 2.1.5
 - Additional testing (no more bugs found to be fixed in this release)
 - Significant performance improvement to the cursor code.
 
-2.2.2 ?
+2.3.0
 - User Data are now defined in TiXmlBase instead of TiXmlNode
 - Character Entities are now UCS-2
 - Character Entities can be decimal or hexadecimal
 - UTF-8 conversion.
+- Fixed many, many bugs.
 
-
-
-
+2.3.1
+- Fixed bug in handling nulls embedded in the input.
+- Make UTF-8 parser tolerant of bad text encoding.
+- Added encoding detection. 
+- Many fixes and input from John-Philip Leonard Johansson (JP) and Ellers, 
+  including UTF-8 feedback, bug reports, and patches. Thanks!
+- Added version # constants - a suggestion from JP and Ellers.
+- [ 979180 ] Missing ; in entity reference, fix from Rob Laveaux.
+- Copy constructors and assignment have been a long time coming. Thanks to
+  Fokke and JP.
