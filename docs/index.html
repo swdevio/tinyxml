@@ -23,32 +23,34 @@ There are different ways to access and interact with XML data. TinyXml uses a Do
 <p>
 TinyXml is designed to be easy and fast. It is one header and three cpp  files. Simply add these to your project and off you go. There is an  example to get you started. It is released under the ZLib license,  so you can use it in open source or commercial code.
 <p>
-It attempts to be a flexible parser, but with truly correct and  compliant XML output (with the exception of the character set, below.) TinyXml should compile on any reasonably C++  system. It does not rely on exceptions or RTTI, and only uses the STL string class.
+It attempts to be a flexible parser, but with truly correct and compliant XML output (with the exception of the character set, below.) TinyXml should compile on any reasonably C++ system. It does not rely on exceptions or RTTI, and only uses the STL string class.
 <p>
 <h2> What it doesn't do. </h2>
 
 <p>
-It doesn’t parse or use DTDs (Document Type Definitions) or XSL’s  (eXtensible Stylesheet Language.) It is limited to the ASCII  character set. There are other parsers out there (check out  www.sourceforge.org, search for XML) that are much more fully  featured. But they are also much bigger, take longer to set up in  your project, have a higher learning curve, and often have a more  restrictive license. If you are working with browsers or have more  complete XML needs, TinyXml is not the parser for you.
+It doesnt parse or use DTDs (Document Type Definitions) or XSLs (eXtensible Stylesheet Language.) It is limited to the ASCII character set. There are other parsers out there (check out www.sourceforge.org, search for XML) that are much more fully featured. But they are also much bigger, take longer to set up in your project, have a higher learning curve, and often have a more restrictive license. If you are working with browsers or have more complete XML needs, TinyXml is not the parser for you.
 <p>
 <h2> Code Status. </h2>
 
 <p>
 Currently in use, TinyXml is looking pretty stable. If you find bugs, send them in and we'll get them straightened out as soon as possible.
 <p>
-There are some areas of improvement; please check sourceforge if you are  interested in working on TinxXml.
+There are some areas of improvement; please check sourceforge if you are interested in working on TinxXml.
 <p>
 <h2> Changes between version 1 and 2 </h2>
 
 <p>
+Ignoring other changes, 1.2 is limited to the STL string class, while version 2.0 makes extensive use of STL. If you need a minimal STL implementation, you should drop back to the 1.2 release. In the next version of TinyXml, I hope to see us support a compile time switch to use full STL or none at all. Initial code looks really good.
+<p>
 <h3> Entities </h3>
- TinyXml recognizes the pre-defined "entity references", meaning special  characters. Namely:
+ TinyXml recognizes the pre-defined "entity references", meaning special characters. Namely:
 <p>
 <div class="fragment"><pre>
     &amp;amp;   &amp;
     &amp;lt;    &lt;
     &amp;gt;    &gt;
     &amp;quot;  "
-    &amp;apos;  ‘
+    &amp;apos;
 </pre></div>
 <p>
 These are recognized when the XML document is read, and translated to there ASCII equivalents. For instance, text with the XML of:
@@ -57,14 +59,14 @@ These are recognized when the XML document is read, and translated to there ASCI
     Far &amp;amp; Away
 </pre></div>
 <p>
-will have the Value() of "Far &amp; Away" when queried from the <a class="el" href="classTiXmlText.html">TiXmlText</a> object,  but will be written back to the XML stream/file as an entitity.
+will have the Value() of "Far &amp; Away" when queried from the <a class="el" href="classTiXmlText.html">TiXmlText</a> object, but will be written back to the XML stream/file as an entitity.
 <p>
-TiXml will ignore unknown entities and the  <div class="fragment"><pre>
+TiXml will ignore unknown entities and the <div class="fragment"><pre>
 "&amp;#x"
 </pre></div> entities, and leave them unprocessed.
 <p>
 <h3> Streams </h3>
- TiXml has been modified to support both C (FILE) and C++ (operator&lt;&lt;,&gt;&gt;)  streams. There are some differences that you may need to be aware of.
+ TiXml has been modified to support both C (FILE) and C++ (operator&lt;&lt;,&gt;&gt;) streams. There are some differences that you may need to be aware of.
 <p>
 C style output:<ul>
 <li>based on FILE*<li>the Print() and SaveFile() methods</ul>
@@ -113,7 +115,7 @@ There are some "it would be nice if..." items. I'll keep those posted as tasks o
 
 <p>
 An example is probably the best way to go. Take: <div class="fragment"><pre>
-    &lt;?xml version="1.0" standalone=‘no’&gt;
+    &lt;?xml version="1.0" standalone=no&gt;
     &lt;?-- Our to do list data --&gt;
     &lt;ToDo&gt;
         &lt;Item priority="1"&gt; Go to the &lt;bold&gt;Toy store!&lt;/bold&gt;&lt;/Item&gt;
@@ -121,18 +123,18 @@ An example is probably the best way to go. Take: <div class="fragment"><pre>
     &lt;/ToDo&gt;
 </pre></div>
 <p>
-It’s not much of a To Do list, but it will do. To read this file  (say "demo.xml") you would create a document, and parse it in: <div class="fragment"><pre>
+Its not much of a To Do list, but it will do. To read this file  (say "demo.xml") you would create a document, and parse it in: <div class="fragment"><pre>
     TiXmlDocument doc( "demo.xml" );
     doc.LoadFile();
 </pre></div>
 <p>
-And it’s ready to go. Now let’s look at some lines and how they  relate to the DOM.
+And its ready to go. Now lets look at some lines and how they  relate to the DOM.
 <p>
-&lt;?xml version="1.0" standalone=‘no’&gt;
+&lt;?xml version="1.0" standalone=no&gt;
 <p>
 The first line is a declaration, and gets turned into the <a class="el" href="classTiXmlDeclaration.html">TiXmlDeclaration</a> class. It will be the first child of the document node.
 <p>
-This is the only directive/special tag parsed by by TinyXml. Generally directive targs are stored in <a class="el" href="classTiXmlUnknown.html">TiXmlUnknown</a> so the  commands won’t be lost when it is saved back to disk.
+This is the only directive/special tag parsed by by TinyXml. Generally directive targs are stored in <a class="el" href="classTiXmlUnknown.html">TiXmlUnknown</a> so the  commands wont be lost when it is saved back to disk.
 <p>
 &lt;?-- Our to do list data --&gt;
 <p>
@@ -144,11 +146,11 @@ The ToDo tag defines a <a class="el" href="classTiXmlElement.html">TiXmlElement<
 <p>
 &lt;Item priority="1"&gt;
 <p>
-Creates another <a class="el" href="classTiXmlElement.html">TiXmlElement</a> which is a child of the "ToDo" element.  This element has 1 attribute, with the name ‘priority’ and the value  ‘1’.
+Creates another <a class="el" href="classTiXmlElement.html">TiXmlElement</a> which is a child of the "ToDo" element.  This element has 1 attribute, with the name priority and the value  1.
 <p>
 Go to the
 <p>
-A <a class="el" href="classTiXmlText.html">TiXmlText</a>. This is a leaf node and cannot contain other nodes.  It is a child of the ‘Item" Element.
+A <a class="el" href="classTiXmlText.html">TiXmlText</a>. This is a leaf node and cannot contain other nodes.  It is a child of the Item" Element.
 <p>
 &lt;bold&gt;
 <p>
@@ -158,7 +160,7 @@ Etc.
 <p>
 Looking at the entire object tree, you end up with: <div class="fragment"><pre>
 TiXmlDocument               "demo.xml"
-    TiXmlDeclaration        "version='1.0'" "standalone=‘no’"
+    TiXmlDeclaration        "version='1.0'" "standalone=no"
     TiXmlComment            " Our to do list data"
     TiXmlElement            "ToDo"
         TiXmlElement        "Item"      Attribtutes: priority = 1
@@ -199,18 +201,18 @@ Permission is granted to anyone to use this software for any  purpose, including
 <h2> References </h2>
 
 <p>
-The World Wide Web Consortium is the definitive standard body for  XML, and there web pages contain huge amounts of information. I also  recommend "XML Pocket Reference" by Robert Eckstein and published by  O’Reilly.
+The World Wide Web Consortium is the definitive standard body for  XML, and there web pages contain huge amounts of information. I also  recommend "XML Pocket Reference" by Robert Eckstein and published by  OReilly.
 <p>
 <h2> Contact Me: </h2>
 
 <p>
-I’d appreciates your suggestions, and would love to know if you  use TinyXml. I hope you enjoy it and find it useful. Please post questions, comments, file bugs, or contact me at:
+Id appreciates your suggestions, and would love to know if you  use TinyXml. I hope you enjoy it and find it useful. Please post questions, comments, file bugs, or contact me at:
 <p>
 www.sourceforge.net/projects/tinyxml
 <p>
 Lee Thomason
 <p>
-<hr><address><small>Generated on Thu Mar 21 11:31:18 2002 for TinyXml by
+<hr><address><small>Generated on Thu Apr 25 22:20:55 2002 for TinyXml by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.gif" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.2.11.1 written by <a href="mailto:dimitri@stack.nl">Dimitri van Heesch</a>,

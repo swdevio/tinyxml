@@ -24,6 +24,7 @@ distribution.
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <ctype.h>
 #include "tinyxml.h"
 using namespace std;
 
@@ -149,8 +150,8 @@ TiXmlNode* TiXmlNode::InsertEndChild( const TiXmlNode& addThis )
 
 
 TiXmlNode* TiXmlNode::InsertBeforeChild( TiXmlNode* beforeThis, const TiXmlNode& addThis )
-{
-	if ( beforeThis->parent != this )
+{	
+	if ( !beforeThis || beforeThis->parent != this )
 		return 0;
 	
 	TiXmlNode* node = addThis.Clone();
@@ -160,7 +161,15 @@ TiXmlNode* TiXmlNode::InsertBeforeChild( TiXmlNode* beforeThis, const TiXmlNode&
 	
 	node->next = beforeThis;
 	node->prev = beforeThis->prev;
-	beforeThis->prev->next = node;
+	if ( beforeThis->prev )
+	{
+		beforeThis->prev->next = node;	
+	}
+	else
+	{
+		assert( firstChild == beforeThis );
+		firstChild = node;
+	}
 	beforeThis->prev = node;
 	return node;
 }
@@ -168,7 +177,7 @@ TiXmlNode* TiXmlNode::InsertBeforeChild( TiXmlNode* beforeThis, const TiXmlNode&
 
 TiXmlNode* TiXmlNode::InsertAfterChild( TiXmlNode* afterThis, const TiXmlNode& addThis )
 {
-	if ( afterThis->parent != this )
+	if ( !afterThis || afterThis->parent != this )
 		return 0;
 	
 	TiXmlNode* node = addThis.Clone();
@@ -178,7 +187,15 @@ TiXmlNode* TiXmlNode::InsertAfterChild( TiXmlNode* afterThis, const TiXmlNode& a
 	
 	node->prev = afterThis;
 	node->next = afterThis->next;
-	afterThis->next->prev = node;
+	if ( afterThis->next )
+	{
+		afterThis->next->prev = node;
+	}
+	else
+	{
+		assert( lastChild == afterThis );
+		lastChild = node;
+	}
 	afterThis->next = node;
 	return node;
 }
@@ -611,11 +628,11 @@ bool TiXmlDocument::SaveFile() const
 
 
 bool TiXmlDocument::LoadFile( const std::string& filename )
-{	
+{
 	// Delete the existing data:
 	Clear();
 	value = filename;
-	
+
 	FILE* file = fopen( filename.c_str(), "r" );
 
 	if ( file )
@@ -625,6 +642,13 @@ bool TiXmlDocument::LoadFile( const std::string& filename )
 		fseek( file, 0, SEEK_END );
 		length = ftell( file );
 		fseek( file, 0, SEEK_SET );
+
+		// Strange case, but good to handle up front.
+		if ( length == 0 )
+		{
+			fclose( file );
+			return false;
+   		}
 
 		// If we have a file, assume it is all one big XML file, and read it in.
 		// The document parser may decide the document ends sooner than the entire file, however.
