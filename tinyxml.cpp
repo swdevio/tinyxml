@@ -29,6 +29,7 @@ distribution.
 #include <sstream>
 #endif
 
+
 bool TiXmlBase::condenseWhiteSpace = true;
 
 void TiXmlBase::PutString( const TIXML_STRING& str, TIXML_OSTREAM* stream )
@@ -44,7 +45,7 @@ void TiXmlBase::PutString( const TIXML_STRING& str, TIXML_STRING* outString )
 
 	while( i<(int)str.length() )
 	{
-		int c = str[i];
+		unsigned char c = (unsigned char) str[i];
 
 		if (    c == '&' 
 		     && i < ( (int)str.length() - 2 )
@@ -87,10 +88,10 @@ void TiXmlBase::PutString( const TIXML_STRING& str, TIXML_STRING* outString )
 			outString->append( entity[4].str, entity[4].strLength );
 			++i;
 		}
-		else if ( c < 32 || c > 126 )
+		else if ( c < 32 )
 		{
 			// Easy pass at non-alpha/numeric/symbol
-			// 127 is the delete key. Below 32 is symbolic.
+			// Below 32 is symbolic.
 			char buf[ 32 ];
 			sprintf( buf, "&#x%02X;", (unsigned) ( c & 0xff ) );
 			outString->append( buf, strlen( buf ) );
@@ -98,8 +99,13 @@ void TiXmlBase::PutString( const TIXML_STRING& str, TIXML_STRING* outString )
 		}
 		else
 		{
-			char realc = (char) c;
-			outString->append( &realc, 1 );
+			// Assume everthing else is unicode. c should never actually 
+			// be out of the range of 0-255. Else something has gone strange.
+			assert( c > 0 && c < 256 );
+
+			//char realc = (char) c;
+			//outString->append( &realc, 1 );
+			*outString += (char) c;	// somewhat more efficient function call.
 			++i;
 		}
 	}
@@ -124,7 +130,7 @@ TiXmlBase::StringToBuffer::~StringToBuffer()
 // End strange bug fix. -->
 
 
-TiXmlNode::TiXmlNode( NodeType _type )
+TiXmlNode::TiXmlNode( NodeType _type ) : TiXmlBase()
 {
 	parent = 0;
 	type = _type;
@@ -132,7 +138,6 @@ TiXmlNode::TiXmlNode( NodeType _type )
 	lastChild = 0;
 	prev = 0;
 	next = 0;
-	userData = 0;
 }
 
 
@@ -456,6 +461,7 @@ TiXmlElement::TiXmlElement (const char * _value)
 	value = _value;
 }
 
+
 TiXmlElement::~TiXmlElement()
 {
 	while( attributeSet.First() )
@@ -529,6 +535,14 @@ void TiXmlElement::SetAttribute( const char * name, int val )
 {	
 	char buf[64];
 	sprintf( buf, "%d", val );
+	SetAttribute( name, buf );
+}
+
+
+void TiXmlElement::SetDoubleAttribute( const char * name, double val )
+{	
+	char buf[128];
+	sprintf( buf, "%f", val );
 	SetAttribute( name, buf );
 }
 
@@ -838,8 +852,8 @@ void TiXmlAttribute::Print( FILE* cfile, int /*depth*/ ) const
 {
 	TIXML_STRING n, v;
 
-	PutString( Name(), &n );
-	PutString( Value(), &v );
+	PutString( name, &n );
+	PutString( value, &v );
 
 	if (value.find ('\"') == TIXML_STRING::npos)
 		fprintf (cfile, "%s=\"%s\"", n.c_str(), v.c_str() );
@@ -916,7 +930,8 @@ void TiXmlComment::Print( FILE* cfile, int depth ) const
 void TiXmlComment::StreamOut( TIXML_OSTREAM * stream ) const
 {
 	(*stream) << "<!--";
-	PutString( value, stream );
+	//PutString( value, stream );
+	(*stream) << value;
 	(*stream) << "-->";
 }
 
@@ -1027,13 +1042,14 @@ void TiXmlUnknown::Print( FILE* cfile, int depth ) const
 {
 	for ( int i=0; i<depth; i++ )
 		fprintf( cfile, "    " );
-	fprintf( cfile, "%s", value.c_str() );
+	fprintf( cfile, "<%s>", value.c_str() );
 }
 
 void TiXmlUnknown::StreamOut( TIXML_OSTREAM * stream ) const
 {
-	(*stream) << "<" << value << ">";		// Don't use entities hear! It is unknown.
+	(*stream) << "<" << value << ">";		// Don't use entities here! It is unknown.
 }
+
 
 TiXmlNode* TiXmlUnknown::Clone() const
 {
