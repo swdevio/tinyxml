@@ -34,670 +34,687 @@
 00026 <font class="preprocessor">#ifndef TINYXML_INCLUDED</font>
 00027 <font class="preprocessor"></font><font class="preprocessor">#define TINYXML_INCLUDED</font>
 00028 <font class="preprocessor"></font>
-00029 <font class="preprocessor">#pragma warning( disable : 4530 )</font>
-00030 <font class="preprocessor"></font><font class="preprocessor">#pragma warning( disable : 4786 )</font>
-00031 <font class="preprocessor"></font>
-00032 <font class="preprocessor">#include &lt;ctype.h&gt;</font>
-00033 <font class="preprocessor">#include &lt;stdio.h&gt;</font>
-00034 <font class="preprocessor">#include &lt;stdlib.h&gt;</font>
-00035 <font class="preprocessor">#include &lt;string.h&gt;</font>
-00036 <font class="preprocessor">#include &lt;assert.h&gt;</font>
-00037 
-00038 <font class="comment">// Help out windows:</font>
-00039 <font class="preprocessor">#if defined( _DEBUG ) &amp;&amp; !defined( DEBUG )</font>
-00040 <font class="preprocessor"></font><font class="preprocessor">#define DEBUG</font>
-00041 <font class="preprocessor"></font><font class="preprocessor">#endif</font>
-00042 <font class="preprocessor"></font>
-00043 <font class="preprocessor">#if defined( DEBUG ) &amp;&amp; defined( _MSC_VER )</font>
-00044 <font class="preprocessor"></font><font class="preprocessor">#include &lt;windows.h&gt;</font>
-00045 <font class="preprocessor">#define TIXML_LOG OutputDebugString</font>
-00046 <font class="preprocessor"></font><font class="preprocessor">#else</font>
-00047 <font class="preprocessor"></font><font class="preprocessor">#define TIXML_LOG printf</font>
-00048 <font class="preprocessor"></font><font class="preprocessor">#endif</font>
-00049 <font class="preprocessor"></font>
-00050 
-00051 <font class="preprocessor">#ifdef TIXML_USE_STL</font>
-00052 <font class="preprocessor"></font><font class="preprocessor">    #include &lt;string&gt;</font>
-00053 <font class="preprocessor">    #define TIXML_STRING    std::string</font>
-00054 <font class="preprocessor"></font><font class="preprocessor">    #define TIXML_ISTREAM   std::istream</font>
-00055 <font class="preprocessor"></font><font class="preprocessor">    #define TIXML_OSTREAM   std::ostream</font>
-00056 <font class="preprocessor"></font><font class="preprocessor">#else</font>
-00057 <font class="preprocessor"></font><font class="preprocessor">    #include "tinystr.h"</font>
-00058 <font class="preprocessor">    #define TIXML_STRING    TiXmlString</font>
-00059 <font class="preprocessor"></font><font class="preprocessor">    #define TIXML_OSTREAM   TiXmlOutStream</font>
-00060 <font class="preprocessor"></font><font class="preprocessor">#endif</font>
-00061 <font class="preprocessor"></font>
-00062 <font class="keyword">class </font><a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>;
-00063 <font class="keyword">class </font><a class="code" href="classTiXmlElement.html">TiXmlElement</a>;
-00064 <font class="keyword">class </font><a class="code" href="classTiXmlComment.html">TiXmlComment</a>;
-00065 <font class="keyword">class </font><a class="code" href="classTiXmlUnknown.html">TiXmlUnknown</a>;
-00066 <font class="keyword">class </font><a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>;
-00067 <font class="keyword">class </font><a class="code" href="classTiXmlText.html">TiXmlText</a>;
-00068 <font class="keyword">class </font><a class="code" href="classTiXmlDeclaration.html">TiXmlDeclaration</a>;
-00069 
-00070 
-<a name="l00093"></a><a class="code" href="classTiXmlBase.html">00093</a> <font class="keyword">class </font><a class="code" href="classTiXmlBase.html">TiXmlBase</a>
-00094 {
-00095     <font class="keyword">friend</font> <font class="keyword">class </font><a class="code" href="classTiXmlNode.html">TiXmlNode</a>;
-00096     <font class="keyword">friend</font> <font class="keyword">class </font><a class="code" href="classTiXmlElement.html">TiXmlElement</a>;
-00097     <font class="keyword">friend</font> <font class="keyword">class </font><a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>;
-00098 
-00099 <font class="keyword">public</font>:
-00100     TiXmlBase()<font class="keyword">                             </font>{}
-00101     <font class="keyword">virtual</font> ~TiXmlBase()<font class="keyword">                    </font>{}
-00102 
-00108     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font> = 0;
-00109 
-<a name="l00116"></a><a class="code" href="classTiXmlBase.html#d0">00116</a>     <font class="keyword">static</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#d0">SetCondenseWhiteSpace</a>( <font class="keywordtype">bool</font> condense )<font class="keyword">      </font>{ condenseWhiteSpace = condense; }
-00117 
-<a name="l00119"></a><a class="code" href="classTiXmlBase.html#d1">00119</a>     <font class="keyword">static</font> <font class="keywordtype">bool</font> <a class="code" href="classTiXmlBase.html#d1">IsWhiteSpaceCondensed</a>()<font class="keyword">                     </font>{ <font class="keywordflow">return</font> condenseWhiteSpace; }
-00120 
-00121 <font class="keyword">protected</font>:
+00029 <font class="preprocessor">#ifdef _MSC_VER</font>
+00030 <font class="preprocessor"></font><font class="preprocessor">#pragma warning( disable : 4530 )</font>
+00031 <font class="preprocessor"></font><font class="preprocessor">#pragma warning( disable : 4786 )</font>
+00032 <font class="preprocessor"></font><font class="preprocessor">#endif</font>
+00033 <font class="preprocessor"></font>
+00034 <font class="preprocessor">#include &lt;ctype.h&gt;</font>
+00035 <font class="preprocessor">#include &lt;stdio.h&gt;</font>
+00036 <font class="preprocessor">#include &lt;stdlib.h&gt;</font>
+00037 <font class="preprocessor">#include &lt;string.h&gt;</font>
+00038 <font class="preprocessor">#include &lt;assert.h&gt;</font>
+00039 
+00040 <font class="comment">// Help out windows:</font>
+00041 <font class="preprocessor">#if defined( _DEBUG ) &amp;&amp; !defined( DEBUG )</font>
+00042 <font class="preprocessor"></font><font class="preprocessor">#define DEBUG</font>
+00043 <font class="preprocessor"></font><font class="preprocessor">#endif</font>
+00044 <font class="preprocessor"></font>
+00045 <font class="preprocessor">#if defined( DEBUG ) &amp;&amp; defined( _MSC_VER )</font>
+00046 <font class="preprocessor"></font><font class="preprocessor">#include &lt;windows.h&gt;</font>
+00047 <font class="preprocessor">#define TIXML_LOG OutputDebugString</font>
+00048 <font class="preprocessor"></font><font class="preprocessor">#else</font>
+00049 <font class="preprocessor"></font><font class="preprocessor">#define TIXML_LOG printf</font>
+00050 <font class="preprocessor"></font><font class="preprocessor">#endif</font>
+00051 <font class="preprocessor"></font>
+00052 
+00053 <font class="preprocessor">#ifdef TIXML_USE_STL</font>
+00054 <font class="preprocessor"></font><font class="preprocessor">    #include &lt;string&gt;</font>
+00055 <font class="preprocessor">    #define TIXML_STRING    std::string</font>
+00056 <font class="preprocessor"></font><font class="preprocessor">    #define TIXML_ISTREAM   std::istream</font>
+00057 <font class="preprocessor"></font><font class="preprocessor">    #define TIXML_OSTREAM   std::ostream</font>
+00058 <font class="preprocessor"></font><font class="preprocessor">#else</font>
+00059 <font class="preprocessor"></font><font class="preprocessor">    #include "tinystr.h"</font>
+00060 <font class="preprocessor">    #define TIXML_STRING    TiXmlString</font>
+00061 <font class="preprocessor"></font><font class="preprocessor">    #define TIXML_OSTREAM   TiXmlOutStream</font>
+00062 <font class="preprocessor"></font><font class="preprocessor">#endif</font>
+00063 <font class="preprocessor"></font>
+00064 <font class="keyword">class </font><a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>;
+00065 <font class="keyword">class </font><a class="code" href="classTiXmlElement.html">TiXmlElement</a>;
+00066 <font class="keyword">class </font><a class="code" href="classTiXmlComment.html">TiXmlComment</a>;
+00067 <font class="keyword">class </font><a class="code" href="classTiXmlUnknown.html">TiXmlUnknown</a>;
+00068 <font class="keyword">class </font><a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>;
+00069 <font class="keyword">class </font><a class="code" href="classTiXmlText.html">TiXmlText</a>;
+00070 <font class="keyword">class </font><a class="code" href="classTiXmlDeclaration.html">TiXmlDeclaration</a>;
+00071 
+00072 
+<a name="l00095"></a><a class="code" href="classTiXmlBase.html">00095</a> <font class="keyword">class </font><a class="code" href="classTiXmlBase.html">TiXmlBase</a>
+00096 {
+00097     <font class="keyword">friend</font> <font class="keyword">class </font><a class="code" href="classTiXmlNode.html">TiXmlNode</a>;
+00098     <font class="keyword">friend</font> <font class="keyword">class </font><a class="code" href="classTiXmlElement.html">TiXmlElement</a>;
+00099     <font class="keyword">friend</font> <font class="keyword">class </font><a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>;
+00100 
+00101 <font class="keyword">public</font>:
+00102     TiXmlBase()<font class="keyword">                             </font>{}
+00103     <font class="keyword">virtual</font> ~TiXmlBase()<font class="keyword">                    </font>{}
+00104 
+00110     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font> = 0;
+00111 
+<a name="l00118"></a><a class="code" href="classTiXmlBase.html#d0">00118</a>     <font class="keyword">static</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#d0">SetCondenseWhiteSpace</a>( <font class="keywordtype">bool</font> condense )<font class="keyword">      </font>{ condenseWhiteSpace = condense; }
+00119 
+<a name="l00121"></a><a class="code" href="classTiXmlBase.html#d1">00121</a>     <font class="keyword">static</font> <font class="keywordtype">bool</font> <a class="code" href="classTiXmlBase.html#d1">IsWhiteSpaceCondensed</a>()<font class="keyword">                     </font>{ <font class="keywordflow">return</font> condenseWhiteSpace; }
 00122 
-00123     <font class="keyword">static</font> <font class="keyword">const</font> <font class="keywordtype">char</font>*  SkipWhiteSpace( <font class="keyword">const</font> <font class="keywordtype">char</font>* );
-00124     <font class="keyword">inline</font> <font class="keyword">static</font> <font class="keywordtype">bool</font>  IsWhiteSpace( <font class="keywordtype">int</font> c )<font class="keyword">       </font>{ <font class="keywordflow">return</font> ( isspace( c ) || c == <font class="charliteral">'\n'</font> || c == <font class="charliteral">'\r'</font> ); }
-00125 
-00126     <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut (TIXML_OSTREAM *) <font class="keyword">const</font> = 0;
+00123 <font class="keyword">protected</font>:
+00124 
+00125     <font class="keyword">static</font> <font class="keyword">const</font> <font class="keywordtype">char</font>*  SkipWhiteSpace( <font class="keyword">const</font> <font class="keywordtype">char</font>* );
+00126     <font class="keyword">inline</font> <font class="keyword">static</font> <font class="keywordtype">bool</font>  IsWhiteSpace( <font class="keywordtype">int</font> c )<font class="keyword">       </font>{ <font class="keywordflow">return</font> ( isspace( c ) || c == <font class="charliteral">'\n'</font> || c == <font class="charliteral">'\r'</font> ); }
 00127 
-00128     #ifdef TIXML_USE_STL
-00129         <font class="keyword">static</font> <font class="keywordtype">bool</font> StreamWhiteSpace( TIXML_ISTREAM * in, TIXML_STRING * tag );
-00130         <font class="keyword">static</font> <font class="keywordtype">bool</font> StreamTo( TIXML_ISTREAM * in, <font class="keywordtype">int</font> character, TIXML_STRING * tag );
-00131 <font class="preprocessor">    #endif</font>
-00132 <font class="preprocessor"></font>
-00133     <font class="comment">/*  Reads an XML name into the string provided. Returns</font>
-00134 <font class="comment">        a pointer just past the last character of the name,</font>
-00135 <font class="comment">        or 0 if the function has an error.</font>
-00136 <font class="comment">    */</font>
-00137     <font class="keyword">static</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* ReadName( <font class="keyword">const</font> <font class="keywordtype">char</font>* p, TIXML_STRING* name );
-00138 
-00139     <font class="comment">/*  Reads text. Returns a pointer past the given end tag.</font>
-00140 <font class="comment">        Wickedly complex options, but it keeps the (sensitive) code in one place.</font>
-00141 <font class="comment">    */</font>
-00142     <font class="keyword">static</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* ReadText(    <font class="keyword">const</font> <font class="keywordtype">char</font>* in,             <font class="comment">// where to start</font>
-00143                                     TIXML_STRING* text,         <font class="comment">// the string read</font>
-00144                                     <font class="keywordtype">bool</font> ignoreWhiteSpace,      <font class="comment">// whether to keep the white space</font>
-00145                                     <font class="keyword">const</font> <font class="keywordtype">char</font>* endTag,         <font class="comment">// what ends this text</font>
-00146                                     <font class="keywordtype">bool</font> ignoreCase );          <font class="comment">// whether to ignore case in the end tag</font>
-00147     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p ) = 0;
-00148 
-00149     <font class="comment">// If an entity has been found, transform it into a character.</font>
-00150     <font class="keyword">static</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* GetEntity( <font class="keyword">const</font> <font class="keywordtype">char</font>* in, <font class="keywordtype">char</font>* value );
-00151 
-00152     <font class="comment">// Get a character, while interpreting entities.</font>
-00153     <font class="keyword">inline</font> <font class="keyword">static</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* GetChar( <font class="keyword">const</font> <font class="keywordtype">char</font>* p, <font class="keywordtype">char</font>* value )<font class="keyword"></font>
-00154 <font class="keyword">    </font>{
-00155         assert( p );
-00156         <font class="keywordflow">if</font> ( *p == <font class="charliteral">'&amp;'</font> )
-00157         {
-00158             <font class="keywordflow">return</font> GetEntity( p, value );
-00159         }
-00160         <font class="keywordflow">else</font>
-00161         {
-00162             *value = *p;
-00163             <font class="keywordflow">return</font> p+1;
-00164         }
-00165     }
-00166 
-00167     <font class="comment">// Puts a string to a stream, expanding entities as it goes.</font>
-00168     <font class="comment">// Note this should not contian the '&lt;', '&gt;', etc, or they will be transformed into entities!</font>
-00169     <font class="keyword">static</font> <font class="keywordtype">void</font> PutString( <font class="keyword">const</font> TIXML_STRING&amp; str, TIXML_OSTREAM* out );
-00170 
-00171     <font class="keyword">static</font> <font class="keywordtype">void</font> PutString( <font class="keyword">const</font> TIXML_STRING&amp; str, TIXML_STRING* out );
+00128     <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut (TIXML_OSTREAM *) <font class="keyword">const</font> = 0;
+00129 
+00130     #ifdef TIXML_USE_STL
+00131         <font class="keyword">static</font> <font class="keywordtype">bool</font> StreamWhiteSpace( TIXML_ISTREAM * in, TIXML_STRING * tag );
+00132         <font class="keyword">static</font> <font class="keywordtype">bool</font> StreamTo( TIXML_ISTREAM * in, <font class="keywordtype">int</font> character, TIXML_STRING * tag );
+00133 <font class="preprocessor">    #endif</font>
+00134 <font class="preprocessor"></font>
+00135     <font class="comment">/*  Reads an XML name into the string provided. Returns</font>
+00136 <font class="comment">        a pointer just past the last character of the name,</font>
+00137 <font class="comment">        or 0 if the function has an error.</font>
+00138 <font class="comment">    */</font>
+00139     <font class="keyword">static</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* ReadName( <font class="keyword">const</font> <font class="keywordtype">char</font>* p, TIXML_STRING* name );
+00140 
+00141     <font class="comment">/*  Reads text. Returns a pointer past the given end tag.</font>
+00142 <font class="comment">        Wickedly complex options, but it keeps the (sensitive) code in one place.</font>
+00143 <font class="comment">    */</font>
+00144     <font class="keyword">static</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* ReadText(    <font class="keyword">const</font> <font class="keywordtype">char</font>* in,             <font class="comment">// where to start</font>
+00145                                     TIXML_STRING* text,         <font class="comment">// the string read</font>
+00146                                     <font class="keywordtype">bool</font> ignoreWhiteSpace,      <font class="comment">// whether to keep the white space</font>
+00147                                     <font class="keyword">const</font> <font class="keywordtype">char</font>* endTag,         <font class="comment">// what ends this text</font>
+00148                                     <font class="keywordtype">bool</font> ignoreCase );          <font class="comment">// whether to ignore case in the end tag</font>
+00149     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p ) = 0;
+00150 
+00151     <font class="comment">// If an entity has been found, transform it into a character.</font>
+00152     <font class="keyword">static</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* GetEntity( <font class="keyword">const</font> <font class="keywordtype">char</font>* in, <font class="keywordtype">char</font>* value );
+00153 
+00154     <font class="comment">// Get a character, while interpreting entities.</font>
+00155     <font class="keyword">inline</font> <font class="keyword">static</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* GetChar( <font class="keyword">const</font> <font class="keywordtype">char</font>* p, <font class="keywordtype">char</font>* value )<font class="keyword"></font>
+00156 <font class="keyword">    </font>{
+00157         assert( p );
+00158         <font class="keywordflow">if</font> ( *p == <font class="charliteral">'&amp;'</font> )
+00159         {
+00160             <font class="keywordflow">return</font> GetEntity( p, value );
+00161         }
+00162         <font class="keywordflow">else</font>
+00163         {
+00164             *value = *p;
+00165             <font class="keywordflow">return</font> p+1;
+00166         }
+00167     }
+00168 
+00169     <font class="comment">// Puts a string to a stream, expanding entities as it goes.</font>
+00170     <font class="comment">// Note this should not contian the '&lt;', '&gt;', etc, or they will be transformed into entities!</font>
+00171     <font class="keyword">static</font> <font class="keywordtype">void</font> PutString( <font class="keyword">const</font> TIXML_STRING&amp; str, TIXML_OSTREAM* out );
 00172 
-00173     <font class="comment">// Return true if the next characters in the stream are any of the endTag sequences.</font>
-00174     <font class="keywordtype">bool</font> <font class="keyword">static</font> StringEqual(    <font class="keyword">const</font> <font class="keywordtype">char</font>* p,
-00175                                 <font class="keyword">const</font> <font class="keywordtype">char</font>* endTag,
-00176                                 <font class="keywordtype">bool</font> ignoreCase );
-00177 
-00178 
-00179     <font class="keyword">enum</font>
-00180     {
-00181         TIXML_NO_ERROR = 0,
-00182         TIXML_ERROR,
-00183         TIXML_ERROR_OPENING_FILE,
-00184         TIXML_ERROR_OUT_OF_MEMORY,
-00185         TIXML_ERROR_PARSING_ELEMENT,
-00186         TIXML_ERROR_FAILED_TO_READ_ELEMENT_NAME,
-00187         TIXML_ERROR_READING_ELEMENT_VALUE,
-00188         TIXML_ERROR_READING_ATTRIBUTES,
-00189         TIXML_ERROR_PARSING_EMPTY,
-00190         TIXML_ERROR_READING_END_TAG,
-00191         TIXML_ERROR_PARSING_UNKNOWN,
-00192         TIXML_ERROR_PARSING_COMMENT,
-00193         TIXML_ERROR_PARSING_DECLARATION,
-00194         TIXML_ERROR_DOCUMENT_EMPTY,
-00195 
-00196         TIXML_ERROR_STRING_COUNT
-00197     };
-00198     <font class="keyword">static</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* errorString[ TIXML_ERROR_STRING_COUNT ];
-00199 
-00200 <font class="keyword">private</font>:
-00201     <font class="keyword">struct </font>Entity
-00202     {
-00203         <font class="keyword">const</font> <font class="keywordtype">char</font>*     str;
-00204         <font class="keywordtype">unsigned</font> <font class="keywordtype">int</font>    strLength;
-00205         <font class="keywordtype">char</font>            chr;
-00206     };
-00207     <font class="keyword">enum</font>
-00208     {
-00209         NUM_ENTITY = 5,
-00210         MAX_ENTITY_LENGTH = 6
-00211 
-00212     };
-00213     <font class="keyword">static</font> Entity entity[ NUM_ENTITY ];
-00214     <font class="keyword">static</font> <font class="keywordtype">bool</font> condenseWhiteSpace;
-00215 };
-00216 
-00217 
-<a name="l00224"></a><a class="code" href="classTiXmlNode.html">00224</a> <font class="keyword">class </font><a class="code" href="classTiXmlNode.html">TiXmlNode</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlBase.html">TiXmlBase</a>
-00225 {
-00226     <font class="keyword">friend</font> <font class="keyword">class </font><a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>;
-00227     <font class="keyword">friend</font> <font class="keyword">class </font><a class="code" href="classTiXmlElement.html">TiXmlElement</a>;
-00228 
-00229 <font class="keyword">public</font>:
-00230 <font class="preprocessor">    #ifdef TIXML_USE_STL    </font>
-00231 <font class="preprocessor"></font>
-00235         <font class="keyword">friend</font> std::istream&amp; <a class="code" href="classTiXmlNode.html#l2">operator &gt;&gt; </a>(std::istream&amp; in, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; base);
-00236 
-00252         <font class="keyword">friend</font> std::ostream &amp; <a class="code" href="classTiXmlNode.html#l3">operator&lt;&lt; </a>(std::ostream&amp; out, <font class="keyword">const</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; base);
-00253 
-00254 <font class="preprocessor">    #else</font>
-00255 <font class="preprocessor"></font>        <font class="comment">// Used internally, not part of the public API.</font>
-00256         <font class="keyword">friend</font> TIXML_OSTREAM&amp; <a class="code" href="classTiXmlNode.html#l3">operator&lt;&lt; </a>(TIXML_OSTREAM&amp; out, <font class="keyword">const</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; base);
-00257 <font class="preprocessor">    #endif</font>
-00258 <font class="preprocessor"></font>
-<a name="l00262"></a><a class="code" href="classTiXmlNode.html#s7">00262</a>     <font class="keyword">enum</font> NodeType
-00263     {
-00264         DOCUMENT,
-00265         ELEMENT,
-00266         COMMENT,
-00267         UNKNOWN,
-00268         TEXT,
-00269         DECLARATION,
-00270         TYPECOUNT
-00271     };
-00272 
-00273     <font class="keyword">virtual</font> ~TiXmlNode();
+00173     <font class="keyword">static</font> <font class="keywordtype">void</font> PutString( <font class="keyword">const</font> TIXML_STRING&amp; str, TIXML_STRING* out );
+00174 
+00175     <font class="comment">// Return true if the next characters in the stream are any of the endTag sequences.</font>
+00176     <font class="keywordtype">bool</font> <font class="keyword">static</font> StringEqual(    <font class="keyword">const</font> <font class="keywordtype">char</font>* p,
+00177                                 <font class="keyword">const</font> <font class="keywordtype">char</font>* endTag,
+00178                                 <font class="keywordtype">bool</font> ignoreCase );
+00179 
+00180 
+00181     <font class="keyword">enum</font>
+00182     {
+00183         TIXML_NO_ERROR = 0,
+00184         TIXML_ERROR,
+00185         TIXML_ERROR_OPENING_FILE,
+00186         TIXML_ERROR_OUT_OF_MEMORY,
+00187         TIXML_ERROR_PARSING_ELEMENT,
+00188         TIXML_ERROR_FAILED_TO_READ_ELEMENT_NAME,
+00189         TIXML_ERROR_READING_ELEMENT_VALUE,
+00190         TIXML_ERROR_READING_ATTRIBUTES,
+00191         TIXML_ERROR_PARSING_EMPTY,
+00192         TIXML_ERROR_READING_END_TAG,
+00193         TIXML_ERROR_PARSING_UNKNOWN,
+00194         TIXML_ERROR_PARSING_COMMENT,
+00195         TIXML_ERROR_PARSING_DECLARATION,
+00196         TIXML_ERROR_DOCUMENT_EMPTY,
+00197 
+00198         TIXML_ERROR_STRING_COUNT
+00199     };
+00200     <font class="keyword">static</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* errorString[ TIXML_ERROR_STRING_COUNT ];
+00201 
+00202 <font class="keyword">private</font>:
+00203     <font class="keyword">struct </font>Entity
+00204     {
+00205         <font class="keyword">const</font> <font class="keywordtype">char</font>*     str;
+00206         <font class="keywordtype">unsigned</font> <font class="keywordtype">int</font>    strLength;
+00207         <font class="keywordtype">char</font>            chr;
+00208     };
+00209     <font class="keyword">enum</font>
+00210     {
+00211         NUM_ENTITY = 5,
+00212         MAX_ENTITY_LENGTH = 6
+00213 
+00214     };
+00215     <font class="keyword">static</font> Entity entity[ NUM_ENTITY ];
+00216     <font class="keyword">static</font> <font class="keywordtype">bool</font> condenseWhiteSpace;
+00217 };
+00218 
+00219 
+<a name="l00226"></a><a class="code" href="classTiXmlNode.html">00226</a> <font class="keyword">class </font><a class="code" href="classTiXmlNode.html">TiXmlNode</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlBase.html">TiXmlBase</a>
+00227 {
+00228     <font class="keyword">friend</font> <font class="keyword">class </font><a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>;
+00229     <font class="keyword">friend</font> <font class="keyword">class </font><a class="code" href="classTiXmlElement.html">TiXmlElement</a>;
+00230 
+00231 <font class="keyword">public</font>:
+00232 <font class="preprocessor">    #ifdef TIXML_USE_STL    </font>
+00233 <font class="preprocessor"></font>
+00237         <font class="keyword">friend</font> std::istream&amp; <a class="code" href="classTiXmlNode.html#l2">operator &gt;&gt; </a>(std::istream&amp; in, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; base);
+00238 
+00254         <font class="keyword">friend</font> std::ostream &amp; <a class="code" href="classTiXmlNode.html#l3">operator&lt;&lt; </a>(std::ostream&amp; out, <font class="keyword">const</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; base);
+00255 
+00256 <font class="preprocessor">    #else</font>
+00257 <font class="preprocessor"></font>        <font class="comment">// Used internally, not part of the public API.</font>
+00258         <font class="keyword">friend</font> TIXML_OSTREAM&amp; <a class="code" href="classTiXmlNode.html#l3">operator&lt;&lt; </a>(TIXML_OSTREAM&amp; out, <font class="keyword">const</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; base);
+00259 <font class="preprocessor">    #endif</font>
+00260 <font class="preprocessor"></font>
+<a name="l00264"></a><a class="code" href="classTiXmlNode.html#s7">00264</a>     <font class="keyword">enum</font> NodeType
+00265     {
+00266         DOCUMENT,
+00267         ELEMENT,
+00268         COMMENT,
+00269         UNKNOWN,
+00270         TEXT,
+00271         DECLARATION,
+00272         TYPECOUNT
+00273     };
 00274 
-<a name="l00287"></a><a class="code" href="classTiXmlNode.html#a1">00287</a>     <font class="keyword">const</font> <font class="keywordtype">char</font> * <a class="code" href="classTiXmlNode.html#a1">Value</a> ()<font class="keyword"> const </font>{ <font class="keywordflow">return</font> value.c_str (); }
-00288 
-<a name="l00298"></a><a class="code" href="classTiXmlNode.html#a2">00298</a>     <font class="keywordtype">void</font> <a class="code" href="classTiXmlNode.html#a2">SetValue</a> (<font class="keyword">const</font> <font class="keywordtype">char</font> * _value)<font class="keyword"> </font>{ value = _value;}
-00299 
-00300 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
-<a name="l00301"></a><a class="code" href="classTiXmlNode.html#a3">00301</a> <font class="preprocessor"></font>    <font class="keywordtype">void</font> <a class="code" href="classTiXmlNode.html#a2">SetValue</a>( <font class="keyword">const</font> std::string&amp; value )<font class="keyword">    </font>{    <a class="code" href="classTiXmlNode.html#a2">SetValue</a> (value . c_str ());      }   
-00302 <font class="preprocessor">    #endif</font>
-00303 <font class="preprocessor"></font>
-00305     <font class="keywordtype">void</font> <a class="code" href="classTiXmlNode.html#a4">Clear</a>();
-00306 
-<a name="l00308"></a><a class="code" href="classTiXmlNode.html#a5">00308</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a5">Parent</a>()<font class="keyword"> const                   </font>{ <font class="keywordflow">return</font> parent; }
-00309 
-<a name="l00310"></a><a class="code" href="classTiXmlNode.html#a6">00310</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a6">FirstChild</a>()<font class="keyword"> const   </font>{ <font class="keywordflow">return</font> firstChild; }      
-00311     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a6">FirstChild</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * value ) <font class="keyword">const</font>;          
-00312 
-00313     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a9">LastChild</a>()<font class="keyword"> const    </font>{ <font class="keywordflow">return</font> lastChild; }       
-00314     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a9">LastChild</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * value ) <font class="keyword">const</font>;           
-00315 
-00316     #ifdef TIXML_USE_STL
-<a name="l00317"></a><a class="code" href="classTiXmlNode.html#a10">00317</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a6">FirstChild</a>( <font class="keyword">const</font> std::string&amp; value )<font class="keyword"> const </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a6">FirstChild</a> (value . c_str ());   }   
-<a name="l00318"></a><a class="code" href="classTiXmlNode.html#a11">00318</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a9">LastChild</a>( <font class="keyword">const</font> std::string&amp; value )<font class="keyword"> const  </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a9">LastChild</a> (value . c_str ());    }   
-00319 <font class="preprocessor">    #endif</font>
-00320 <font class="preprocessor"></font>
-00337     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a12">IterateChildren</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) <font class="keyword">const</font>;
-00338 
-00340     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a12">IterateChildren</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * value, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) <font class="keyword">const</font>;
-00341 
-00342     #ifdef TIXML_USE_STL
-<a name="l00343"></a><a class="code" href="classTiXmlNode.html#a14">00343</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a12">IterateChildren</a>( <font class="keyword">const</font> std::string&amp; value, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous )<font class="keyword"> const   </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a12">IterateChildren</a> (value . c_str (), previous);    }   
-00344 <font class="preprocessor">    #endif</font>
-00345 <font class="preprocessor"></font>
-00349     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a15">InsertEndChild</a>( <font class="keyword">const</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; addThis );
-00350 
-00354     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a16">InsertBeforeChild</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* beforeThis, <font class="keyword">const</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; addThis );
-00355 
-00359     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a17">InsertAfterChild</a>(  <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* afterThis, <font class="keyword">const</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; addThis );
-00360 
-00364     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a18">ReplaceChild</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* replaceThis, <font class="keyword">const</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; withThis );
-00365 
-00367     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlNode.html#a19">RemoveChild</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* removeThis );
-00368 
-<a name="l00370"></a><a class="code" href="classTiXmlNode.html#a20">00370</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a20">PreviousSibling</a>()<font class="keyword"> const          </font>{ <font class="keywordflow">return</font> prev; }
-00371 
-00373     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a20">PreviousSibling</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * ) <font class="keyword">const</font>;
-00374 
-00375     #ifdef TIXML_USE_STL
-<a name="l00376"></a><a class="code" href="classTiXmlNode.html#a22">00376</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a20">PreviousSibling</a>( <font class="keyword">const</font> std::string&amp; value )<font class="keyword"> const    </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a20">PreviousSibling</a> (value . c_str ());  }   
-<a name="l00377"></a><a class="code" href="classTiXmlNode.html#a23">00377</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a24">NextSibling</a>( <font class="keyword">const</font> std::string&amp; value)<font class="keyword"> const </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a24">NextSibling</a> (value . c_str ());  }   
-00378 <font class="preprocessor">    #endif</font>
-00379 <font class="preprocessor"></font>
-<a name="l00381"></a><a class="code" href="classTiXmlNode.html#a24">00381</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a24">NextSibling</a>()<font class="keyword"> const              </font>{ <font class="keywordflow">return</font> next; }
-00382 
-00384     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a24">NextSibling</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * ) <font class="keyword">const</font>;
-00385 
-00390     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#a26">NextSiblingElement</a>() <font class="keyword">const</font>;
-00391 
-00396     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#a26">NextSiblingElement</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * ) <font class="keyword">const</font>;
-00397 
-00398     #ifdef TIXML_USE_STL
-<a name="l00399"></a><a class="code" href="classTiXmlNode.html#a28">00399</a>     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#a26">NextSiblingElement</a>( <font class="keyword">const</font> std::string&amp; value)<font class="keyword"> const   </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a26">NextSiblingElement</a> (value . c_str ());   }   
-00400 <font class="preprocessor">    #endif</font>
-00401 <font class="preprocessor"></font>
-00403     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#a29">FirstChildElement</a>()   <font class="keyword">const</font>;
-00404 
-00406     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#a29">FirstChildElement</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * value ) <font class="keyword">const</font>;
-00407 
-00408     #ifdef TIXML_USE_STL
-<a name="l00409"></a><a class="code" href="classTiXmlNode.html#a31">00409</a>     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#a29">FirstChildElement</a>( <font class="keyword">const</font> std::string&amp; value )<font class="keyword"> const   </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a29">FirstChildElement</a> (value . c_str ());    }   
-00410 <font class="preprocessor">    #endif</font>
-00411 <font class="preprocessor"></font>
-<a name="l00413"></a><a class="code" href="classTiXmlNode.html#a32">00413</a>     <font class="keyword">virtual</font> <font class="keywordtype">int</font> <a class="code" href="classTiXmlNode.html#a32">Type</a>()<font class="keyword"> const    </font>{ <font class="keywordflow">return</font> type; }
-00414 
-00418     <a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>* <a class="code" href="classTiXmlNode.html#a33">GetDocument</a>() <font class="keyword">const</font>;
-00419 
-<a name="l00421"></a><a class="code" href="classTiXmlNode.html#a34">00421</a>     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlNode.html#a34">NoChildren</a>()<font class="keyword"> const                     </font>{ <font class="keywordflow">return</font> !firstChild; }
-00422 
-<a name="l00423"></a><a class="code" href="classTiXmlNode.html#a35">00423</a>     <a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>* <a class="code" href="classTiXmlNode.html#a35">ToDocument</a>()<font class="keyword"> const       </font>{ <font class="keywordflow">return</font> ( <font class="keyword">this</font> &amp;&amp; type == DOCUMENT ) ? (<a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>*) <font class="keyword">this</font> : 0; } 
-<a name="l00424"></a><a class="code" href="classTiXmlNode.html#a36">00424</a>     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>*  <a class="code" href="classTiXmlNode.html#a36">ToElement</a>()<font class="keyword"> const        </font>{ <font class="keywordflow">return</font> ( <font class="keyword">this</font> &amp;&amp; type == ELEMENT  ) ? (<a class="code" href="classTiXmlElement.html">TiXmlElement</a>*)  <font class="keyword">this</font> : 0; } 
-<a name="l00425"></a><a class="code" href="classTiXmlNode.html#a37">00425</a>     <a class="code" href="classTiXmlComment.html">TiXmlComment</a>*  <a class="code" href="classTiXmlNode.html#a37">ToComment</a>()<font class="keyword"> const        </font>{ <font class="keywordflow">return</font> ( <font class="keyword">this</font> &amp;&amp; type == COMMENT  ) ? (<a class="code" href="classTiXmlComment.html">TiXmlComment</a>*)  <font class="keyword">this</font> : 0; } 
-<a name="l00426"></a><a class="code" href="classTiXmlNode.html#a38">00426</a>     <a class="code" href="classTiXmlUnknown.html">TiXmlUnknown</a>*  <a class="code" href="classTiXmlNode.html#a38">ToUnknown</a>()<font class="keyword"> const        </font>{ <font class="keywordflow">return</font> ( <font class="keyword">this</font> &amp;&amp; type == UNKNOWN  ) ? (<a class="code" href="classTiXmlUnknown.html">TiXmlUnknown</a>*)  <font class="keyword">this</font> : 0; } 
-<a name="l00427"></a><a class="code" href="classTiXmlNode.html#a39">00427</a>     <a class="code" href="classTiXmlText.html">TiXmlText</a>*     <a class="code" href="classTiXmlNode.html#a39">ToText</a>()    <font class="keyword">const</font>        { <font class="keywordflow">return</font> ( <font class="keyword">this</font> &amp;&amp; type == TEXT     ) ? (<a class="code" href="classTiXmlText.html">TiXmlText</a>*)     <font class="keyword">this</font> : 0; } 
-<a name="l00428"></a><a class="code" href="classTiXmlNode.html#a40">00428</a>     <a class="code" href="classTiXmlDeclaration.html">TiXmlDeclaration</a>* <a class="code" href="classTiXmlNode.html#a40">ToDeclaration</a>()<font class="keyword"> const </font>{ <font class="keywordflow">return</font> ( <font class="keyword">this</font> &amp;&amp; type == DECLARATION ) ? (<a class="code" href="classTiXmlDeclaration.html">TiXmlDeclaration</a>*) <font class="keyword">this</font> : 0; } 
-00429 
-00430     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font> = 0;
+00275     <font class="keyword">virtual</font> ~TiXmlNode();
+00276 
+<a name="l00289"></a><a class="code" href="classTiXmlNode.html#a1">00289</a>     <font class="keyword">const</font> <font class="keywordtype">char</font> * <a class="code" href="classTiXmlNode.html#a1">Value</a> ()<font class="keyword"> const </font>{ <font class="keywordflow">return</font> value.c_str (); }
+00290 
+<a name="l00300"></a><a class="code" href="classTiXmlNode.html#a2">00300</a>     <font class="keywordtype">void</font> <a class="code" href="classTiXmlNode.html#a2">SetValue</a> (<font class="keyword">const</font> <font class="keywordtype">char</font> * _value)<font class="keyword"> </font>{ value = _value;}
+00301 
+00302 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
+<a name="l00303"></a><a class="code" href="classTiXmlNode.html#a3">00303</a> <font class="preprocessor"></font>    <font class="keywordtype">void</font> <a class="code" href="classTiXmlNode.html#a2">SetValue</a>( <font class="keyword">const</font> std::string&amp; value )<font class="keyword">    </font>{    <a class="code" href="classTiXmlNode.html#a2">SetValue</a> (value . c_str ());      }   
+00304 <font class="preprocessor">    #endif</font>
+00305 <font class="preprocessor"></font>
+00307     <font class="keywordtype">void</font> <a class="code" href="classTiXmlNode.html#a4">Clear</a>();
+00308 
+<a name="l00310"></a><a class="code" href="classTiXmlNode.html#a5">00310</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a5">Parent</a>()<font class="keyword"> const                   </font>{ <font class="keywordflow">return</font> parent; }
+00311 
+<a name="l00312"></a><a class="code" href="classTiXmlNode.html#a6">00312</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a6">FirstChild</a>()<font class="keyword"> const   </font>{ <font class="keywordflow">return</font> firstChild; }      
+00313     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a6">FirstChild</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * value ) <font class="keyword">const</font>;          
+00314 
+00315     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a9">LastChild</a>()<font class="keyword"> const    </font>{ <font class="keywordflow">return</font> lastChild; }       
+00316     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a9">LastChild</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * value ) <font class="keyword">const</font>;           
+00317 
+00318     #ifdef TIXML_USE_STL
+<a name="l00319"></a><a class="code" href="classTiXmlNode.html#a10">00319</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a6">FirstChild</a>( <font class="keyword">const</font> std::string&amp; value )<font class="keyword"> const </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a6">FirstChild</a> (value . c_str ());   }   
+<a name="l00320"></a><a class="code" href="classTiXmlNode.html#a11">00320</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a9">LastChild</a>( <font class="keyword">const</font> std::string&amp; value )<font class="keyword"> const  </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a9">LastChild</a> (value . c_str ());    }   
+00321 <font class="preprocessor">    #endif</font>
+00322 <font class="preprocessor"></font>
+00339     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a12">IterateChildren</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) <font class="keyword">const</font>;
+00340 
+00342     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a12">IterateChildren</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * value, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) <font class="keyword">const</font>;
+00343 
+00344     #ifdef TIXML_USE_STL
+<a name="l00345"></a><a class="code" href="classTiXmlNode.html#a14">00345</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a12">IterateChildren</a>( <font class="keyword">const</font> std::string&amp; value, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous )<font class="keyword"> const   </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a12">IterateChildren</a> (value . c_str (), previous);    }   
+00346 <font class="preprocessor">    #endif</font>
+00347 <font class="preprocessor"></font>
+00351     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a15">InsertEndChild</a>( <font class="keyword">const</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; addThis );
+00352 
+00356     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a16">InsertBeforeChild</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* beforeThis, <font class="keyword">const</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; addThis );
+00357 
+00361     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a17">InsertAfterChild</a>(  <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* afterThis, <font class="keyword">const</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; addThis );
+00362 
+00366     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a18">ReplaceChild</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* replaceThis, <font class="keyword">const</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; withThis );
+00367 
+00369     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlNode.html#a19">RemoveChild</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* removeThis );
+00370 
+<a name="l00372"></a><a class="code" href="classTiXmlNode.html#a20">00372</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a20">PreviousSibling</a>()<font class="keyword"> const          </font>{ <font class="keywordflow">return</font> prev; }
+00373 
+00375     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a20">PreviousSibling</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * ) <font class="keyword">const</font>;
+00376 
+00377     #ifdef TIXML_USE_STL
+<a name="l00378"></a><a class="code" href="classTiXmlNode.html#a22">00378</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a20">PreviousSibling</a>( <font class="keyword">const</font> std::string&amp; value )<font class="keyword"> const    </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a20">PreviousSibling</a> (value . c_str ());  }   
+<a name="l00379"></a><a class="code" href="classTiXmlNode.html#a23">00379</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a24">NextSibling</a>( <font class="keyword">const</font> std::string&amp; value)<font class="keyword"> const </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a24">NextSibling</a> (value . c_str ());  }   
+00380 <font class="preprocessor">    #endif</font>
+00381 <font class="preprocessor"></font>
+<a name="l00383"></a><a class="code" href="classTiXmlNode.html#a24">00383</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a24">NextSibling</a>()<font class="keyword"> const              </font>{ <font class="keywordflow">return</font> next; }
+00384 
+00386     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a24">NextSibling</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * ) <font class="keyword">const</font>;
+00387 
+00392     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#a26">NextSiblingElement</a>() <font class="keyword">const</font>;
+00393 
+00398     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#a26">NextSiblingElement</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * ) <font class="keyword">const</font>;
+00399 
+00400     #ifdef TIXML_USE_STL
+<a name="l00401"></a><a class="code" href="classTiXmlNode.html#a28">00401</a>     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#a26">NextSiblingElement</a>( <font class="keyword">const</font> std::string&amp; value)<font class="keyword"> const   </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a26">NextSiblingElement</a> (value . c_str ());   }   
+00402 <font class="preprocessor">    #endif</font>
+00403 <font class="preprocessor"></font>
+00405     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#a29">FirstChildElement</a>()   <font class="keyword">const</font>;
+00406 
+00408     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#a29">FirstChildElement</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * value ) <font class="keyword">const</font>;
+00409 
+00410     #ifdef TIXML_USE_STL
+<a name="l00411"></a><a class="code" href="classTiXmlNode.html#a31">00411</a>     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#a29">FirstChildElement</a>( <font class="keyword">const</font> std::string&amp; value )<font class="keyword"> const   </font>{   <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a29">FirstChildElement</a> (value . c_str ());    }   
+00412 <font class="preprocessor">    #endif</font>
+00413 <font class="preprocessor"></font>
+<a name="l00415"></a><a class="code" href="classTiXmlNode.html#a32">00415</a>     <font class="keyword">virtual</font> <font class="keywordtype">int</font> <a class="code" href="classTiXmlNode.html#a32">Type</a>()<font class="keyword"> const    </font>{ <font class="keywordflow">return</font> type; }
+00416 
+00420     <a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>* <a class="code" href="classTiXmlNode.html#a33">GetDocument</a>() <font class="keyword">const</font>;
+00421 
+<a name="l00423"></a><a class="code" href="classTiXmlNode.html#a34">00423</a>     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlNode.html#a34">NoChildren</a>()<font class="keyword"> const                     </font>{ <font class="keywordflow">return</font> !firstChild; }
+00424 
+<a name="l00425"></a><a class="code" href="classTiXmlNode.html#a35">00425</a>     <a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>* <a class="code" href="classTiXmlNode.html#a35">ToDocument</a>()<font class="keyword"> const       </font>{ <font class="keywordflow">return</font> ( <font class="keyword">this</font> &amp;&amp; type == DOCUMENT ) ? (<a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>*) <font class="keyword">this</font> : 0; } 
+<a name="l00426"></a><a class="code" href="classTiXmlNode.html#a36">00426</a>     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>*  <a class="code" href="classTiXmlNode.html#a36">ToElement</a>()<font class="keyword"> const        </font>{ <font class="keywordflow">return</font> ( <font class="keyword">this</font> &amp;&amp; type == ELEMENT  ) ? (<a class="code" href="classTiXmlElement.html">TiXmlElement</a>*)  <font class="keyword">this</font> : 0; } 
+<a name="l00427"></a><a class="code" href="classTiXmlNode.html#a37">00427</a>     <a class="code" href="classTiXmlComment.html">TiXmlComment</a>*  <a class="code" href="classTiXmlNode.html#a37">ToComment</a>()<font class="keyword"> const        </font>{ <font class="keywordflow">return</font> ( <font class="keyword">this</font> &amp;&amp; type == COMMENT  ) ? (<a class="code" href="classTiXmlComment.html">TiXmlComment</a>*)  <font class="keyword">this</font> : 0; } 
+<a name="l00428"></a><a class="code" href="classTiXmlNode.html#a38">00428</a>     <a class="code" href="classTiXmlUnknown.html">TiXmlUnknown</a>*  <a class="code" href="classTiXmlNode.html#a38">ToUnknown</a>()<font class="keyword"> const        </font>{ <font class="keywordflow">return</font> ( <font class="keyword">this</font> &amp;&amp; type == UNKNOWN  ) ? (<a class="code" href="classTiXmlUnknown.html">TiXmlUnknown</a>*)  <font class="keyword">this</font> : 0; } 
+<a name="l00429"></a><a class="code" href="classTiXmlNode.html#a39">00429</a>     <a class="code" href="classTiXmlText.html">TiXmlText</a>*     <a class="code" href="classTiXmlNode.html#a39">ToText</a>()    <font class="keyword">const</font>        { <font class="keywordflow">return</font> ( <font class="keyword">this</font> &amp;&amp; type == TEXT     ) ? (<a class="code" href="classTiXmlText.html">TiXmlText</a>*)     <font class="keyword">this</font> : 0; } 
+<a name="l00430"></a><a class="code" href="classTiXmlNode.html#a40">00430</a>     <a class="code" href="classTiXmlDeclaration.html">TiXmlDeclaration</a>* <a class="code" href="classTiXmlNode.html#a40">ToDeclaration</a>()<font class="keyword"> const </font>{ <font class="keywordflow">return</font> ( <font class="keyword">this</font> &amp;&amp; type == DECLARATION ) ? (<a class="code" href="classTiXmlDeclaration.html">TiXmlDeclaration</a>*) <font class="keyword">this</font> : 0; } 
 00431 
-00432 <font class="keyword">protected</font>:
-00433     TiXmlNode( NodeType type );
-00434 
-00435 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
-00436 <font class="preprocessor"></font>        <font class="comment">// The real work of the input operator.</font>
-00437         <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM* in, TIXML_STRING* tag ) = 0;
-00438     #endif
+00432     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font> = 0;
+00433 
+00434     <font class="keywordtype">void</font>  SetUserData( <font class="keywordtype">void</font>* user )<font class="keyword">         </font>{ userData = user; }
+00435     <font class="keywordtype">void</font>* GetUserData()<font class="keyword">                     </font>{ <font class="keywordflow">return</font> userData; }
+00436 
+00437 <font class="keyword">protected</font>:
+00438     TiXmlNode( NodeType type );
 00439 
-00440     <font class="comment">// The node is passed in by ownership. This object will delete it.</font>
-00441     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* LinkEndChild( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* addThis );
-00442 
-00443     <font class="comment">// Figure out what is at *p, and parse it. Returns null if it is not an xml node.</font>
-00444     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Identify( <font class="keyword">const</font> <font class="keywordtype">char</font>* start );
-00445     <font class="keywordtype">void</font> CopyToClone( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* target )<font class="keyword"> const </font>{ target-&gt;<a class="code" href="classTiXmlNode.html#a2">SetValue</a> (value.c_str() ); }
-00446 
-00447     <font class="comment">// Internal Value function returning a TIXML_STRING</font>
-00448     TIXML_STRING SValue()<font class="keyword"> const </font>{ <font class="keywordflow">return</font> value ; }
-00449 
-00450     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>*      parent;
-00451     NodeType        type;
+00440 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
+00441 <font class="preprocessor"></font>        <font class="comment">// The real work of the input operator.</font>
+00442         <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM* in, TIXML_STRING* tag ) = 0;
+00443     #endif
+00444 
+00445     <font class="comment">// The node is passed in by ownership. This object will delete it.</font>
+00446     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* LinkEndChild( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* addThis );
+00447 
+00448     <font class="comment">// Figure out what is at *p, and parse it. Returns null if it is not an xml node.</font>
+00449     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Identify( <font class="keyword">const</font> <font class="keywordtype">char</font>* start );
+00450     <font class="keywordtype">void</font> CopyToClone( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* target )<font class="keyword"> const </font>{ target-&gt;<a class="code" href="classTiXmlNode.html#a2">SetValue</a> (value.c_str() );
+00451                                                   target-&gt;userData = userData; }
 00452 
-00453     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>*      firstChild;
-00454     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>*      lastChild;
+00453     <font class="comment">// Internal Value function returning a TIXML_STRING</font>
+00454     TIXML_STRING SValue()<font class="keyword"> const </font>{ <font class="keywordflow">return</font> value ; }
 00455 
-00456     TIXML_STRING    value;
-00457 
-00458     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>*      prev;
-00459     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>*      next;
-00460 };
+00456     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>*      parent;
+00457     NodeType        type;
+00458 
+00459     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>*      firstChild;
+00460     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>*      lastChild;
 00461 
-00462 
-<a name="l00472"></a><a class="code" href="classTiXmlAttribute.html">00472</a> <font class="keyword">class </font><a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlBase.html">TiXmlBase</a>
-00473 {
-00474     <font class="keyword">friend</font> <font class="keyword">class </font>TiXmlAttributeSet;
-00475 
-00476 <font class="keyword">public</font>:
-<a name="l00478"></a><a class="code" href="classTiXmlAttribute.html#a0">00478</a>     <a class="code" href="classTiXmlAttribute.html#a0">TiXmlAttribute</a>() : prev( 0 ), next( 0 ) {}
-00479 
-00480 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
-00481 <font class="preprocessor"></font>
-<a name="l00482"></a><a class="code" href="classTiXmlAttribute.html#a1">00482</a>     <a class="code" href="classTiXmlAttribute.html#a0">TiXmlAttribute</a>( <font class="keyword">const</font> std::string&amp; _name, <font class="keyword">const</font> std::string&amp; _value )<font class="keyword"></font>
-00483 <font class="keyword">    </font>{
-00484         name = _name . c_str ();
-00485         value = _value . c_str ();
-00486     }
-00487 <font class="preprocessor">    #endif</font>
+00462     TIXML_STRING    value;
+00463 
+00464     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>*      prev;
+00465     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>*      next;
+00466     <font class="keywordtype">void</font>*           userData;
+00467 };
+00468 
+00469 
+<a name="l00479"></a><a class="code" href="classTiXmlAttribute.html">00479</a> <font class="keyword">class </font><a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlBase.html">TiXmlBase</a>
+00480 {
+00481     <font class="keyword">friend</font> <font class="keyword">class </font>TiXmlAttributeSet;
+00482 
+00483 <font class="keyword">public</font>:
+<a name="l00485"></a><a class="code" href="classTiXmlAttribute.html#a0">00485</a>     <a class="code" href="classTiXmlAttribute.html#a0">TiXmlAttribute</a>() : prev( 0 ), next( 0 ) {}
+00486 
+00487 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
 00488 <font class="preprocessor"></font>
-<a name="l00490"></a><a class="code" href="classTiXmlAttribute.html#a2">00490</a>     <a class="code" href="classTiXmlAttribute.html#a0">TiXmlAttribute</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * _name, <font class="keyword">const</font> <font class="keywordtype">char</font> * _value ): name( _name ), value( _value ), prev( 0 ), next( 0 ) {}
-<a name="l00491"></a><a class="code" href="classTiXmlAttribute.html#a3">00491</a>     <font class="keyword">const</font> <font class="keywordtype">char</font>*     <a class="code" href="classTiXmlAttribute.html#a3">Name</a>()  <font class="keyword">const</font>       { <font class="keywordflow">return</font> name.c_str (); }       
-<a name="l00492"></a><a class="code" href="classTiXmlAttribute.html#a4">00492</a>     <font class="keyword">const</font> <font class="keywordtype">char</font>*     Value()<font class="keyword"> const       </font>{ <font class="keywordflow">return</font> value.c_str (); }      
-00493     <font class="keyword">const</font> <font class="keywordtype">int</font>       IntValue() <font class="keyword">const</font>;                                   
-00494     <font class="keyword">const</font> <font class="keywordtype">double</font>    DoubleValue() <font class="keyword">const</font>;                                
-00495 
-<a name="l00496"></a><a class="code" href="classTiXmlAttribute.html#a7">00496</a>     <font class="keywordtype">void</font> SetName( <font class="keyword">const</font> <font class="keywordtype">char</font>* _name )<font class="keyword">   </font>{ name = _name; }               
-<a name="l00497"></a><a class="code" href="classTiXmlAttribute.html#a8">00497</a>     <font class="keywordtype">void</font> SetValue( <font class="keyword">const</font> <font class="keywordtype">char</font>* _value )<font class="keyword"> </font>{ value = _value; }             
-00498 
-00499     <font class="keywordtype">void</font> SetIntValue( <font class="keywordtype">int</font> value );                                      
-00500     <font class="keywordtype">void</font> SetDoubleValue( <font class="keywordtype">double</font> value );                                
-00501 
-00502 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
-<a name="l00503"></a><a class="code" href="classTiXmlAttribute.html#a11">00503</a> <font class="preprocessor"></font>    <font class="keywordtype">void</font> SetName( <font class="keyword">const</font> std::string&amp; _name )<font class="keyword">    </font>{   SetName (_name . c_str ()); }   
-<a name="l00504"></a><a class="code" href="classTiXmlAttribute.html#a12">00504</a>     <font class="keywordtype">void</font> SetValue( <font class="keyword">const</font> std::string&amp; _value )<font class="keyword">  </font>{   SetValue (_value . c_str ());   }   
-00505 <font class="preprocessor">    #endif</font>
-00506 <font class="preprocessor"></font>
-00508     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* Next() <font class="keyword">const</font>;
-00510     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* Previous() <font class="keyword">const</font>;
-00511 
-00512     <font class="keywordtype">bool</font> <font class="keyword">operator</font>==( <font class="keyword">const</font> <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>&amp; rhs )<font class="keyword"> const </font>{ <font class="keywordflow">return</font> rhs.name == name; }
-00513     <font class="keywordtype">bool</font> operator&lt;( <font class="keyword">const</font> <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>&amp; rhs )  <font class="keyword">const</font> { <font class="keywordflow">return</font> name &lt; rhs.name; }
-00514     <font class="keywordtype">bool</font> <font class="keyword">operator</font>&gt;( <font class="keyword">const</font> <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>&amp; rhs )  <font class="keyword">const</font> { <font class="keywordflow">return</font> name &gt; rhs.name; }
-00515 
-00516     <font class="comment">/*  [internal use]</font>
-00517 <font class="comment">        Attribtue parsing starts: first letter of the name</font>
-00518 <font class="comment">                         returns: the next char after the value end quote</font>
-00519 <font class="comment">    */</font>
-00520     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
-00521 
-00522     <font class="comment">// [internal use]</font>
-00523     <font class="keyword">virtual</font> <font class="keywordtype">void</font> Print( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font>;
-00524 
-00525     <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut( TIXML_OSTREAM * out ) <font class="keyword">const</font>;
-00526     <font class="comment">// [internal use]</font>
-00527     <font class="comment">// Set the document pointer so the attribute can report errors.</font>
-00528     <font class="keywordtype">void</font> SetDocument( <a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>* doc )<font class="keyword">  </font>{ document = doc; }
-00529 
-00530 <font class="keyword">private</font>:
-00531     <a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>*  document;   <font class="comment">// A pointer back to a document, for error reporting.</font>
-00532     TIXML_STRING name;
-00533     TIXML_STRING value;
-00534     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* prev;
-00535     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* next;
-00536 };
-00537 
-00538 
-00539 <font class="comment">/*  A class used to manage a group of attributes.</font>
-00540 <font class="comment">    It is only used internally, both by the ELEMENT and the DECLARATION.</font>
-00541 <font class="comment">    </font>
-00542 <font class="comment">    The set can be changed transparent to the Element and Declaration</font>
-00543 <font class="comment">    classes that use it, but NOT transparent to the Attribute</font>
-00544 <font class="comment">    which has to implement a next() and previous() method. Which makes</font>
-00545 <font class="comment">    it a bit problematic and prevents the use of STL.</font>
-00546 <font class="comment"></font>
-00547 <font class="comment">    This version is implemented with circular lists because:</font>
-00548 <font class="comment">        - I like circular lists</font>
-00549 <font class="comment">        - it demonstrates some independence from the (typical) doubly linked list.</font>
-00550 <font class="comment">*/</font>
-00551 <font class="keyword">class </font>TiXmlAttributeSet
-00552 {
-00553 <font class="keyword">public</font>:
-00554     TiXmlAttributeSet();
-00555     ~TiXmlAttributeSet();
-00556 
-00557     <font class="keywordtype">void</font> Add( <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* attribute );
-00558     <font class="keywordtype">void</font> Remove( <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* attribute );
-00559 
-00560     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* First()<font class="keyword"> const   </font>{ <font class="keywordflow">return</font> ( sentinel.next == &amp;sentinel ) ? 0 : sentinel.next; }
-00561     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* Last()  <font class="keyword">const</font>   { <font class="keywordflow">return</font> ( sentinel.prev == &amp;sentinel ) ? 0 : sentinel.prev; }
-00562     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* Find( <font class="keyword">const</font> <font class="keywordtype">char</font> * name ) <font class="keyword">const</font>;
+<a name="l00489"></a><a class="code" href="classTiXmlAttribute.html#a1">00489</a>     <a class="code" href="classTiXmlAttribute.html#a0">TiXmlAttribute</a>( <font class="keyword">const</font> std::string&amp; _name, <font class="keyword">const</font> std::string&amp; _value )<font class="keyword"></font>
+00490 <font class="keyword">    </font>{
+00491         name = _name . c_str ();
+00492         value = _value . c_str ();
+00493     }
+00494 <font class="preprocessor">    #endif</font>
+00495 <font class="preprocessor"></font>
+<a name="l00497"></a><a class="code" href="classTiXmlAttribute.html#a2">00497</a>     <a class="code" href="classTiXmlAttribute.html#a0">TiXmlAttribute</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * _name, <font class="keyword">const</font> <font class="keywordtype">char</font> * _value ): name( _name ), value( _value ), prev( 0 ), next( 0 ) {}
+<a name="l00498"></a><a class="code" href="classTiXmlAttribute.html#a3">00498</a>     <font class="keyword">const</font> <font class="keywordtype">char</font>*     <a class="code" href="classTiXmlAttribute.html#a3">Name</a>()  <font class="keyword">const</font>       { <font class="keywordflow">return</font> name.c_str (); }       
+<a name="l00499"></a><a class="code" href="classTiXmlAttribute.html#a4">00499</a>     <font class="keyword">const</font> <font class="keywordtype">char</font>*     Value()<font class="keyword"> const       </font>{ <font class="keywordflow">return</font> value.c_str (); }      
+00500     <font class="keyword">const</font> <font class="keywordtype">int</font>       IntValue() <font class="keyword">const</font>;                                   
+00501     <font class="keyword">const</font> <font class="keywordtype">double</font>    DoubleValue() <font class="keyword">const</font>;                                
+00502 
+<a name="l00503"></a><a class="code" href="classTiXmlAttribute.html#a7">00503</a>     <font class="keywordtype">void</font> SetName( <font class="keyword">const</font> <font class="keywordtype">char</font>* _name )<font class="keyword">   </font>{ name = _name; }               
+<a name="l00504"></a><a class="code" href="classTiXmlAttribute.html#a8">00504</a>     <font class="keywordtype">void</font> SetValue( <font class="keyword">const</font> <font class="keywordtype">char</font>* _value )<font class="keyword"> </font>{ value = _value; }             
+00505 
+00506     <font class="keywordtype">void</font> SetIntValue( <font class="keywordtype">int</font> value );                                      
+00507     <font class="keywordtype">void</font> SetDoubleValue( <font class="keywordtype">double</font> value );                                
+00508 
+00509 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
+<a name="l00510"></a><a class="code" href="classTiXmlAttribute.html#a11">00510</a> <font class="preprocessor"></font>    <font class="keywordtype">void</font> SetName( <font class="keyword">const</font> std::string&amp; _name )<font class="keyword">    </font>{   SetName (_name . c_str ()); }   
+<a name="l00511"></a><a class="code" href="classTiXmlAttribute.html#a12">00511</a>     <font class="keywordtype">void</font> SetValue( <font class="keyword">const</font> std::string&amp; _value )<font class="keyword">  </font>{   SetValue (_value . c_str ());   }   
+00512 <font class="preprocessor">    #endif</font>
+00513 <font class="preprocessor"></font>
+00515     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* Next() <font class="keyword">const</font>;
+00517     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* Previous() <font class="keyword">const</font>;
+00518 
+00519     <font class="keywordtype">bool</font> <font class="keyword">operator</font>==( <font class="keyword">const</font> <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>&amp; rhs )<font class="keyword"> const </font>{ <font class="keywordflow">return</font> rhs.name == name; }
+00520     <font class="keywordtype">bool</font> operator&lt;( <font class="keyword">const</font> <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>&amp; rhs )  <font class="keyword">const</font> { <font class="keywordflow">return</font> name &lt; rhs.name; }
+00521     <font class="keywordtype">bool</font> <font class="keyword">operator</font>&gt;( <font class="keyword">const</font> <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>&amp; rhs )  <font class="keyword">const</font> { <font class="keywordflow">return</font> name &gt; rhs.name; }
+00522 
+00523     <font class="comment">/*  [internal use]</font>
+00524 <font class="comment">        Attribtue parsing starts: first letter of the name</font>
+00525 <font class="comment">                         returns: the next char after the value end quote</font>
+00526 <font class="comment">    */</font>
+00527     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
+00528 
+00529     <font class="comment">// [internal use]</font>
+00530     <font class="keyword">virtual</font> <font class="keywordtype">void</font> Print( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font>;
+00531 
+00532     <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut( TIXML_OSTREAM * out ) <font class="keyword">const</font>;
+00533     <font class="comment">// [internal use]</font>
+00534     <font class="comment">// Set the document pointer so the attribute can report errors.</font>
+00535     <font class="keywordtype">void</font> SetDocument( <a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>* doc )<font class="keyword">  </font>{ document = doc; }
+00536 
+00537 <font class="keyword">private</font>:
+00538     <a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>*  document;   <font class="comment">// A pointer back to a document, for error reporting.</font>
+00539     TIXML_STRING name;
+00540     TIXML_STRING value;
+00541     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* prev;
+00542     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* next;
+00543 };
+00544 
+00545 
+00546 <font class="comment">/*  A class used to manage a group of attributes.</font>
+00547 <font class="comment">    It is only used internally, both by the ELEMENT and the DECLARATION.</font>
+00548 <font class="comment">    </font>
+00549 <font class="comment">    The set can be changed transparent to the Element and Declaration</font>
+00550 <font class="comment">    classes that use it, but NOT transparent to the Attribute</font>
+00551 <font class="comment">    which has to implement a next() and previous() method. Which makes</font>
+00552 <font class="comment">    it a bit problematic and prevents the use of STL.</font>
+00553 <font class="comment"></font>
+00554 <font class="comment">    This version is implemented with circular lists because:</font>
+00555 <font class="comment">        - I like circular lists</font>
+00556 <font class="comment">        - it demonstrates some independence from the (typical) doubly linked list.</font>
+00557 <font class="comment">*/</font>
+00558 <font class="keyword">class </font>TiXmlAttributeSet
+00559 {
+00560 <font class="keyword">public</font>:
+00561     TiXmlAttributeSet();
+00562     ~TiXmlAttributeSet();
 00563 
-00564 <font class="keyword">private</font>:
-00565     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a> sentinel;
-00566 };
-00567 
-00568 
-<a name="l00573"></a><a class="code" href="classTiXmlElement.html">00573</a> <font class="keyword">class</font> <a class="code" href="classTiXmlElement.html">TiXmlElement</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>
-00574 {
-00575 <font class="keyword">public</font>:
-00577     <a class="code" href="classTiXmlElement.html">TiXmlElement</a> (<font class="keyword">const</font> <font class="keywordtype">char</font> * in_value);
-00578 
-00579 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
-00580 <font class="preprocessor"></font>
-<a name="l00581"></a><a class="code" href="classTiXmlElement.html#a1">00581</a>     TiXmlElement( <font class="keyword">const</font> std::string&amp; _value ) :     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>::ELEMENT )
-00582     {
-00583         firstChild = lastChild = 0;
-00584         value = _value . c_str ();
-00585     }
-00586 <font class="preprocessor">    #endif</font>
+00564     <font class="keywordtype">void</font> Add( <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* attribute );
+00565     <font class="keywordtype">void</font> Remove( <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* attribute );
+00566 
+00567     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* First()<font class="keyword"> const   </font>{ <font class="keywordflow">return</font> ( sentinel.next == &amp;sentinel ) ? 0 : sentinel.next; }
+00568     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* Last()  <font class="keyword">const</font>   { <font class="keywordflow">return</font> ( sentinel.prev == &amp;sentinel ) ? 0 : sentinel.prev; }
+00569     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* Find( <font class="keyword">const</font> <font class="keywordtype">char</font> * name ) <font class="keyword">const</font>;
+00570 
+00571 <font class="keyword">private</font>:
+00572     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a> sentinel;
+00573 };
+00574 
+00575 
+<a name="l00580"></a><a class="code" href="classTiXmlElement.html">00580</a> <font class="keyword">class</font> <a class="code" href="classTiXmlElement.html">TiXmlElement</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>
+00581 {
+00582 <font class="keyword">public</font>:
+00584     <a class="code" href="classTiXmlElement.html">TiXmlElement</a> (<font class="keyword">const</font> <font class="keywordtype">char</font> * in_value);
+00585 
+00586 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
 00587 <font class="preprocessor"></font>
-00588     <font class="keyword">virtual</font> ~TiXmlElement();
-00589 
-00593     <font class="keyword">const</font> <font class="keywordtype">char</font> * Attribute( <font class="keyword">const</font> <font class="keywordtype">char</font> * name ) <font class="keyword">const</font>;
-00594 
-00598     <font class="keyword">const</font> <font class="keywordtype">char</font> * Attribute( <font class="keyword">const</font> <font class="keywordtype">char</font> * name, <font class="keywordtype">int</font> &amp; i ) <font class="keyword">const</font>;
-00599 
-00603     <font class="keywordtype">void</font> SetAttribute( <font class="keyword">const</font> <font class="keywordtype">char</font> * name, <font class="keyword">const</font> <font class="keywordtype">char</font> * value );
-00604 
-00605 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
-<a name="l00606"></a><a class="code" href="classTiXmlElement.html#a6">00606</a> <font class="preprocessor"></font>    <font class="keywordtype">void</font> SetAttribute( <font class="keyword">const</font> std::string&amp; name, <font class="keyword">const</font> std::string&amp; value )<font class="keyword">  </font>{   SetAttribute (name . c_str (), value . c_str ());   }   
-<a name="l00607"></a><a class="code" href="classTiXmlElement.html#a7">00607</a>     <font class="keywordtype">void</font> SetAttribute( <font class="keyword">const</font> std::string&amp; name, <font class="keywordtype">int</font> value )<font class="keyword"> </font>{   SetAttribute (name . c_str (), value);  }   
-00608 <font class="preprocessor">    #endif</font>
-00609 <font class="preprocessor"></font>
-00613     <font class="keywordtype">void</font> SetAttribute( <font class="keyword">const</font> <font class="keywordtype">char</font> * name, <font class="keywordtype">int</font> value );
-00614 
-00617     <font class="keywordtype">void</font> RemoveAttribute( <font class="keyword">const</font> <font class="keywordtype">char</font> * name );
-00618 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
-<a name="l00619"></a><a class="code" href="classTiXmlElement.html#a10">00619</a> <font class="preprocessor"></font>    <font class="keywordtype">void</font> RemoveAttribute( <font class="keyword">const</font> std::string&amp; name )<font class="keyword"> </font>{   RemoveAttribute (name . c_str ());  }   
-00620 <font class="preprocessor">    #endif</font>
-00621 <font class="preprocessor"></font>
-<a name="l00622"></a><a class="code" href="classTiXmlElement.html#a11">00622</a>     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* FirstAttribute()<font class="keyword"> const  </font>{ <font class="keywordflow">return</font> attributeSet.First(); }        
-<a name="l00623"></a><a class="code" href="classTiXmlElement.html#a12">00623</a>     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* LastAttribute()<font class="keyword"> const   </font>{ <font class="keywordflow">return</font> attributeSet.Last(); }     
-00624 
-00625     <font class="comment">// [internal use] Creates a new Element and returs it.</font>
-00626     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font>;
-00627     <font class="comment">// [internal use]</font>
-00628 
-00629     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font>;
-00630 
-00631 <font class="keyword">protected</font>:
-00632 
-00633     <font class="comment">// Used to be public [internal use]</font>
-00634     #ifdef TIXML_USE_STL
-00635         <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM * in, TIXML_STRING * tag );
-00636 <font class="preprocessor">    #endif</font>
-00637 <font class="preprocessor"></font>    <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut( TIXML_OSTREAM * out ) <font class="keyword">const</font>;
-00638 
-00639     <font class="comment">/*  [internal use]</font>
-00640 <font class="comment">        Attribtue parsing starts: next char past '&lt;'</font>
-00641 <font class="comment">                         returns: next char past '&gt;'</font>
-00642 <font class="comment">    */</font>
-00643     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
-00644 
-00645     <font class="comment">/*  [internal use]</font>
-00646 <font class="comment">        Reads the "value" of the element -- another element, or text.</font>
-00647 <font class="comment">        This should terminate with the current end tag.</font>
-00648 <font class="comment">    */</font>
-00649     <font class="keyword">const</font> <font class="keywordtype">char</font>* ReadValue( <font class="keyword">const</font> <font class="keywordtype">char</font>* in );
-00650 
-00651 <font class="keyword">private</font>:
-00652     TiXmlAttributeSet attributeSet;
-00653 };
-00654 
-00655 
-<a name="l00658"></a><a class="code" href="classTiXmlComment.html">00658</a> <font class="keyword">class </font><a class="code" href="classTiXmlComment.html">TiXmlComment</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>
-00659 {
-00660 <font class="keyword">public</font>:
-<a name="l00662"></a><a class="code" href="classTiXmlComment.html#a0">00662</a>     <a class="code" href="classTiXmlComment.html#a0">TiXmlComment</a>() : <a class="code" href="classTiXmlNode.html">TiXmlNode</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>::COMMENT ) {}
-00663     <font class="keyword">virtual</font> ~TiXmlComment()<font class="keyword"> </font>{}
-00664 
-00665     <font class="comment">// [internal use] Creates a new Element and returs it.</font>
-00666     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font>;
-00667     <font class="comment">// [internal use]</font>
-00668     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font>;
-00669 <font class="keyword">protected</font>:
-00670     <font class="comment">// used to be public</font>
-00671     #ifdef TIXML_USE_STL
-00672         <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM * in, TIXML_STRING * tag );
-00673 <font class="preprocessor">    #endif</font>
-00674 <font class="preprocessor"></font>    <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut( TIXML_OSTREAM * out ) <font class="keyword">const</font>;
-00675     <font class="comment">/*  [internal use]</font>
-00676 <font class="comment">        Attribtue parsing starts: at the ! of the !--</font>
-00677 <font class="comment">                         returns: next char past '&gt;'</font>
-00678 <font class="comment">    */</font>
-00679     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
-00680 };
-00681 
-00682 
-<a name="l00685"></a><a class="code" href="classTiXmlText.html">00685</a> <font class="keyword">class </font><a class="code" href="classTiXmlText.html">TiXmlText</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>
-00686 {
-00687     <font class="keyword">friend</font> <font class="keyword">class </font><a class="code" href="classTiXmlElement.html">TiXmlElement</a>;
-00688 <font class="keyword">public</font>:
-<a name="l00690"></a><a class="code" href="classTiXmlText.html#a0">00690</a>     <a class="code" href="classTiXmlText.html#a0">TiXmlText</a> (<font class="keyword">const</font> <font class="keywordtype">char</font> * initValue) : <a class="code" href="classTiXmlNode.html">TiXmlNode</a> (<a class="code" href="classTiXmlNode.html">TiXmlNode</a>::TEXT)
-00691     {
-00692         <a class="code" href="classTiXmlNode.html#a2">SetValue</a>( initValue );
-00693     }
-00694     <font class="keyword">virtual</font> ~TiXmlText()<font class="keyword"> </font>{}
-00695 
-00696 <font class="preprocessor">#ifdef TIXML_USE_STL</font>
-00697 <font class="preprocessor"></font>
-00698     <a class="code" href="classTiXmlText.html#a0">TiXmlText</a>( <font class="keyword">const</font> std::string&amp; initValue );
-00699 <font class="preprocessor">#endif</font>
-00700 <font class="preprocessor"></font>
-00701 <font class="keyword">protected</font> :
-00702     <font class="comment">// [internal use] Creates a new Element and returns it.</font>
-00703     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font>;
-00704     <font class="comment">// [internal use]</font>
-00705     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font>;
-00706     <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut ( TIXML_OSTREAM * out ) <font class="keyword">const</font>;
-00707     <font class="comment">// [internal use]</font>
-00708     <font class="keywordtype">bool</font> Blank() <font class="keyword">const</font>; <font class="comment">// returns true if all white space and new lines</font>
-00709     <font class="comment">/*  [internal use]</font>
-00710 <font class="comment">            Attribtue parsing starts: First char of the text</font>
-00711 <font class="comment">                             returns: next char past '&gt;'</font>
-00712 <font class="comment">        */</font>
-00713     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
+<a name="l00588"></a><a class="code" href="classTiXmlElement.html#a1">00588</a>     TiXmlElement( <font class="keyword">const</font> std::string&amp; _value ) :     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>::ELEMENT )
+00589     {
+00590         firstChild = lastChild = 0;
+00591         value = _value . c_str ();
+00592     }
+00593 <font class="preprocessor">    #endif</font>
+00594 <font class="preprocessor"></font>
+00595     <font class="keyword">virtual</font> ~TiXmlElement();
+00596 
+00600     <font class="keyword">const</font> <font class="keywordtype">char</font> * Attribute( <font class="keyword">const</font> <font class="keywordtype">char</font> * name ) <font class="keyword">const</font>;
+00601 
+00605     <font class="keyword">const</font> <font class="keywordtype">char</font> * Attribute( <font class="keyword">const</font> <font class="keywordtype">char</font> * name, <font class="keywordtype">int</font> &amp; i ) <font class="keyword">const</font>;
+00606 
+00610     <font class="keywordtype">void</font> SetAttribute( <font class="keyword">const</font> <font class="keywordtype">char</font> * name, <font class="keyword">const</font> <font class="keywordtype">char</font> * value );
+00611 
+00612 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
+<a name="l00613"></a><a class="code" href="classTiXmlElement.html#a6">00613</a> <font class="preprocessor"></font>    <font class="keywordtype">void</font> SetAttribute( <font class="keyword">const</font> std::string&amp; name, <font class="keyword">const</font> std::string&amp; value )<font class="keyword">  </font>{   SetAttribute (name . c_str (), value . c_str ());   }   
+<a name="l00614"></a><a class="code" href="classTiXmlElement.html#a7">00614</a>     <font class="keywordtype">void</font> SetAttribute( <font class="keyword">const</font> std::string&amp; name, <font class="keywordtype">int</font> value )<font class="keyword"> </font>{   SetAttribute (name . c_str (), value);  }   
+00615 <font class="preprocessor">    #endif</font>
+00616 <font class="preprocessor"></font>
+00620     <font class="keywordtype">void</font> SetAttribute( <font class="keyword">const</font> <font class="keywordtype">char</font> * name, <font class="keywordtype">int</font> value );
+00621 
+00624     <font class="keywordtype">void</font> RemoveAttribute( <font class="keyword">const</font> <font class="keywordtype">char</font> * name );
+00625 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
+<a name="l00626"></a><a class="code" href="classTiXmlElement.html#a10">00626</a> <font class="preprocessor"></font>    <font class="keywordtype">void</font> RemoveAttribute( <font class="keyword">const</font> std::string&amp; name )<font class="keyword"> </font>{   RemoveAttribute (name . c_str ());  }   
+00627 <font class="preprocessor">    #endif</font>
+00628 <font class="preprocessor"></font>
+<a name="l00629"></a><a class="code" href="classTiXmlElement.html#a11">00629</a>     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* FirstAttribute()<font class="keyword"> const  </font>{ <font class="keywordflow">return</font> attributeSet.First(); }        
+<a name="l00630"></a><a class="code" href="classTiXmlElement.html#a12">00630</a>     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* LastAttribute()<font class="keyword"> const   </font>{ <font class="keywordflow">return</font> attributeSet.Last(); }     
+00631 
+00632     <font class="comment">// [internal use] Creates a new Element and returs it.</font>
+00633     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font>;
+00634     <font class="comment">// [internal use]</font>
+00635 
+00636     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font>;
+00637 
+00638 <font class="keyword">protected</font>:
+00639 
+00640     <font class="comment">// Used to be public [internal use]</font>
+00641     #ifdef TIXML_USE_STL
+00642         <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM * in, TIXML_STRING * tag );
+00643 <font class="preprocessor">    #endif</font>
+00644 <font class="preprocessor"></font>    <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut( TIXML_OSTREAM * out ) <font class="keyword">const</font>;
+00645 
+00646     <font class="comment">/*  [internal use]</font>
+00647 <font class="comment">        Attribtue parsing starts: next char past '&lt;'</font>
+00648 <font class="comment">                         returns: next char past '&gt;'</font>
+00649 <font class="comment">    */</font>
+00650     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
+00651 
+00652     <font class="comment">/*  [internal use]</font>
+00653 <font class="comment">        Reads the "value" of the element -- another element, or text.</font>
+00654 <font class="comment">        This should terminate with the current end tag.</font>
+00655 <font class="comment">    */</font>
+00656     <font class="keyword">const</font> <font class="keywordtype">char</font>* ReadValue( <font class="keyword">const</font> <font class="keywordtype">char</font>* in );
+00657 
+00658 <font class="keyword">private</font>:
+00659     TiXmlAttributeSet attributeSet;
+00660 };
+00661 
+00662 
+<a name="l00665"></a><a class="code" href="classTiXmlComment.html">00665</a> <font class="keyword">class </font><a class="code" href="classTiXmlComment.html">TiXmlComment</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>
+00666 {
+00667 <font class="keyword">public</font>:
+<a name="l00669"></a><a class="code" href="classTiXmlComment.html#a0">00669</a>     <a class="code" href="classTiXmlComment.html#a0">TiXmlComment</a>() : <a class="code" href="classTiXmlNode.html">TiXmlNode</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>::COMMENT ) {}
+00670     <font class="keyword">virtual</font> ~TiXmlComment()<font class="keyword"> </font>{}
+00671 
+00672     <font class="comment">// [internal use] Creates a new Element and returs it.</font>
+00673     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font>;
+00674     <font class="comment">// [internal use]</font>
+00675     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font>;
+00676 <font class="keyword">protected</font>:
+00677     <font class="comment">// used to be public</font>
+00678     #ifdef TIXML_USE_STL
+00679         <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM * in, TIXML_STRING * tag );
+00680 <font class="preprocessor">    #endif</font>
+00681 <font class="preprocessor"></font>    <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut( TIXML_OSTREAM * out ) <font class="keyword">const</font>;
+00682     <font class="comment">/*  [internal use]</font>
+00683 <font class="comment">        Attribtue parsing starts: at the ! of the !--</font>
+00684 <font class="comment">                         returns: next char past '&gt;'</font>
+00685 <font class="comment">    */</font>
+00686     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
+00687 };
+00688 
+00689 
+<a name="l00692"></a><a class="code" href="classTiXmlText.html">00692</a> <font class="keyword">class </font><a class="code" href="classTiXmlText.html">TiXmlText</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>
+00693 {
+00694     <font class="keyword">friend</font> <font class="keyword">class </font><a class="code" href="classTiXmlElement.html">TiXmlElement</a>;
+00695 <font class="keyword">public</font>:
+<a name="l00697"></a><a class="code" href="classTiXmlText.html#a0">00697</a>     <a class="code" href="classTiXmlText.html#a0">TiXmlText</a> (<font class="keyword">const</font> <font class="keywordtype">char</font> * initValue) : <a class="code" href="classTiXmlNode.html">TiXmlNode</a> (<a class="code" href="classTiXmlNode.html">TiXmlNode</a>::TEXT)
+00698     {
+00699         <a class="code" href="classTiXmlNode.html#a2">SetValue</a>( initValue );
+00700     }
+00701     <font class="keyword">virtual</font> ~TiXmlText()<font class="keyword"> </font>{}
+00702 
+00703 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
+00704 <font class="preprocessor"></font>
+<a name="l00705"></a><a class="code" href="classTiXmlText.html#a2">00705</a>     <a class="code" href="classTiXmlText.html#a0">TiXmlText</a>( <font class="keyword">const</font> std::string&amp; initValue ) : <a class="code" href="classTiXmlNode.html">TiXmlNode</a> (<a class="code" href="classTiXmlNode.html">TiXmlNode</a>::TEXT)
+00706     {
+00707         <a class="code" href="classTiXmlNode.html#a2">SetValue</a>( initValue );
+00708     }
+00709 <font class="preprocessor">    #endif</font>
+00710 <font class="preprocessor"></font>
+00711 <font class="keyword">protected</font> :
+00712     <font class="comment">// [internal use] Creates a new Element and returns it.</font>
+00713     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font>;
 00714     <font class="comment">// [internal use]</font>
-00715 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
-00716 <font class="preprocessor"></font>        <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM * in, TIXML_STRING * tag );
-00717 <font class="preprocessor">    #endif</font>
-00718 <font class="preprocessor"></font>};
-00719 
-00720 
-<a name="l00734"></a><a class="code" href="classTiXmlDeclaration.html">00734</a> <font class="keyword">class </font><a class="code" href="classTiXmlDeclaration.html">TiXmlDeclaration</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>
-00735 {
-00736 <font class="keyword">public</font>:
-<a name="l00738"></a><a class="code" href="classTiXmlDeclaration.html#a0">00738</a>     <a class="code" href="classTiXmlDeclaration.html#a0">TiXmlDeclaration</a>()   : <a class="code" href="classTiXmlNode.html">TiXmlNode</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>::DECLARATION ) {}
-00739 
-00740 <font class="preprocessor">#ifdef TIXML_USE_STL</font>
-00741 <font class="preprocessor"></font>
-<a name="l00742"></a><a class="code" href="classTiXmlDeclaration.html#a1">00742</a>     <a class="code" href="classTiXmlDeclaration.html#a0">TiXmlDeclaration</a>(
-00743                         <font class="keyword">const</font> std::string&amp; _version,
-00744                         <font class="keyword">const</font> std::string&amp; _encoding,
-00745                         <font class="keyword">const</font> std::string&amp; _standalone )
-00746                     : <a class="code" href="classTiXmlNode.html">TiXmlNode</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>::DECLARATION )
-00747     {
-00748         version = _version . c_str ();
-00749         encoding = _encoding . c_str ();
-00750         standalone = _standalone . c_str ();
-00751     }
-00752 <font class="preprocessor">#endif</font>
-00753 <font class="preprocessor"></font>
-00755     <a class="code" href="classTiXmlDeclaration.html#a0">TiXmlDeclaration::TiXmlDeclaration</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * _version,
-00756                                         <font class="keyword">const</font> <font class="keywordtype">char</font> * _encoding,
-00757                                         <font class="keyword">const</font> <font class="keywordtype">char</font> * _standalone );
-00758 
-00759     <font class="keyword">virtual</font> ~TiXmlDeclaration()<font class="keyword"> </font>{}
-00760 
-<a name="l00762"></a><a class="code" href="classTiXmlDeclaration.html#a4">00762</a>     <font class="keyword">const</font> <font class="keywordtype">char</font> * <a class="code" href="classTiXmlDeclaration.html#a4">Version</a>()<font class="keyword"> const        </font>{ <font class="keywordflow">return</font> version . c_str (); }
-<a name="l00764"></a><a class="code" href="classTiXmlDeclaration.html#a5">00764</a>     <font class="keyword">const</font> <font class="keywordtype">char</font> * <a class="code" href="classTiXmlDeclaration.html#a5">Encoding</a>()<font class="keyword"> const       </font>{ <font class="keywordflow">return</font> encoding . c_str (); }
-<a name="l00766"></a><a class="code" href="classTiXmlDeclaration.html#a6">00766</a>     <font class="keyword">const</font> <font class="keywordtype">char</font> * <a class="code" href="classTiXmlDeclaration.html#a6">Standalone</a>()<font class="keyword"> const     </font>{ <font class="keywordflow">return</font> standalone . c_str (); }
-00767 
-00768     <font class="comment">// [internal use] Creates a new Element and returs it.</font>
-00769     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font>;
-00770     <font class="comment">// [internal use]</font>
-00771     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font>;
-00772 
-00773 <font class="keyword">protected</font>:
-00774     <font class="comment">// used to be public</font>
-00775     #ifdef TIXML_USE_STL
-00776         <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM * in, TIXML_STRING * tag );
-00777 <font class="preprocessor">    #endif</font>
-00778 <font class="preprocessor"></font>    <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut ( TIXML_OSTREAM * out) <font class="keyword">const</font>;
-00779     <font class="comment">//  [internal use]</font>
-00780     <font class="comment">//  Attribtue parsing starts: next char past '&lt;'</font>
-00781     <font class="comment">//                   returns: next char past '&gt;'</font>
+00715     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font>;
+00716     <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut ( TIXML_OSTREAM * out ) <font class="keyword">const</font>;
+00717     <font class="comment">// [internal use]</font>
+00718     <font class="keywordtype">bool</font> Blank() <font class="keyword">const</font>; <font class="comment">// returns true if all white space and new lines</font>
+00719     <font class="comment">/*  [internal use]</font>
+00720 <font class="comment">            Attribtue parsing starts: First char of the text</font>
+00721 <font class="comment">                             returns: next char past '&gt;'</font>
+00722 <font class="comment">        */</font>
+00723     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
+00724     <font class="comment">// [internal use]</font>
+00725 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
+00726 <font class="preprocessor"></font>        <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM * in, TIXML_STRING * tag );
+00727 <font class="preprocessor">    #endif</font>
+00728 <font class="preprocessor"></font>};
+00729 
+00730 
+<a name="l00744"></a><a class="code" href="classTiXmlDeclaration.html">00744</a> <font class="keyword">class </font><a class="code" href="classTiXmlDeclaration.html">TiXmlDeclaration</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>
+00745 {
+00746 <font class="keyword">public</font>:
+<a name="l00748"></a><a class="code" href="classTiXmlDeclaration.html#a0">00748</a>     <a class="code" href="classTiXmlDeclaration.html#a0">TiXmlDeclaration</a>()   : <a class="code" href="classTiXmlNode.html">TiXmlNode</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>::DECLARATION ) {}
+00749 
+00750 <font class="preprocessor">#ifdef TIXML_USE_STL</font>
+00751 <font class="preprocessor"></font>
+<a name="l00752"></a><a class="code" href="classTiXmlDeclaration.html#a1">00752</a>     <a class="code" href="classTiXmlDeclaration.html#a0">TiXmlDeclaration</a>(
+00753                         <font class="keyword">const</font> std::string&amp; _version,
+00754                         <font class="keyword">const</font> std::string&amp; _encoding,
+00755                         <font class="keyword">const</font> std::string&amp; _standalone )
+00756                     : <a class="code" href="classTiXmlNode.html">TiXmlNode</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>::DECLARATION )
+00757     {
+00758         version = _version . c_str ();
+00759         encoding = _encoding . c_str ();
+00760         standalone = _standalone . c_str ();
+00761     }
+00762 <font class="preprocessor">#endif</font>
+00763 <font class="preprocessor"></font>
+00765     <a class="code" href="classTiXmlDeclaration.html#a0">TiXmlDeclaration::TiXmlDeclaration</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * _version,
+00766                                         <font class="keyword">const</font> <font class="keywordtype">char</font> * _encoding,
+00767                                         <font class="keyword">const</font> <font class="keywordtype">char</font> * _standalone );
+00768 
+00769     <font class="keyword">virtual</font> ~TiXmlDeclaration()<font class="keyword"> </font>{}
+00770 
+<a name="l00772"></a><a class="code" href="classTiXmlDeclaration.html#a4">00772</a>     <font class="keyword">const</font> <font class="keywordtype">char</font> * <a class="code" href="classTiXmlDeclaration.html#a4">Version</a>()<font class="keyword"> const        </font>{ <font class="keywordflow">return</font> version . c_str (); }
+<a name="l00774"></a><a class="code" href="classTiXmlDeclaration.html#a5">00774</a>     <font class="keyword">const</font> <font class="keywordtype">char</font> * <a class="code" href="classTiXmlDeclaration.html#a5">Encoding</a>()<font class="keyword"> const       </font>{ <font class="keywordflow">return</font> encoding . c_str (); }
+<a name="l00776"></a><a class="code" href="classTiXmlDeclaration.html#a6">00776</a>     <font class="keyword">const</font> <font class="keywordtype">char</font> * <a class="code" href="classTiXmlDeclaration.html#a6">Standalone</a>()<font class="keyword"> const     </font>{ <font class="keywordflow">return</font> standalone . c_str (); }
+00777 
+00778     <font class="comment">// [internal use] Creates a new Element and returs it.</font>
+00779     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font>;
+00780     <font class="comment">// [internal use]</font>
+00781     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font>;
 00782 
-00783     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
-00784 
-00785 <font class="keyword">private</font>:
-00786     TIXML_STRING version;
-00787     TIXML_STRING encoding;
-00788     TIXML_STRING standalone;
-00789 };
-00790 
-00791 
-<a name="l00797"></a><a class="code" href="classTiXmlUnknown.html">00797</a> <font class="keyword">class </font><a class="code" href="classTiXmlUnknown.html">TiXmlUnknown</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>
-00798 {
-00799 <font class="keyword">public</font>:
-00800     TiXmlUnknown() : TiXmlNode( TiXmlNode::UNKNOWN )<font class="keyword"> </font>{}
-00801     <font class="keyword">virtual</font> ~TiXmlUnknown()<font class="keyword"> </font>{}
-00802 
-00803     <font class="comment">// [internal use]</font>
-00804     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font>;
-00805     <font class="comment">// [internal use]</font>
-00806     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font>;
-00807 <font class="keyword">protected</font>:
-00808     <font class="comment">// used to be public</font>
-00809     #ifdef TIXML_USE_STL
-00810         <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM * in, TIXML_STRING * tag );
-00811 <font class="preprocessor">    #endif</font>
-00812 <font class="preprocessor"></font>    <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut ( TIXML_OSTREAM * out ) <font class="keyword">const</font>;
-00813     <font class="comment">/*  [internal use]</font>
-00814 <font class="comment">        Attribute parsing starts: First char of the text</font>
-00815 <font class="comment">                         returns: next char past '&gt;'</font>
-00816 <font class="comment">    */</font>
-00817     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
-00818 };
-00819 
-00820 
-<a name="l00825"></a><a class="code" href="classTiXmlDocument.html">00825</a> <font class="keyword">class </font><a class="code" href="classTiXmlDocument.html">TiXmlDocument</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>
-00826 {
-00827 <font class="keyword">public</font>:
-00829     <a class="code" href="classTiXmlDocument.html#a0">TiXmlDocument</a>();
-00831     <a class="code" href="classTiXmlDocument.html#a0">TiXmlDocument</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * documentName );
-00832 
-00833 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
-00834 <font class="preprocessor"></font>
-<a name="l00835"></a><a class="code" href="classTiXmlDocument.html#a2">00835</a>     <a class="code" href="classTiXmlDocument.html#a0">TiXmlDocument</a>( <font class="keyword">const</font> std::string&amp; documentName ) :
-00836         <a class="code" href="classTiXmlNode.html">TiXmlNode</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>::DOCUMENT )
-00837     {
-00838         error = <font class="keyword">false</font>;
-00839     }
-00840 <font class="preprocessor">    #endif</font>
-00841 <font class="preprocessor"></font>
-00842     <font class="keyword">virtual</font> ~TiXmlDocument()<font class="keyword"> </font>{}
-00843 
-00848     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlDocument.html#a4">LoadFile</a>();
-00850     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlDocument.html#a5">SaveFile</a>() <font class="keyword">const</font>;
-00852     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlDocument.html#a4">LoadFile</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * filename );
-00854     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlDocument.html#a5">SaveFile</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * filename ) <font class="keyword">const</font>;
-00855 
-00856     #ifdef TIXML_USE_STL
-00857     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlDocument.html#a4">LoadFile</a>( <font class="keyword">const</font> std::string&amp; filename );           
-00858     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlDocument.html#a5">SaveFile</a>( <font class="keyword">const</font> std::string&amp; filename ) <font class="keyword">const</font>;     
-00859     #endif
-00860 
-00862     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* <a class="code" href="classTiXmlDocument.html#a10">Parse</a>( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
-00863 
-<a name="l00868"></a><a class="code" href="classTiXmlDocument.html#a11">00868</a>     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlDocument.html#a11">RootElement</a>()<font class="keyword"> const       </font>{ <font class="keywordflow">return</font> <a class="code" href="classTiXmlNode.html#a29">FirstChildElement</a>(); }
-00869 
-<a name="l00871"></a><a class="code" href="classTiXmlDocument.html#a12">00871</a>     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlDocument.html#a12">Error</a>()<font class="keyword"> const                      </font>{ <font class="keywordflow">return</font> error; }
-00872 
-<a name="l00874"></a><a class="code" href="classTiXmlDocument.html#a13">00874</a>     <font class="keyword">const</font> <font class="keywordtype">char</font> * <a class="code" href="classTiXmlDocument.html#a13">ErrorDesc</a>()<font class="keyword"> const  </font>{ <font class="keywordflow">return</font> errorDesc . c_str (); }
-00875 
-<a name="l00879"></a><a class="code" href="classTiXmlDocument.html#a14">00879</a>     <font class="keyword">const</font> <font class="keywordtype">int</font> <a class="code" href="classTiXmlDocument.html#a14">ErrorId</a>()<font class="keyword"> const               </font>{ <font class="keywordflow">return</font> errorId; }
+00783 <font class="keyword">protected</font>:
+00784     <font class="comment">// used to be public</font>
+00785     #ifdef TIXML_USE_STL
+00786         <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM * in, TIXML_STRING * tag );
+00787 <font class="preprocessor">    #endif</font>
+00788 <font class="preprocessor"></font>    <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut ( TIXML_OSTREAM * out) <font class="keyword">const</font>;
+00789     <font class="comment">//  [internal use]</font>
+00790     <font class="comment">//  Attribtue parsing starts: next char past '&lt;'</font>
+00791     <font class="comment">//                   returns: next char past '&gt;'</font>
+00792 
+00793     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
+00794 
+00795 <font class="keyword">private</font>:
+00796     TIXML_STRING version;
+00797     TIXML_STRING encoding;
+00798     TIXML_STRING standalone;
+00799 };
+00800 
+00801 
+<a name="l00807"></a><a class="code" href="classTiXmlUnknown.html">00807</a> <font class="keyword">class </font><a class="code" href="classTiXmlUnknown.html">TiXmlUnknown</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>
+00808 {
+00809 <font class="keyword">public</font>:
+00810     TiXmlUnknown() : TiXmlNode( TiXmlNode::UNKNOWN )<font class="keyword"> </font>{}
+00811     <font class="keyword">virtual</font> ~TiXmlUnknown()<font class="keyword"> </font>{}
+00812 
+00813     <font class="comment">// [internal use]</font>
+00814     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font>;
+00815     <font class="comment">// [internal use]</font>
+00816     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth ) <font class="keyword">const</font>;
+00817 <font class="keyword">protected</font>:
+00818     <font class="comment">// used to be public</font>
+00819     #ifdef TIXML_USE_STL
+00820         <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM * in, TIXML_STRING * tag );
+00821 <font class="preprocessor">    #endif</font>
+00822 <font class="preprocessor"></font>    <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut ( TIXML_OSTREAM * out ) <font class="keyword">const</font>;
+00823     <font class="comment">/*  [internal use]</font>
+00824 <font class="comment">        Attribute parsing starts: First char of the text</font>
+00825 <font class="comment">                         returns: next char past '&gt;'</font>
+00826 <font class="comment">    */</font>
+00827     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
+00828 };
+00829 
+00830 
+<a name="l00835"></a><a class="code" href="classTiXmlDocument.html">00835</a> <font class="keyword">class </font><a class="code" href="classTiXmlDocument.html">TiXmlDocument</a> : <font class="keyword">public</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>
+00836 {
+00837 <font class="keyword">public</font>:
+00839     <a class="code" href="classTiXmlDocument.html#a0">TiXmlDocument</a>();
+00841     <a class="code" href="classTiXmlDocument.html#a0">TiXmlDocument</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * documentName );
+00842 
+00843 <font class="preprocessor">    #ifdef TIXML_USE_STL</font>
+00844 <font class="preprocessor"></font>
+<a name="l00845"></a><a class="code" href="classTiXmlDocument.html#a2">00845</a>     <a class="code" href="classTiXmlDocument.html#a0">TiXmlDocument</a>( <font class="keyword">const</font> std::string&amp; documentName ) :
+00846         <a class="code" href="classTiXmlNode.html">TiXmlNode</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>::DOCUMENT )
+00847     {
+00848         value = documentName;
+00849         error = <font class="keyword">false</font>;
+00850     }
+00851 <font class="preprocessor">    #endif</font>
+00852 <font class="preprocessor"></font>
+00853     <font class="keyword">virtual</font> ~TiXmlDocument()<font class="keyword"> </font>{}
+00854 
+00859     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlDocument.html#a4">LoadFile</a>();
+00861     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlDocument.html#a5">SaveFile</a>() <font class="keyword">const</font>;
+00863     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlDocument.html#a4">LoadFile</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * filename );
+00865     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlDocument.html#a5">SaveFile</a>( <font class="keyword">const</font> <font class="keywordtype">char</font> * filename ) <font class="keyword">const</font>;
+00866 
+00867     #ifdef TIXML_USE_STL
+<a name="l00868"></a><a class="code" href="classTiXmlDocument.html#a8">00868</a>     <font class="keywordtype">bool</font> <a class="code" href="classTiXmlDocument.html#a4">LoadFile</a>( <font class="keyword">const</font> std::string&amp; filename )            
+00869     {
+00870         <font class="keywordflow">return</font> LoadFile (filename.c_str ());
+00871     }
+<a name="l00872"></a><a class="code" href="classTiXmlDocument.html#a9">00872</a>     <font class="keywordtype">bool</font> SaveFile( <font class="keyword">const</font> std::string&amp; filename ) <font class="keyword">const</font>      
+00873     {
+00874         <font class="keywordflow">return</font> SaveFile (filename.c_str ());
+00875     }
+00876 <font class="preprocessor">    #endif</font>
+00877 <font class="preprocessor"></font>
+00879     <font class="keyword">virtual</font> <font class="keyword">const</font> <font class="keywordtype">char</font>* Parse( <font class="keyword">const</font> <font class="keywordtype">char</font>* p );
 00880 
-<a name="l00882"></a><a class="code" href="classTiXmlDocument.html#a15">00882</a>     <font class="keywordtype">void</font> <a class="code" href="classTiXmlDocument.html#a15">ClearError</a>()<font class="keyword">                       </font>{ error = <font class="keyword">false</font>; errorId = 0; errorDesc = <font class="stringliteral">""</font>; }
-00883 
-<a name="l00885"></a><a class="code" href="classTiXmlDocument.html#a16">00885</a>     <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>()<font class="keyword"> const                              </font>{ <a class="code" href="classTiXmlBase.html#a2">Print</a>( stdout, 0 ); }
+<a name="l00885"></a><a class="code" href="classTiXmlDocument.html#a11">00885</a>     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* RootElement()<font class="keyword"> const       </font>{ <font class="keywordflow">return</font> FirstChildElement(); }
 00886 
-00887     <font class="comment">// [internal use]</font>
-00888     <font class="keyword">virtual</font> <font class="keywordtype">void</font> <a class="code" href="classTiXmlBase.html#a2">Print</a>( FILE* cfile, <font class="keywordtype">int</font> depth = 0 ) <font class="keyword">const</font>;
-00889     <font class="comment">// [internal use]</font>
-00890     <font class="keywordtype">void</font> SetError( <font class="keywordtype">int</font> err )<font class="keyword"> </font>{      assert( err &gt; 0 &amp;&amp; err &lt; TIXML_ERROR_STRING_COUNT );
-00891         error   = <font class="keyword">true</font>;
-00892         errorId = err;
-00893     errorDesc = errorString[ errorId ]; }
-00894 
-00895 <font class="keyword">protected</font> :
-00896     <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut ( TIXML_OSTREAM * out) <font class="keyword">const</font>;
-00897     <font class="comment">// [internal use]</font>
-00898     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font>;
-00899     #ifdef TIXML_USE_STL
-00900         <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM * in, TIXML_STRING * tag );
-00901 <font class="preprocessor">    #endif</font>
-00902 <font class="preprocessor"></font>
-00903 <font class="keyword">private</font>:
-00904     <font class="keywordtype">bool</font> error;
-00905     <font class="keywordtype">int</font>  errorId;
-00906     TIXML_STRING errorDesc;
-00907 };
-00908 
-00909 <font class="preprocessor">#endif</font>
-00910 <font class="preprocessor"></font>
-</pre></div><hr><address><small>Generated on Sun May 12 22:14:44 2002 for TinyXml by
+<a name="l00888"></a><a class="code" href="classTiXmlDocument.html#a12">00888</a>     <font class="keywordtype">bool</font> Error()<font class="keyword"> const                      </font>{ <font class="keywordflow">return</font> error; }
+00889 
+<a name="l00891"></a><a class="code" href="classTiXmlDocument.html#a13">00891</a>     <font class="keyword">const</font> <font class="keywordtype">char</font> * ErrorDesc()<font class="keyword"> const  </font>{ <font class="keywordflow">return</font> errorDesc . c_str (); }
+00892 
+<a name="l00896"></a><a class="code" href="classTiXmlDocument.html#a14">00896</a>     <font class="keyword">const</font> <font class="keywordtype">int</font> ErrorId()<font class="keyword"> const               </font>{ <font class="keywordflow">return</font> errorId; }
+00897 
+<a name="l00899"></a><a class="code" href="classTiXmlDocument.html#a15">00899</a>     <font class="keywordtype">void</font> ClearError()<font class="keyword">                       </font>{ error = <font class="keyword">false</font>; errorId = 0; errorDesc = <font class="stringliteral">""</font>; }
+00900 
+<a name="l00902"></a><a class="code" href="classTiXmlDocument.html#a16">00902</a>     <font class="keywordtype">void</font> Print()<font class="keyword"> const                              </font>{ Print( stdout, 0 ); }
+00903 
+00904     <font class="comment">// [internal use]</font>
+00905     <font class="keyword">virtual</font> <font class="keywordtype">void</font> Print( FILE* cfile, <font class="keywordtype">int</font> depth = 0 ) <font class="keyword">const</font>;
+00906     <font class="comment">// [internal use]</font>
+00907     <font class="keywordtype">void</font> SetError( <font class="keywordtype">int</font> err )<font class="keyword"> </font>{      assert( err &gt; 0 &amp;&amp; err &lt; TIXML_ERROR_STRING_COUNT );
+00908         error   = <font class="keyword">true</font>;
+00909         errorId = err;
+00910     errorDesc = errorString[ errorId ]; }
+00911 
+00912 <font class="keyword">protected</font> :
+00913     <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamOut ( TIXML_OSTREAM * out) <font class="keyword">const</font>;
+00914     <font class="comment">// [internal use]</font>
+00915     <font class="keyword">virtual</font> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* Clone() <font class="keyword">const</font>;
+00916     #ifdef TIXML_USE_STL
+00917         <font class="keyword">virtual</font> <font class="keywordtype">void</font> StreamIn( TIXML_ISTREAM * in, TIXML_STRING * tag );
+00918 <font class="preprocessor">    #endif</font>
+00919 <font class="preprocessor"></font>
+00920 <font class="keyword">private</font>:
+00921     <font class="keywordtype">bool</font> error;
+00922     <font class="keywordtype">int</font>  errorId;
+00923     TIXML_STRING errorDesc;
+00924 };
+00925 
+00926 <font class="preprocessor">#endif</font>
+00927 <font class="preprocessor"></font>
+</pre></div><hr><address><small>Generated on Fri May 24 21:14:57 2002 for TinyXml by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.gif" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.2.11.1 written by <a href="mailto:dimitri@stack.nl">Dimitri van Heesch</a>,

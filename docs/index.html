@@ -51,9 +51,9 @@ Use the compile time define:
 <p>
 TIXML_USE_STL
 <p>
-to compile one version or the other.
+to compile one version or the other. This can be passed by the compiler, or set as the first line of "tinyxml.h".
 <p>
-Note: If compiling the test code in Linux, setting the environment variable TINYXML_USE_STL=YES/NO will control STL compilation. In the Windows project file, STL and non STL targets are provided.
+Note: If compiling the test code in Linux, setting the environment variable TINYXML_USE_STL=YES/NO will control STL compilation. In the Windows project file, STL and non STL targets are provided. In your project, its probably easiest to add the line "define TIXML_USE_STL" as the first line of tinyxml.h.
 <p>
 <h3> Entities </h3>
  TinyXml recognizes the pre-defined "entity references", meaning special characters. Namely:
@@ -225,7 +225,7 @@ www.sourceforge.net/projects/tinyxml
 <p>
 Lee Thomason
 <p>
-<hr><address><small>Generated on Sun May 12 22:14:44 2002 for TinyXml by
+<hr><address><small>Generated on Fri May 24 21:14:57 2002 for TinyXml by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.gif" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.2.11.1 written by <a href="mailto:dimitri@stack.nl">Dimitri van Heesch</a>,

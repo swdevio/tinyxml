@@ -26,8 +26,10 @@ distribution.
 #ifndef TINYXML_INCLUDED
 #define TINYXML_INCLUDED
 
+#ifdef _MSC_VER
 #pragma warning( disable : 4530 )
 #pragma warning( disable : 4786 )
+#endif
 
 #include <ctype.h>
 #include <stdio.h>
@@ -429,6 +431,9 @@ public:
 
 	virtual TiXmlNode* Clone() const = 0;
 
+	void  SetUserData( void* user )			{ userData = user; }
+	void* GetUserData()						{ return userData; }
+
 protected:
 	TiXmlNode( NodeType type );
 
@@ -442,7 +447,8 @@ protected:
 
 	// Figure out what is at *p, and parse it. Returns null if it is not an xml node.
 	TiXmlNode* Identify( const char* start );
-	void CopyToClone( TiXmlNode* target ) const	{ target->SetValue (value.c_str() ); }
+	void CopyToClone( TiXmlNode* target ) const	{ target->SetValue (value.c_str() );
+												  target->userData = userData; }
 
 	// Internal Value function returning a TIXML_STRING
 	TIXML_STRING SValue() const	{ return value ; }
@@ -457,6 +463,7 @@ protected:
 
 	TiXmlNode*		prev;
 	TiXmlNode*		next;
+	void*			userData;
 };
 
 
@@ -693,10 +700,13 @@ public:
 	}
 	virtual ~TiXmlText() {}
 
-#ifdef TIXML_USE_STL
+	#ifdef TIXML_USE_STL
 	/// Constructor.
-	TiXmlText( const std::string& initValue );
-#endif
+	TiXmlText( const std::string& initValue ) : TiXmlNode (TiXmlNode::TEXT)
+	{
+		SetValue( initValue );
+	}
+	#endif
 
 protected :
 	// [internal use] Creates a new Element and returns it.
@@ -835,6 +845,7 @@ public:
 	TiXmlDocument( const std::string& documentName ) :
 	    TiXmlNode( TiXmlNode::DOCUMENT )
 	{
+        value = documentName;
 		error = false;
 	}
 	#endif
@@ -854,8 +865,14 @@ public:
 	bool SaveFile( const char * filename ) const;
 
 	#ifdef TIXML_USE_STL
-	bool LoadFile( const std::string& filename );			///< STL std::string version.
-	bool SaveFile( const std::string& filename ) const;		///< STL std::string version.
+	bool LoadFile( const std::string& filename )			///< STL std::string version.
+	{
+		return LoadFile (filename.c_str ());
+	}
+	bool SaveFile( const std::string& filename ) const		///< STL std::string version.
+	{
+		return SaveFile (filename.c_str ());
+	}
 	#endif
 
 	/// Parse the given null terminated block of xml data.
