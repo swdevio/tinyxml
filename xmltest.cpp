@@ -8,10 +8,18 @@
 #ifdef TIXML_USE_STL
 	#include <iostream>
 	#include <sstream>
-	#include <strstream>
 	using namespace std;
 #else
 	#include <stdio.h>
+#endif
+
+#if defined( WIN32 ) && defined( TUNE )
+	#include <windows.h>
+	// Apologies to non-windows users! But I need some good timers for
+	// profiling, and these are very platform specific.
+	__int64 start;
+	__int64 end;
+	__int64 freq;
 #endif
 
 static int gPass = 0;
@@ -108,6 +116,9 @@ int main()
 #endif
 
 	// The example parses from the character string (above):
+	#if defined( WIN32 ) && defined( TUNE )
+	QueryPerformanceCounter( (LARGE_INTEGER*) (&start) );
+	#endif
 
 	{
 		// Write to a file and read it back, to check file I/O.
@@ -263,8 +274,8 @@ int main()
 	// Walk all the top level nodes of the document.
 	count = 0;
 	for( node = doc.FirstChild();
-	node;
-	node = node->NextSibling() )
+		 node;
+		 node = node->NextSibling() )
 	{
 		count++;
 	}
@@ -272,8 +283,8 @@ int main()
 
 	count = 0;
 	for( node = doc.LastChild();
-	node;
-	node = node->PreviousSibling() )
+		 node;
+		 node = node->PreviousSibling() )
 	{
 		count++;
 	}
@@ -283,8 +294,8 @@ int main()
 	// using a different sytax.
 	count = 0;
 	for( node = doc.IterateChildren( 0 );
-	node;
-	node = doc.IterateChildren( node ) )
+		 node;
+		 node = doc.IterateChildren( node ) )
 	{
 		count++;
 	}
@@ -293,8 +304,8 @@ int main()
 	// Walk all the elements in a node.
 	count = 0;
 	for( element = todoElement->FirstChildElement();
-	element;
-	element = element->NextSiblingElement() )
+		 element;
+		 element = element->NextSiblingElement() )
 	{
 		count++;
 	}
@@ -304,8 +315,8 @@ int main()
 	// Walk all the elements in a node by value.
 	count = 0;
 	for( node = todoElement->FirstChild( "Item" );
-	node;
-	node = node->NextSibling( "Item" ) )
+		 node;
+		 node = node->NextSibling( "Item" ) )
 	{
 		count++;
 	}
@@ -313,8 +324,8 @@ int main()
 
 	count = 0;
 	for( node = todoElement->LastChild( "Item" );
-	node;
-	node = node->PreviousSibling( "Item" ) )
+		 node;
+		 node = node->PreviousSibling( "Item" ) )
 	{
 		count++;
 	}
@@ -334,6 +345,120 @@ int main()
 	}
 #endif
 
+	{
+		const char* error =	"<?xml version=\"1.0\" standalone=\"no\" ?>\n"
+							"<passages count=\"006\" formatversion=\"20020620\">\n"
+							"    <wrong error>\n"
+							"</passages>";
+
+        TiXmlDocument doc;
+		doc.Parse( error );
+		XmlTest( "Error row", doc.ErrorRow(), 3 );
+		XmlTest( "Error column", doc.ErrorCol(), 17 );
+		//printf( "error=%d id='%s' row %d col%d\n", (int) doc.Error(), doc.ErrorDesc(), doc.ErrorRow()+1, doc.ErrorCol() + 1 );
+
+	}
+	{
+		const char* str =	"\t<?xml version=\"1.0\" standalone=\"no\" ?>\t<room doors='2'>\n"
+							"  <!-- Silly example -->\n"
+							"    <door wall='north'>A great door!</door>\n"
+							"\t<door wall='east'/>"
+							"</room>";
+
+        TiXmlDocument doc;
+		doc.Parse( str );
+
+		TiXmlHandle docHandle( &doc );
+		TiXmlHandle roomHandle = docHandle.FirstChildElement( "room" );
+		TiXmlHandle commentHandle = docHandle.FirstChildElement( "room" ).FirstChild();
+		TiXmlHandle textHandle = docHandle.FirstChildElement( "room" ).ChildElement( "door", 0 ).FirstChild();
+		TiXmlHandle door0Handle = docHandle.FirstChildElement( "room" ).ChildElement( 0 );
+		TiXmlHandle door1Handle = docHandle.FirstChildElement( "room" ).ChildElement( 1 );
+
+		assert( docHandle.Node() );
+		assert( roomHandle.Element() );
+		assert( commentHandle.Node() );
+		assert( textHandle.Text() );
+		assert( door0Handle.Element() );
+		assert( door1Handle.Element() );
+
+		TiXmlDeclaration* declaration = doc.FirstChild()->ToDeclaration();
+		assert( declaration );
+		TiXmlElement* room = roomHandle.Element();
+		assert( room );
+		TiXmlAttribute* doors = room->FirstAttribute();
+		assert( doors );
+		TiXmlText* text = textHandle.Text();
+		TiXmlComment* comment = commentHandle.Node()->ToComment();
+		assert( comment );
+		TiXmlElement* door0 = door0Handle.Element();
+		TiXmlElement* door1 = door1Handle.Element();
+
+		XmlTest( "Location tracking: Declaration row", declaration->Row(), 1 );
+		XmlTest( "Location tracking: Declaration col", declaration->Column(), 5 );
+		XmlTest( "Location tracking: room row", room->Row(), 1 );
+		XmlTest( "Location tracking: room col", room->Column(), 45 );
+		XmlTest( "Location tracking: doors row", doors->Row(), 1 );
+		XmlTest( "Location tracking: doors col", doors->Column(), 51 );
+		XmlTest( "Location tracking: Comment row", comment->Row(), 2 );
+		XmlTest( "Location tracking: Comment col", comment->Column(), 3 );
+		XmlTest( "Location tracking: text row", text->Row(), 3 ); 
+		XmlTest( "Location tracking: text col", text->Column(), 24 );
+		XmlTest( "Location tracking: door0 row", door0->Row(), 3 );
+		XmlTest( "Location tracking: door0 col", door0->Column(), 5 );
+		XmlTest( "Location tracking: door1 row", door1->Row(), 4 );
+		XmlTest( "Location tracking: door1 col", door1->Column(), 5 );
+	}
+	{
+		const char* str =	"\t<?xml version=\"1.0\" standalone=\"no\" ?>\t<room doors='2'>\n"
+							"</room>";
+
+        TiXmlDocument doc;
+		doc.SetTabSize( 8 );
+		doc.Parse( str );
+
+		TiXmlHandle docHandle( &doc );
+		TiXmlHandle roomHandle = docHandle.FirstChildElement( "room" );
+
+		assert( docHandle.Node() );
+		assert( roomHandle.Element() );
+
+		TiXmlElement* room = roomHandle.Element();
+		assert( room );
+		TiXmlAttribute* doors = room->FirstAttribute();
+		assert( doors );
+
+		XmlTest( "Location tracking: Tab 8: room row", room->Row(), 1 );
+		XmlTest( "Location tracking: Tab 8: room col", room->Column(), 49 );
+		XmlTest( "Location tracking: Tab 8: doors row", doors->Row(), 1 );
+		XmlTest( "Location tracking: Tab 8: doors col", doors->Column(), 55 );
+	}
+
+	{
+		const char* str = "<doc attr0='1' attr1='2.0' attr2='foo' />";
+
+		TiXmlDocument doc;
+		doc.Parse( str );
+
+		TiXmlElement* ele = doc.FirstChildElement();
+
+		int iVal, result;
+		double dVal;
+
+		result = ele->QueryDoubleAttribute( "attr0", &dVal );
+		XmlTest( "Query attribute: int as double", result, TIXML_SUCCESS );
+		XmlTest( "Query attribute: int as double", (int)dVal, 1 );
+		result = ele->QueryDoubleAttribute( "attr1", &dVal );
+		XmlTest( "Query attribute: double as double", (int)dVal, 2 );
+		result = ele->QueryIntAttribute( "attr1", &iVal );
+		XmlTest( "Query attribute: double as int", result, TIXML_SUCCESS );
+		XmlTest( "Query attribute: double as int", iVal, 2 );
+		result = ele->QueryIntAttribute( "attr2", &iVal );
+		XmlTest( "Query attribute: not a number", result, TIXML_WRONG_TYPE );
+		result = ele->QueryIntAttribute( "bar", &iVal );
+		XmlTest( "Query attribute: does not exist", result, TIXML_NO_ATTRIBUTE );
+	}
+
 #ifdef TIXML_USE_STL
 	{
 		//////////////////////////////////////////////////////
@@ -352,6 +477,12 @@ int main()
 
 		XmlTest( "Stream round trip correct.",	string( demoEnd ).c_str(), 
 												outputStream0.str().c_str(), true );
+
+		std::string str;
+		str << document0;
+
+		XmlTest( "String printing correct.", string( demoEnd ).c_str(), 
+											 str.c_str(), true );
 	}
 #endif
 
@@ -465,10 +596,10 @@ int main()
 			char buf[ 1024 ];
 			fgets( buf, 1024, textfile );
 			XmlTest( "Entity transformation: write. ",
-								"<psg context=\'Line 5 has &quot;quotation marks&quot; and &apos;apostrophe marks&apos;."
-								" It also has &lt;, &gt;, and &amp;, as well as a fake &#xA9;.' />",
-								buf,
-								true );
+					 "<psg context=\'Line 5 has &quot;quotation marks&quot; and &apos;apostrophe marks&apos;."
+					 " It also has &lt;, &gt;, and &amp;, as well as a fake &#xA9;.' />",
+					 buf,
+					 true );
 		}
 		fclose( textfile );
 	}
@@ -477,15 +608,39 @@ int main()
 		FILE* textfile = fopen( "test5.xml", "w" );
 		if ( textfile )
 		{
-            fputs ("<?xml version='1.0'?><a.elem xmi.version='2.0'/>", textfile);
-            fclose (textfile);
-            TiXmlDocument doc;
-            doc.LoadFile ("test5.xml");
-            XmlTest ( "dot in element attributes and names", doc.Error (), 0);
+            fputs("<?xml version='1.0'?><a.elem xmi.version='2.0'/>", textfile);
+            fclose(textfile);
+
+			TiXmlDocument doc;
+            doc.LoadFile( "test5.xml" );
+            XmlTest( "dot in element attributes and names", doc.Error(), 0);
 		}
-		textfile = fopen( "textfile.txt", "r" );
-        
     }
+
+	{
+		FILE* textfile = fopen( "test6.xml", "w" );
+		if ( textfile )
+		{
+            fputs("<element><Name>1.1 Start easy ignore fin thickness&#xA;</Name></element>", textfile );
+            fclose(textfile);
+
+            TiXmlDocument doc;
+            bool result = doc.LoadFile( "test6.xml" );
+            XmlTest( "Entity with one digit.", result, true );
+
+			TiXmlText* text = doc.FirstChildElement()->FirstChildElement()->FirstChild()->ToText();
+			XmlTest( "Entity with one digit.",
+						text->Value(), "1.1 Start easy ignore fin thickness\n" );
+		}
+    }
+
+
+	#if defined( WIN32 ) && defined( TUNE )
+	QueryPerformanceCounter( (LARGE_INTEGER*) (&end) );
+	QueryPerformanceFrequency( (LARGE_INTEGER*) (&freq) );
+	printf( "Time for run: %f\n", ( double )( end-start ) / (double) freq );
+	#endif
+
 	printf ("\nPass %d, Fail %d\n", gPass, gFail);
 	return gFail;
 }

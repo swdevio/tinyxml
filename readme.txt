@@ -9,7 +9,7 @@ integrating into other programs.
 <h2> What it does. </h2>
 	
 In brief, TinyXml parses an XML document, and builds from that a 
-Document Object Model that can be read, modified, and saved.
+Document Object Model (DOM) that can be read, modified, and saved.
 
 XML stands for "eXtensible Markup Language." It allows you to create 
 your own document markups. Where HTML does a very good job of marking 
@@ -20,7 +20,7 @@ All those random file formats created to store application data can
 all be replaced with XML. One parser for everything.
 
 There are different ways to access and interact with XML data.
-TinyXml uses a Document Object Model, meaning the XML data is parsed
+TinyXml uses a Document Object Model (DOM), meaning the XML data is parsed
 into a tree objects that can be browsed and manipulated, and then 
 written back to disk. You can also construct an XML document from
 scratch with C++ objects and write this to disk (or another output
@@ -41,8 +41,10 @@ compiled with or without STL support.
 <h2> What it doesn't do. </h2>
 
 It doesnt parse or use DTDs (Document Type Definitions) or XSLs
-(eXtensible Stylesheet Language.) It is limited to the ASCII
-character set. There are other parsers out there (check out
+(eXtensible Stylesheet Language.) It is only tested on Latin-1 
+characters (which is the Western European character set). 
+Although people have reported success in passing through Latin-1 
+and UTF-8 data. There are other parsers out there (check out
 www.sourceforge.org, search for XML) that are much more fully
 featured. But they are also much bigger, take longer to set up in
 your project, have a higher learning curve, and often have a more
@@ -146,24 +148,74 @@ C++ style input:
 	Reads XML from a stream, making it useful for network transmission. The tricky
 	part is knowing when the XML document is complete, since there will almost
 	certainly be other data in the stream. TinyXml will assume the XML data is
-	complete after it reads the root element. Also not that operator>> is somewhat
-	slower than Parse, due to both implementation of the STL and limitations of
-	TinyXml.
+	complete after it reads the root element. Put another way, documents that
+	are ill-constructed with more than one root element will not read correctly.
+	Also note that operator>> is somewhat slower than Parse, due to both 
+	implementation of the STL and limitations of TinyXml.
 
 <h3> White space </h3>
 The world simply does not agree on whether white space should be kept, or condensed.
 For example, pretend the '_' is a space, and look at "Hello____world". HTML, and 
 at least some XML parsers, will interpret this as "Hello_world". They condense white
 space. Some XML parsers do not, and will leave it as "Hello____world". (Remember
-to keep pretending the _ is a space.)
+to keep pretending the _ is a space.) Others suggest that __Hello___world__ should become
+Hello___world.
 
-It's an issue that hasn't been resolved to my satisfaction. TinyXml supports both
-motifs. Call TiXmlBase::SetCondenseWhiteSpace( bool ) to set the desired behavior.
+It's an issue that hasn't been resolved to my satisfaction. TinyXml supports the
+first 2 approaches. Call TiXmlBase::SetCondenseWhiteSpace( bool ) to set the desired behavior.
 The default is to condense white space.
 
 If you change the default, you should call TiXmlBase::SetCondenseWhiteSpace( bool )
 before making any calls to Parse XML data, and I don't recommend changing it after
 it has been set.
+
+
+<h3> Handles </h3>
+
+Where browsing an XML document in a robust way, it is important to check
+for null returns from method calls. An error safe implementation can
+generate a lot of code like:
+
+@verbatim
+TiXmlElement* root = document.FirstChildElement( "Document" );
+if ( root )
+{
+	TiXmlElement* element = root->FirstChildElement( "Element" );
+	if ( element )
+	{
+		TiXmlElement* child = element->FirstChildElement( "Child" );
+		if ( child )
+		{
+			TiXmlElement* child2 = child->NextSiblingElement( "Child" );
+			if ( child2 )
+			{
+				// Finally do something useful.
+@endverbatim
+
+Handles have been introduced to clean this up. Using the TiXmlHandle class,
+the previous code reduces to:
+
+@verbatim
+TiXmlHandle docHandle( &document );
+TiXmlElement* child2 = docHandle.FirstChild( "Document" ).FirstChild( "Element" ).Child( "Child", 1 ).Element();
+if ( child2 )
+{
+	// do something useful
+@endverbatim
+
+Which is much easier to deal with. See TiXmlHandle for more information.
+
+
+<h3> Row and Column tracking </h3>
+Being able to track nodes and attributes back to their origin location
+in source files can be very important for some applications. Additionally,
+knowing where parsing errors occured in the original source can be very
+time saving.
+
+TinyXml can tracks the row and column origin of all nodes and attributes
+in a text file. The TiXmlBase::Row() and TiXmlBase::Column() methods return
+the origin of the node in the source text. The correct tabs can be 
+configured in TiXmlDocument::SetTabSize().
 
 
 <h2> Using and Installing </h2>
@@ -208,22 +260,12 @@ compliant C++ system. You do not need to enable exceptions or
 RTTI for TinyXml.
 
 
-<h2> Where it may go.  </h2>
-
-At this point, I'm focusing on tightening up remaining issues.
-Bug fixes (though comfortably rare) and minor interface 
-corrections. 
-
-There are some "it would be nice if..." items. I'll keep those
-posted as tasks on SourceForge. (www.sourceforge.net/projects/tinyxml)
-
-
 <h2> How TinyXml works.  </h2>
 
 An example is probably the best way to go. Take:
 @verbatim
 	<?xml version="1.0" standalone=no>
-	<?-- Our to do list data -->
+	<!-- Our to do list data -->
 	<ToDo>
 		<Item priority="1"> Go to the <bold>Toy store!</bold></Item>
 		<Item priority="2"> Do bills</Item>
@@ -240,7 +282,9 @@ Its not much of a To Do list, but it will do. To read this file
 And its ready to go. Now lets look at some lines and how they 
 relate to the DOM.
 
+@verbatim
 <?xml version="1.0" standalone=no>
+@endverbatim
 
 	The first line is a declaration, and gets turned into the
 	TiXmlDeclaration class. It will be the first child of the
@@ -250,28 +294,36 @@ relate to the DOM.
 	Generally directive targs are stored in TiXmlUnknown so the 
 	commands wont be lost when it is saved back to disk.
 
-<?-- Our to do list data -->
+@verbatim
+<!-- Our to do list data -->
+@endverbatim
 
 	A comment. Will become a TiXmlComment object.
 
+@verbatim
 <ToDo>
+@endverbatim
 
-	The ToDo tag defines a TiXmlElement object. This one does not have 
-	any attributes, but will contain 2 other elements, both of which 
-	are items.
+	The "ToDo" tag defines a TiXmlElement object. This one does not have 
+	any attributes, but does contain 2 other elements.
 
+@verbatim
 <Item priority="1"> 
+@endverbatim
 
 	Creates another TiXmlElement which is a child of the "ToDo" element. 
-	This element has 1 attribute, with the name priority and the value 
-	1.
+	This element has 1 attribute, with the name "priority" and the value 
+	"1".
 
 Go to the 
 
 	A TiXmlText. This is a leaf node and cannot contain other nodes. 
-	It is a child of the Item" Element.
+	It is a child of the "Item" TiXmlElement.
 
+@verbatim
 <bold>
+@endverbatim
+
 	
 	Another TiXmlElement, this one a child of the "Item" element.
 
@@ -337,8 +389,7 @@ we try to give credit due in the "changes.txt" file.
 
 TinyXml was originally written be Lee Thomason. (Often the "I" still
 in the documenation.) Lee reviews changes and releases new versions,
-but the project is on maintained and managed by Yves Berquin, with
-the help of the tinyXml community.
+with the help of Yves Berquin and the tinyXml community.
 
 We appreciate your suggestions, and would love to know if you 
 use TinyXml. Hopefully you will enjoy it and find it useful. 
@@ -346,6 +397,6 @@ Please post questions, comments, file bugs, or contact us at:
 
 www.sourceforge.net/projects/tinyxml
 
-Lee Thomason
+Lee Thomason,
 Yves Berquin
 */
