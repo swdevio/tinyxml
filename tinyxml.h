@@ -93,6 +93,7 @@ class TiXmlBase
 	enum
 	{
 		NO_ERROR = 0,
+		ERROR_OPENING_FILE,
 		ERROR_OUT_OF_MEMORY,
 		ERROR_PARSING_ELEMENT,
 		ERROR_FAILED_TO_READ_ELEMENT_NAME,
@@ -153,6 +154,9 @@ class TiXmlNode : public TiXmlBase
 		@endverbatim
 	*/
 	void SetValue( const std::string& _value )		{ value = _value; }
+
+	/// Delete all the children of this node. Does not affect 'this'.
+	void Clear();
 
 	/// One step up the DOM.
 	TiXmlNode* Parent() const					{ return parent; }
@@ -566,7 +570,10 @@ class TiXmlDocument : public TiXmlNode
 	
 	virtual ~TiXmlDocument() {}
 
-	/// Load a file using the current document value. Returns true if successful.
+	/** Load a file using the current document value. 
+		Returns true if successful. Will delete any existing
+		document data before loading.
+	*/
 	bool LoadFile();
 	/// Save a file using the current document value. Returns true if successful.
 	bool SaveFile();
