@@ -807,17 +807,19 @@ TiXmlNode* TiXmlComment::Clone() const
 }
 
 
-void TiXmlText::Print( FILE* cfile, int depth ) const
+void TiXmlText::Print( FILE* cfile, int /*depth*/ ) const
 {
 	TIXML_STRING buffer;
 	PutString( value, &buffer );
 	fprintf( cfile, "%s", buffer.c_str() );
 }
 
+
 void TiXmlText::StreamOut( TIXML_OSTREAM * stream ) const
 {
 	PutString( value, stream );
 }
+
 
 TiXmlNode* TiXmlText::Clone() const
 {	
@@ -831,6 +833,7 @@ TiXmlNode* TiXmlText::Clone() const
 	return clone;
 }
 
+
 TiXmlDeclaration::TiXmlDeclaration( const char * _version,
 	const char * _encoding,
 	const char * _standalone )
@@ -842,7 +845,7 @@ TiXmlDeclaration::TiXmlDeclaration( const char * _version,
 }
 
 
-void TiXmlDeclaration::Print( FILE* cfile, int depth ) const
+void TiXmlDeclaration::Print( FILE* cfile, int /*depth*/ ) const
 {
 	fprintf (cfile, "<?xml ");
 
