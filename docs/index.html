@@ -8,7 +8,7 @@
 <a class="qindex" href="index.html">Main Page</a> &nbsp; <a class="qindex" href="hierarchy.html">Class Hierarchy</a> &nbsp; <a class="qindex" href="annotated.html">Compound List</a> &nbsp; <a class="qindex" href="files.html">File List</a> &nbsp; <a class="qindex" href="functions.html">Compound Members</a> &nbsp; </center>
 <hr><h1>TinyXml Documentation</h1>
 <p>
-<h3 align="center">2.3.1</h3>
+<h3 align="center">2.3.2</h3>
 <p>
 <h1> TinyXml </h1>
 <p>
@@ -23,7 +23,7 @@ XML stands for "eXtensible Markup Language." It allows you to create  your own d
 <p>
 The best place for the complete, correct, and quite frankly hard to read spec is at <a href="http://www.w3.org/TR/2004/REC-xml-20040204/"> <a href="http://www.w3.org/TR/2004/REC-xml-20040204/">http://www.w3.org/TR/2004/REC-xml-20040204/</a></a>. An intro to XML (that I really like) can be found at  <a href="http://skew.org/xml/tutorial/"><a href="http://skew.org/xml/tutorial">http://skew.org/xml/tutorial</a></a>.
 <p>
-There are different ways to access and interact with XML data. TinyXml uses a Document Object Model (DOM), meaning the XML data is parsed into a tree objects that can be browsed and manipulated, and then  written back to disk. You can also construct an XML document from scratch with C++ objects and write this to disk (or another output stream.)
+There are different ways to access and interact with XML data. TinyXml uses a Document Object Model (DOM), meaning the XML data is parsed into a C++ objects that can be browsed and manipulated, and then  written to disk or another output stream. You can also construct an XML document from scratch with C++ objects and write this to disk or another output stream.
 <p>
 TinyXml is designed to be easy and fast to learn. It is two headers  and four cpp files. Simply add these to your project and off you go.  There is an example file - xmltest.cpp - to get you started.
 <p>
@@ -35,6 +35,16 @@ TinyXml attempts to be a flexible parser, but with truly correct and compliant X
 
 <p>
 It doesnt parse or use DTDs (Document Type Definitions) or XSLs (eXtensible Stylesheet Language.) There are other parsers out there  (check out www.sourceforge.org, search for XML) that are much more fully featured. But they are also much bigger, take longer to set up in your project, have a higher learning curve, and often have a more restrictive license. If you are working with browsers or have more complete XML needs, TinyXml is not the parser for you.
+<p>
+The following DTD syntax will not parse at this time in TinyXml:
+<p>
+<div class="fragment"><pre>
+    &lt;!DOCTYPE Archiv [
+     &lt;!ELEMENT Comment (#PCDATA)&gt;
+    ]&gt;
+</pre></div>
+<p>
+because TinyXml sees this as a !DOCTYPE node with an illegally  embedded !ELEMENT node. This may be addressed in the future.
 <p>
 <h2> Code Status. </h2>
 
@@ -68,15 +78,15 @@ TinyXml supports UTF-8 allowing to manipulate XML files in any language. TinyXml
 <p>
 Normally, TinyXml will try to detect the correct encoding and use it. However, by setting the value of TIXML_DEFAULT_ENCODING in the header file, TinyXml can be forced to always use one encoding.
 <p>
-The rules for detecting the encoding are: <ol>
-<li> If the non-standard but common "UTF-8 lead bytes" (0xef 0xbb 0xbf) begin the file or data stream, TinyXml will read it as UTF-8.  <li> If the declaration tag is read, and it has an encoding="UTF-8", then TinyXml will read it as UTF-8.  <li> If the declaration tag is read, and it has no encoding specified, then TinyXml will read it as UTF-8.  <li> If the declaration tag is read, and it has an encoding="something else", then TinyXml will read it as Legacy Mode. In legacy mode, TinyXml will  work as it did before. It's not clear what that mode does exactly, but  old content should keep working. </ol>
-What happens if the encoding is incorrectly set or detected? TinyXml will try to read and pass through text seen as improperly encoded. You may get some strange results or mangled characters, however. In this case, you may want to force TinyXml to Legacy Mode.
+TinyXml will assume Legacy Mode until one of the following occurs: <ol>
+<li> If the non-standard but common "UTF-8 lead bytes" (0xef 0xbb 0xbf) begin the file or data stream, TinyXml will read it as UTF-8.  <li> If the declaration tag is read, and it has an encoding="UTF-8", then TinyXml will read it as UTF-8.  <li> If the declaration tag is read, and it has no encoding specified, then TinyXml will read it as UTF-8.  <li> If the declaration tag is read, and it has an encoding="something else", then TinyXml will read it as Legacy Mode. In legacy mode, TinyXml will  work as it did before. It's not clear what that mode does exactly, but  old content should keep working. <li> Until one of the above criteria is met, TinyXml runs in Legacy Mode. </ol>
+What happens if the encoding is incorrectly set or detected? TinyXml will try to read and pass through text seen as improperly encoded. You may get some strange results or mangled characters. You may want to force TinyXml to the correct mode.
 <p>
-<b> You may force TinyXml to Legacy Mode by using LoadFile( TIXML_ENCODING_LEGACY ) or LoadFile( filename, TIXML_ENCODING_LEGACY ). You may force it to use legacy mode all the time by setting TIXML_DEFAULT_ENCODING = TIXML_ENCODING_LEGACY.</b>
+<b> You may force TinyXml to Legacy Mode by using LoadFile( TIXML_ENCODING_LEGACY ) or LoadFile( filename, TIXML_ENCODING_LEGACY ). You may force it to use legacy mode all the time by setting TIXML_DEFAULT_ENCODING = TIXML_ENCODING_LEGACY. Likewise, you may  force it to TIXML_ENCODING_UTF8 with the same technique.</b>
 <p>
 For English users, using English XML, UTF-8 is the same as low-ASCII. You don't need to be aware of UTF-8 or change your code in any way. You can think of UTF-8 as a "superset" of ASCII.
 <p>
-UTF-8 is not a double byte format. TinyXml does not use or support wchar, TCHAR, or Microsofts _UNICODE.
+UTF-8 is not a double byte format - but it is a standard encoding of Unicode! TinyXml does not use or directly support wchar, TCHAR, or Microsofts _UNICODE at this time.  It is common to see the term "Unicode" improperly refer to UTF-16, a wide byte encoding of unicode. This is a source of confusion.
 <p>
 For "high-ascii" languages - everything not English, pretty much - TinyXml can handle all languages, at the same time, as long as the XML is encoded in UTF-8. That can be a little tricky, older programs and operating systems tend to use the "default" or "traditional" code page. Many apps (and almost all modern ones) can output UTF-8, but older or stubborn (or just broken) ones still output text in the default code page.
 <p>
@@ -105,7 +115,7 @@ These are recognized when the XML document is read, and translated to there UTF-
 <p>
 will have the Value() of "Far &amp; Away" when queried from the <a class="el" href="classTiXmlText.html">TiXmlText</a> object, and will be written back to the XML stream/file as an ampersand. Older versions of TinyXml "preserved" character entities, but the newer versions will translate them into characters.
 <p>
-Additionally, any character can be specified by its Unicode code point: The syntax "&amp;xA0;" or "&amp;#160;" are both to the non-breaking space characher. Note that these will generally not be preserved on output: TinyXml will write the space to the output stream, not the character reference.
+Additionally, any character can be specified by its Unicode code point: The syntax "&amp;xA0;" or "&amp;#160;" are both to the non-breaking space characher.
 <p>
 <h3> Streams </h3>
  With TIXML_USE_STL on, TiXml has been modified to support both C (FILE) and C++ (operator&lt;&lt;,&gt;&gt;)  streams. There are some differences that you may need to be aware of.
@@ -309,7 +319,7 @@ www.sourceforge.net/projects/tinyxml
 <p>
 Lee Thomason, Yves Berquin
 <p>
-<hr><address style="align: right;"><small>Generated on Wed Jun 30 10:06:36 2004 for TinyXml by
+<hr><address style="align: right;"><small>Generated on Sun Aug 1 12:06:33 2004 for TinyXml by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.2.18 </small></address>
