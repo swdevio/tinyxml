@@ -84,3 +84,7 @@ Changes in version 2.0.1
 - Added missing licence text. Thanks to Lars Willemsens.
 - Added <ctype.h> include, at the suggestion of Steve Walters.
 
+Changes in version 2.1.0
+- Yves Berquin brings us the STL switch. The forum on SourceForge, and various emails to
+  me, have long debated all out STL vs. no STL at all. And now you can have it both ways.
+  TinyXml will compile either way.

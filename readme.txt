@@ -22,7 +22,7 @@ all be replaced with XML. One parser for everything.
 There are different ways to access and interact with XML data.
 TinyXml uses a Document Object Model, meaning the XML data is parsed
 into a tree objects that can be browsed and manipulated, and then 
-written back to disk. You can also construct an XML document from 
+written back to disk. You can also construct an XML document from
 scratch with C++ objects and write this to disk.
 
 TinyXml is designed to be easy and fast. It is one header and three cpp 
@@ -58,14 +58,28 @@ There are some areas of improvement; please check sourceforge if you are
 interested in working on TinxXml.
 
 
-<h2> Changes between version 1 and 2 </h2>
+<h2> Features </h2>
 
-Ignoring other changes, 1.2 is limited to the STL string class, while version
-2.0 makes extensive use of STL. If you need a minimal STL implementation,
-you should drop back to the 1.2 release. In the next version of TinyXml,
-I hope to see us support a compile time switch to use full STL or none
-at all. Initial code looks really good.
+<h3> Using STL </h3>
 
+TinyXml can be compiled to use or not use STL. When using STL, TinyXml
+uses the std::string class, and fully supports std::istream, std::ostream,
+operator<<, and operator>>. Many API methods have both 'const char*' and
+'const std::string&' forms.
+
+When STL support is compiled out, no STL files are included whatsover. All
+the string classes are implemented by TinyXml itself. API methods
+all use the 'const char*' form for input.
+
+Use the compile time #define:
+
+	TIXML_USE_STL
+
+to compile one version or the other.
+
+Note: If compiling the test code in Linux, setting the environment
+variable TINYXML_USE_STL=YES/NO will control STL compilation. In the
+Windows project file, STL and non STL targets are provided.
 
 <h3> Entities </h3>
 TinyXml recognizes the pre-defined "entity references", meaning special
@@ -97,7 +111,8 @@ entities, and leave them unprocessed.
 
 
 <h3> Streams </h3>
-TiXml has been modified to support both C (FILE) and C++ (operator <<,>>)
+With TIXML_USE_STL on,
+TiXml has been modified to support both C (FILE) and C++ (operator <<,>>) 
 streams. There are some differences that you may need to be aware of.
 
 C style output:
@@ -170,7 +185,7 @@ hard coded.
 
 To Use in an Application:
 
-Add tinyxml.cpp, tinyxml.h, tinyxmlerror.cpp, and tinyxmlparser.cpp to your 
+Add tinyxml.cpp, tinyxml.h, tinyxmlerror.cpp, tinyxmlparser.cpp, and tinystr.cpp to your 
 project or make file. That's it! It should compile on any reasonably
 compliant C++ system. You do not need to enable exceptions or
 RTTI for TinyXml.

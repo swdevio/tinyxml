@@ -27,94 +27,122 @@
 <tr><td nowrap align=right valign=top>enum &nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#s7">NodeType</a> </td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>The types of XML nodes supported by TinyXml.</em> <a href="#s7">More...</a><em></em></font><br><br></td></tr>
 <tr><td colspan=2><br><h2>Public Methods</h2></td></tr>
-<tr><td nowrap align=right valign=top>const std::string &amp;&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a1">Value</a> () const</td></tr>
+<tr><td nowrap align=right valign=top>const char *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a1">Value</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>The meaning of 'value' changes for the specific type of TiXmlNode.</em> <a href="#a1">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top>void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a2">SetValue</a> (const std::string &amp;_value)</td></tr>
+<tr><td nowrap align=right valign=top>void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a2">SetValue</a> (const char *_value)</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Changes the value of the node.</em> <a href="#a2">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a3" doxytag="TiXmlNode::Clear"></a>
-void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a3">Clear</a> ()</td></tr>
+<tr><td nowrap align=right valign=top><a name="a3" doxytag="TiXmlNode::SetValue"></a>
+void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a3">SetValue</a> (const std::string &amp;value)</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>STL std::string form.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a4" doxytag="TiXmlNode::Clear"></a>
+void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a4">Clear</a> ()</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Delete all the children of this node. Does not affect 'this'.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a4" doxytag="TiXmlNode::Parent"></a>
-TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a4">Parent</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a5" doxytag="TiXmlNode::Parent"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a5">Parent</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>One step up the DOM.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a5" doxytag="TiXmlNode::FirstChild"></a>
-TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a5">FirstChild</a> () const</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>The first child of this node. Will be null if there are no children.</em></font><br><br></td></tr>
 <tr><td nowrap align=right valign=top><a name="a6" doxytag="TiXmlNode::FirstChild"></a>
-TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a6">FirstChild</a> (const std::string &amp;value) const</td></tr>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a6">FirstChild</a> () const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>The first child of this node. Will be null if there are no children.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a7" doxytag="TiXmlNode::FirstChild"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a7">FirstChild</a> (const char *value) const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>The first child of this node with the matching 'value'. Will be null if none found.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a8" doxytag="TiXmlNode::LastChild"></a>
-TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a8">LastChild</a> (const std::string &amp;value) const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a9" doxytag="TiXmlNode::LastChild"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a9">LastChild</a> (const char *value) const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>The last child of this node. Will be null if there are no children.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top>TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a9">IterateChildren</a> (TiXmlNode *previous) const</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>An alternate way to walk the children of a node.</em> <a href="#a9">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a10" doxytag="TiXmlNode::IterateChildren"></a>
-TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a10">IterateChildren</a> (const std::string &amp;value, TiXmlNode *previous) const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a10" doxytag="TiXmlNode::FirstChild"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a10">FirstChild</a> (const std::string &amp;value) const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>STL std::string form.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a11" doxytag="TiXmlNode::LastChild"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a11">LastChild</a> (const std::string &amp;value) const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>STL std::string form.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top>TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a12">IterateChildren</a> (TiXmlNode *previous) const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>An alternate way to walk the children of a node.</em> <a href="#a12">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a13" doxytag="TiXmlNode::IterateChildren"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a13">IterateChildren</a> (const char *value, TiXmlNode *previous) const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>This flavor of IterateChildren searches for children with a particular 'value'.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top>TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a11">InsertEndChild</a> (const TiXmlNode &amp;addThis)</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>Add a new node related to this.</em> <a href="#a11">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top>TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a12">InsertBeforeChild</a> (TiXmlNode *beforeThis, const TiXmlNode &amp;addThis)</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>Add a new node related to this.</em> <a href="#a12">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top>TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a13">InsertAfterChild</a> (TiXmlNode *afterThis, const TiXmlNode &amp;addThis)</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>Add a new node related to this.</em> <a href="#a13">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top>TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a14">ReplaceChild</a> (TiXmlNode *replaceThis, const TiXmlNode &amp;withThis)</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>Replace a child of this node.</em> <a href="#a14">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a15" doxytag="TiXmlNode::RemoveChild"></a>
-bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a15">RemoveChild</a> (TiXmlNode *removeThis)</td></tr>
+<tr><td nowrap align=right valign=top><a name="a14" doxytag="TiXmlNode::IterateChildren"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a14">IterateChildren</a> (const std::string &amp;value, TiXmlNode *previous) const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>STL std::string form.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top>TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a15">InsertEndChild</a> (const TiXmlNode &amp;addThis)</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Add a new node related to this.</em> <a href="#a15">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top>TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a16">InsertBeforeChild</a> (TiXmlNode *beforeThis, const TiXmlNode &amp;addThis)</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Add a new node related to this.</em> <a href="#a16">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top>TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a17">InsertAfterChild</a> (TiXmlNode *afterThis, const TiXmlNode &amp;addThis)</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Add a new node related to this.</em> <a href="#a17">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top>TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a18">ReplaceChild</a> (TiXmlNode *replaceThis, const TiXmlNode &amp;withThis)</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Replace a child of this node.</em> <a href="#a18">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a19" doxytag="TiXmlNode::RemoveChild"></a>
+bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a19">RemoveChild</a> (TiXmlNode *removeThis)</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Delete a child of this node.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a16" doxytag="TiXmlNode::PreviousSibling"></a>
-TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a16">PreviousSibling</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a20" doxytag="TiXmlNode::PreviousSibling"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a20">PreviousSibling</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Navigate to a sibling node.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a17" doxytag="TiXmlNode::PreviousSibling"></a>
-TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a17">PreviousSibling</a> (const std::string &amp;) const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a21" doxytag="TiXmlNode::PreviousSibling"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a21">PreviousSibling</a> (const char *) const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Navigate to a sibling node.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a18" doxytag="TiXmlNode::NextSibling"></a>
-TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a18">NextSibling</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a22" doxytag="TiXmlNode::PreviousSibling"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a22">PreviousSibling</a> (const std::string &amp;value) const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>STL std::string form.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a23" doxytag="TiXmlNode::NextSibling"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a23">NextSibling</a> (const std::string &amp;value) const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>STL std::string form.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a24" doxytag="TiXmlNode::NextSibling"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a24">NextSibling</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Navigate to a sibling node.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a19" doxytag="TiXmlNode::NextSibling"></a>
-TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a19">NextSibling</a> (const std::string &amp;) const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a25" doxytag="TiXmlNode::NextSibling"></a>
+TiXmlNode *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a25">NextSibling</a> (const char *) const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Navigate to a sibling node with the given 'value'.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a20">NextSiblingElement</a> () const</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>Convenience function to get through elements.</em> <a href="#a20">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a21">NextSiblingElement</a> (const std::string &amp;) const</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>Convenience function to get through elements.</em> <a href="#a21">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a22" doxytag="TiXmlNode::FirstChildElement"></a>
-<a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a22">FirstChildElement</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a26">NextSiblingElement</a> () const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Convenience function to get through elements.</em> <a href="#a26">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a27">NextSiblingElement</a> (const char *) const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Convenience function to get through elements.</em> <a href="#a27">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a28" doxytag="TiXmlNode::NextSiblingElement"></a>
+<a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a28">NextSiblingElement</a> (const std::string &amp;value) const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>STL std::string form.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a29" doxytag="TiXmlNode::FirstChildElement"></a>
+<a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a29">FirstChildElement</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Convenience function to get through elements.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a23" doxytag="TiXmlNode::FirstChildElement"></a>
-<a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a23">FirstChildElement</a> (const std::string &amp;value) const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a30" doxytag="TiXmlNode::FirstChildElement"></a>
+<a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a30">FirstChildElement</a> (const char *value) const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Convenience function to get through elements.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a24" doxytag="TiXmlNode::Type"></a>
-virtual int&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a24">Type</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a31" doxytag="TiXmlNode::FirstChildElement"></a>
+<a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a31">FirstChildElement</a> (const std::string &amp;value) const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>STL std::string form.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a32" doxytag="TiXmlNode::Type"></a>
+virtual int&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a32">Type</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Query the type (as an enumerated value, above) of this node.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a class="el" href="classTiXmlDocument.html">TiXmlDocument</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a25">GetDocument</a> () const</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>Return a pointer to the Document this node lives in.</em> <a href="#a25">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a26" doxytag="TiXmlNode::NoChildren"></a>
-bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a26">NoChildren</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a class="el" href="classTiXmlDocument.html">TiXmlDocument</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a33">GetDocument</a> () const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Return a pointer to the Document this node lives in.</em> <a href="#a33">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a34" doxytag="TiXmlNode::NoChildren"></a>
+bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a34">NoChildren</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Returns true if this node has no children.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a27" doxytag="TiXmlNode::ToDocument"></a>
-<a class="el" href="classTiXmlDocument.html">TiXmlDocument</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a27">ToDocument</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a35" doxytag="TiXmlNode::ToDocument"></a>
+<a class="el" href="classTiXmlDocument.html">TiXmlDocument</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a35">ToDocument</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Cast to a more defined type. Will return null not of the requested type.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a28" doxytag="TiXmlNode::ToElement"></a>
-<a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a28">ToElement</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a36" doxytag="TiXmlNode::ToElement"></a>
+<a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a36">ToElement</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Cast to a more defined type. Will return null not of the requested type.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a29" doxytag="TiXmlNode::ToComment"></a>
-<a class="el" href="classTiXmlComment.html">TiXmlComment</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a29">ToComment</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a37" doxytag="TiXmlNode::ToComment"></a>
+<a class="el" href="classTiXmlComment.html">TiXmlComment</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a37">ToComment</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Cast to a more defined type. Will return null not of the requested type.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a30" doxytag="TiXmlNode::ToUnknown"></a>
-<a class="el" href="classTiXmlUnknown.html">TiXmlUnknown</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a30">ToUnknown</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a38" doxytag="TiXmlNode::ToUnknown"></a>
+<a class="el" href="classTiXmlUnknown.html">TiXmlUnknown</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a38">ToUnknown</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Cast to a more defined type. Will return null not of the requested type.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a31" doxytag="TiXmlNode::ToText"></a>
-<a class="el" href="classTiXmlText.html">TiXmlText</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a31">ToText</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a39" doxytag="TiXmlNode::ToText"></a>
+<a class="el" href="classTiXmlText.html">TiXmlText</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a39">ToText</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Cast to a more defined type. Will return null not of the requested type.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a32" doxytag="TiXmlNode::ToDeclaration"></a>
-<a class="el" href="classTiXmlDeclaration.html">TiXmlDeclaration</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a32">ToDeclaration</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a40" doxytag="TiXmlNode::ToDeclaration"></a>
+<a class="el" href="classTiXmlDeclaration.html">TiXmlDeclaration</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#a40">ToDeclaration</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Cast to a more defined type. Will return null not of the requested type.</em></font><br><br></td></tr>
 <tr><td colspan=2><br><h2>Friends</h2></td></tr>
-<tr><td nowrap align=right valign=top>std::ostream &amp;&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#l0">operator&lt;&lt;</a> (std::ostream &amp;out, const TiXmlNode &amp;base)</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>An output stream operator, for every class.</em> <a href="#l0">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top>std::istream &amp;&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#l1">operator&gt;&gt;</a> (std::istream &amp;in, TiXmlNode &amp;base)</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>An input stream operator, for every class.</em> <a href="#l1">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="l0" doxytag="TiXmlNode::TiXmlDocument"></a>
+class&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#l0">TiXmlDocument</a></td></tr>
+<tr><td nowrap align=right valign=top><a name="l1" doxytag="TiXmlNode::TiXmlElement"></a>
+class&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlElement.html#l1">TiXmlElement</a></td></tr>
+<tr><td nowrap align=right valign=top>std::istream &amp;&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#l2">operator&gt;&gt;</a> (std::istream &amp;in, TiXmlNode &amp;base)</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>An input stream operator, for every class.</em> <a href="#l2">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top>std::ostream &amp;&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlNode.html#l3">operator&lt;&lt;</a> (std::ostream &amp;out, const TiXmlNode &amp;base)</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>An output stream operator, for every class.</em> <a href="#l3">More...</a><em></em></font><br><br></td></tr>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 The parent class for everything in the Document Object Model.
@@ -147,7 +175,7 @@ The types of XML nodes supported by TinyXml.
   </tr>
 </table>
 <hr><h2>Member Function Documentation</h2>
-<a name="a25" doxytag="TiXmlNode::GetDocument"></a><p>
+<a name="a33" doxytag="TiXmlNode::GetDocument"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -177,7 +205,7 @@ Return a pointer to the Document this node lives in.
 Returns null if not in a document.     </td>
   </tr>
 </table>
-<a name="a13" doxytag="TiXmlNode::InsertAfterChild"></a><p>
+<a name="a17" doxytag="TiXmlNode::InsertAfterChild"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -217,7 +245,7 @@ Add a new node related to this.
 Adds a child after the specified child. Returns a pointer to the new object or NULL if an error occured.     </td>
   </tr>
 </table>
-<a name="a12" doxytag="TiXmlNode::InsertBeforeChild"></a><p>
+<a name="a16" doxytag="TiXmlNode::InsertBeforeChild"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -257,7 +285,7 @@ Add a new node related to this.
 Adds a child before the specified child. Returns a pointer to the new object or NULL if an error occured.     </td>
   </tr>
 </table>
-<a name="a11" doxytag="TiXmlNode::InsertEndChild"></a><p>
+<a name="a15" doxytag="TiXmlNode::InsertEndChild"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -288,7 +316,7 @@ Add a new node related to this.
 Adds a child past the LastChild. Returns a pointer to the new object or NULL if an error occured.     </td>
   </tr>
 </table>
-<a name="a9" doxytag="TiXmlNode::IterateChildren"></a><p>
+<a name="a12" doxytag="TiXmlNode::IterateChildren"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -328,7 +356,7 @@ IterateChildren does the same thing with the syntax: <div class="fragment"><pre>
 IterateChildren takes the previous child as input and finds the next one. If the previous child is null, it returns the first. IterateChildren will return null when done.     </td>
   </tr>
 </table>
-<a name="a21" doxytag="TiXmlNode::NextSiblingElement"></a><p>
+<a name="a27" doxytag="TiXmlNode::NextSiblingElement"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -336,7 +364,7 @@ IterateChildren takes the previous child as input and finds the next one. If the
         <tr>
           <td class="md" nowrap valign="top"> <a class="el" href="classTiXmlElement.html">TiXmlElement</a>* TiXmlNode::NextSiblingElement </td>
           <td class="md" valign="top">(&nbsp;</td>
-          <td class="md" nowrap valign="top">const std::string &amp;&nbsp;</td>
+          <td class="md" nowrap valign="top">const char *&nbsp;</td>
           <td class="mdname1" valign="top" nowrap>&nbsp;          </td>
           <td class="md" valign="top">)&nbsp;</td>
           <td class="md" nowrap> const</td>
@@ -359,7 +387,7 @@ Convenience function to get through elements.
 Calls NextSibling and ToElement. Will skip all non-Element nodes. Returns 0 if there is not another element.     </td>
   </tr>
 </table>
-<a name="a20" doxytag="TiXmlNode::NextSiblingElement"></a><p>
+<a name="a26" doxytag="TiXmlNode::NextSiblingElement"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -389,7 +417,7 @@ Convenience function to get through elements.
 Calls NextSibling and ToElement. Will skip all non-Element nodes. Returns 0 if there is not another element.     </td>
   </tr>
 </table>
-<a name="a14" doxytag="TiXmlNode::ReplaceChild"></a><p>
+<a name="a18" doxytag="TiXmlNode::ReplaceChild"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -437,7 +465,7 @@ Returns a pointer to the new object or NULL if an error occured.     </td>
         <tr>
           <td class="md" nowrap valign="top"> void TiXmlNode::SetValue </td>
           <td class="md" valign="top">(&nbsp;</td>
-          <td class="md" nowrap valign="top">const std::string &amp;&nbsp;</td>
+          <td class="md" nowrap valign="top">const char *&nbsp;</td>
           <td class="mdname1" valign="top" nowrap>&nbsp; <em>_value</em>          </td>
           <td class="md" valign="top">)&nbsp;</td>
           <td class="md" nowrap><code> [inline]</code></td>
@@ -472,7 +500,7 @@ Defined as: <div class="fragment"><pre>
     <td class="md">
       <table cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td class="md" nowrap valign="top"> const std::string&amp; TiXmlNode::Value </td>
+          <td class="md" nowrap valign="top"> const char* TiXmlNode::Value </td>
           <td class="md" valign="top">(&nbsp;</td>
           <td class="mdname1" valign="top" nowrap>&nbsp;          </td>
           <td class="md" valign="top">)&nbsp;</td>
@@ -505,7 +533,7 @@ The subclasses will wrap this function.     </td>
   </tr>
 </table>
 <hr><h2>Friends And Related Function Documentation</h2>
-<a name="l0" doxytag="TiXmlNode::operator<<"></a><p>
+<a name="l3" doxytag="TiXmlNode::operator<<"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -551,7 +579,7 @@ But reading is not as well defined. (As it always is.) If you create a <a class=
 A <a class="el" href="classTiXmlDocument.html">TiXmlDocument</a> will read nodes until it reads a root element.     </td>
   </tr>
 </table>
-<a name="l1" doxytag="TiXmlNode::operator>>"></a><p>
+<a name="l2" doxytag="TiXmlNode::operator>>"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -593,7 +621,7 @@ Tolerant of newlines and formatting, but doesn't expect them.     </td>
 </table>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="tinyxml_8h-source.html">tinyxml.h</a></ul>
-<hr><address><small>Generated on Thu Apr 25 22:20:55 2002 for TinyXml by
+<hr><address><small>Generated on Mon May 6 22:45:16 2002 for TinyXml by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.gif" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.2.11.1 written by <a href="mailto:dimitri@stack.nl">Dimitri van Heesch</a>,

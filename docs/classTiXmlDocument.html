@@ -23,40 +23,49 @@
 &nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a0">TiXmlDocument</a> ()</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Create an empty document, that has no name.</em></font><br><br></td></tr>
 <tr><td nowrap align=right valign=top><a name="a1" doxytag="TiXmlDocument::TiXmlDocument"></a>
-&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a1">TiXmlDocument</a> (const std::string &amp;documentName)</td></tr>
+&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a1">TiXmlDocument</a> (const char *documentName)</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Create a document with a name. The name of the document is also the filename of the xml.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top>bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a3">LoadFile</a> ()</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>Load a file using the current document value.</em> <a href="#a3">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a4" doxytag="TiXmlDocument::SaveFile"></a>
-bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a4">SaveFile</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a2" doxytag="TiXmlDocument::TiXmlDocument"></a>
+&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a2">TiXmlDocument</a> (const std::string &amp;documentName)</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Constructor.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top>bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a4">LoadFile</a> ()</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Load a file using the current document value.</em> <a href="#a4">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a5" doxytag="TiXmlDocument::SaveFile"></a>
+bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a5">SaveFile</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Save a file using the current document value. Returns true if successful.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a5" doxytag="TiXmlDocument::LoadFile"></a>
-bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a5">LoadFile</a> (const std::string &amp;filename)</td></tr>
+<tr><td nowrap align=right valign=top><a name="a6" doxytag="TiXmlDocument::LoadFile"></a>
+bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a6">LoadFile</a> (const char *filename)</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Load a file using the given filename. Returns true if successful.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a6" doxytag="TiXmlDocument::SaveFile"></a>
-bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a6">SaveFile</a> (const std::string &amp;filename) const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a7" doxytag="TiXmlDocument::SaveFile"></a>
+bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a7">SaveFile</a> (const char *filename) const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Save a file using the given filename. Returns true if successful.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a7" doxytag="TiXmlDocument::Parse"></a>
-virtual const char *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a7">Parse</a> (const char *p)</td></tr>
+<tr><td nowrap align=right valign=top><a name="a8" doxytag="TiXmlDocument::LoadFile"></a>
+bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a8">LoadFile</a> (const std::string &amp;filename)</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>STL std::string version.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a9" doxytag="TiXmlDocument::SaveFile"></a>
+bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a9">SaveFile</a> (const std::string &amp;filename) const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>STL std::string version.</em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a10" doxytag="TiXmlDocument::Parse"></a>
+virtual const char *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a10">Parse</a> (const char *p)</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Parse the given null terminated block of xml data.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a8">RootElement</a> () const</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>Get the root element -- the only top level element -- of the document.</em> <a href="#a8">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a9" doxytag="TiXmlDocument::Error"></a>
-bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a9">Error</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a class="el" href="classTiXmlElement.html">TiXmlElement</a> *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a11">RootElement</a> () const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Get the root element -- the only top level element -- of the document.</em> <a href="#a11">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a12" doxytag="TiXmlDocument::Error"></a>
+bool&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a12">Error</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>If, during parsing, a error occurs, Error will be set to true.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a10" doxytag="TiXmlDocument::ErrorDesc"></a>
-const std::string &amp;&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a10">ErrorDesc</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a13" doxytag="TiXmlDocument::ErrorDesc"></a>
+const char *&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a13">ErrorDesc</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Contains a textual (english) description of the error if one occurs.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top>const int&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a11">ErrorId</a> () const</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>Generally, you probably want the error string ( <a class="el" href="classTiXmlDocument.html#a10">ErrorDesc</a>() ).</em> <a href="#a11">More...</a><em></em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a12" doxytag="TiXmlDocument::ClearError"></a>
-void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a12">ClearError</a> ()</td></tr>
+<tr><td nowrap align=right valign=top>const int&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a14">ErrorId</a> () const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>Generally, you probably want the error string ( <a class="el" href="classTiXmlDocument.html#a13">ErrorDesc</a>() ).</em> <a href="#a14">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top><a name="a15" doxytag="TiXmlDocument::ClearError"></a>
+void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a15">ClearError</a> ()</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>If you have handled the error, it can be reset with this call.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top><a name="a13" doxytag="TiXmlDocument::Print"></a>
-void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a13">Print</a> () const</td></tr>
+<tr><td nowrap align=right valign=top><a name="a16" doxytag="TiXmlDocument::Print"></a>
+void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a16">Print</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Dump the document to standard out.</em></font><br><br></td></tr>
-<tr><td nowrap align=right valign=top>virtual void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a14">Print</a> (FILE *cfile, int depth=0) const</td></tr>
-<tr><td>&nbsp;</td><td><font size=-1><em>All TinyXml classes can print themselves to a filestream.</em> <a href="#a14">More...</a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top>virtual void&nbsp;</td><td valign=bottom><a class="el" href="classTiXmlDocument.html#a17">Print</a> (FILE *cfile, int depth=0) const</td></tr>
+<tr><td>&nbsp;</td><td><font size=-1><em>All TinyXml classes can print themselves to a filestream.</em> <a href="#a17">More...</a><em></em></font><br><br></td></tr>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Always the top level node.
@@ -64,7 +73,7 @@ Always the top level node.
 A document binds together all the XML pieces. It can be saved, loaded, and printed to the screen. The 'value' of a document node is the xml file name. 
 <p>
 <hr><h2>Member Function Documentation</h2>
-<a name="a11" doxytag="TiXmlDocument::ErrorId"></a><p>
+<a name="a14" doxytag="TiXmlDocument::ErrorId"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -89,12 +98,12 @@ A document binds together all the XML pieces. It can be saved, loaded, and print
     <td>
 
 <p>
-Generally, you probably want the error string ( <a class="el" href="classTiXmlDocument.html#a10">ErrorDesc</a>() ).
+Generally, you probably want the error string ( <a class="el" href="classTiXmlDocument.html#a13">ErrorDesc</a>() ).
 <p>
 But if you prefer the ErrorId, this function will fetch it.     </td>
   </tr>
 </table>
-<a name="a3" doxytag="TiXmlDocument::LoadFile"></a><p>
+<a name="a4" doxytag="TiXmlDocument::LoadFile"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -124,7 +133,7 @@ Load a file using the current document value.
 Returns true if successful. Will delete any existing document data before loading.     </td>
   </tr>
 </table>
-<a name="a14" doxytag="TiXmlDocument::Print"></a><p>
+<a name="a17" doxytag="TiXmlDocument::Print"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -168,7 +177,7 @@ This is a formatted print, and will insert tabs and newlines.
 Reimplemented from <a class="el" href="classTiXmlBase.html#a2">TiXmlBase</a>.    </td>
   </tr>
 </table>
-<a name="a8" doxytag="TiXmlDocument::RootElement"></a><p>
+<a name="a11" doxytag="TiXmlDocument::RootElement"></a><p>
 <table width="100%" cellpadding="2" cellspacing="0" border="0">
   <tr>
     <td class="md">
@@ -200,7 +209,7 @@ In well formed XML, there should only be one. TinyXml is tolerant of multiple el
 </table>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="tinyxml_8h-source.html">tinyxml.h</a></ul>
-<hr><address><small>Generated on Thu Apr 25 22:20:55 2002 for TinyXml by
+<hr><address><small>Generated on Mon May 6 22:45:16 2002 for TinyXml by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.gif" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.2.11.1 written by <a href="mailto:dimitri@stack.nl">Dimitri van Heesch</a>,
