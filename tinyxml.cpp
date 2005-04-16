@@ -318,7 +318,7 @@ const TiXmlNode* TiXmlNode::FirstChild( const char * _value ) const
 	const TiXmlNode* node;
 	for ( node = firstChild; node; node = node->next )
 	{
-		if ( node->SValue() == TIXML_STRING( _value ))
+		if ( node->SValue() == _value )
 			return node;
 	}
 	return 0;
@@ -330,7 +330,7 @@ TiXmlNode* TiXmlNode::FirstChild( const char * _value )
 	TiXmlNode* node;
 	for ( node = firstChild; node; node = node->next )
 	{
-		if ( node->SValue() == TIXML_STRING( _value ))
+		if ( node->SValue() == _value )
 			return node;
 	}
 	return 0;
@@ -342,7 +342,7 @@ const TiXmlNode* TiXmlNode::LastChild( const char * _value ) const
 	const TiXmlNode* node;
 	for ( node = lastChild; node; node = node->prev )
 	{
-		if ( node->SValue() == TIXML_STRING (_value))
+		if ( node->SValue() == _value )
 			return node;
 	}
 	return 0;
@@ -353,13 +353,13 @@ TiXmlNode* TiXmlNode::LastChild( const char * _value )
 	TiXmlNode* node;
 	for ( node = lastChild; node; node = node->prev )
 	{
-		if ( node->SValue() == TIXML_STRING (_value))
+		if ( node->SValue() == _value )
 			return node;
 	}
 	return 0;
 }
 
-const TiXmlNode* TiXmlNode::IterateChildren( TiXmlNode* previous ) const
+const TiXmlNode* TiXmlNode::IterateChildren( const TiXmlNode* previous ) const
 {
 	if ( !previous )
 	{
@@ -385,7 +385,7 @@ TiXmlNode* TiXmlNode::IterateChildren( TiXmlNode* previous )
 	}
 }
 
-const TiXmlNode* TiXmlNode::IterateChildren( const char * val, TiXmlNode* previous ) const
+const TiXmlNode* TiXmlNode::IterateChildren( const char * val, const TiXmlNode* previous ) const
 {
 	if ( !previous )
 	{
@@ -416,7 +416,7 @@ const TiXmlNode* TiXmlNode::NextSibling( const char * _value ) const
 	const TiXmlNode* node;
 	for ( node = next; node; node = node->next )
 	{
-		if ( node->SValue() == TIXML_STRING (_value))
+		if ( node->SValue() == _value )
 			return node;
 	}
 	return 0;
@@ -427,7 +427,7 @@ TiXmlNode* TiXmlNode::NextSibling( const char * _value )
 	TiXmlNode* node;
 	for ( node = next; node; node = node->next )
 	{
-		if ( node->SValue() == TIXML_STRING (_value))
+		if ( node->SValue() == _value )
 			return node;
 	}
 	return 0;
@@ -438,7 +438,7 @@ const TiXmlNode* TiXmlNode::PreviousSibling( const char * _value ) const
 	const TiXmlNode* node;
 	for ( node = prev; node; node = node->prev )
 	{
-		if ( node->SValue() == TIXML_STRING (_value))
+		if ( node->SValue() == _value )
 			return node;
 	}
 	return 0;
@@ -449,7 +449,7 @@ TiXmlNode* TiXmlNode::PreviousSibling( const char * _value )
 	TiXmlNode* node;
 	for ( node = prev; node; node = node->prev )
 	{
-		if ( node->SValue() == TIXML_STRING (_value))
+		if ( node->SValue() == _value )
 			return node;
 	}
 	return 0;
@@ -722,7 +722,7 @@ void TiXmlElement::SetAttribute( const char * name, int val )
 
 void TiXmlElement::SetDoubleAttribute( const char * name, double val )
 {	
-	char buf[128];
+	char buf[256];
 	sprintf( buf, "%f", val );
 	SetAttribute( name, buf );
 }
@@ -1140,7 +1140,7 @@ void TiXmlAttribute::SetIntValue( int _value )
 
 void TiXmlAttribute::SetDoubleValue( double _value )
 {
-	char buf [64];
+	char buf [256];
 	sprintf (buf, "%lf", _value);
 	SetValue (buf);
 }
@@ -1412,7 +1412,7 @@ void TiXmlAttributeSet::Remove( TiXmlAttribute* removeMe )
 	assert( 0 );		// we tried to remove a non-linked attribute.
 }
 
-const TiXmlAttribute*	TiXmlAttributeSet::Find( const char * name ) const
+const TiXmlAttribute* TiXmlAttributeSet::Find( const char * name ) const
 {
 	const TiXmlAttribute* node;
 

@@ -31,7 +31,8 @@ distribution.
 #define TIXML_STRING_INCLUDED
 
 #ifdef _MSC_VER
-#pragma warning( disable : 4786 )	// Debugger truncating names.
+#pragma warning( disable : 4530 )
+#pragma warning( disable : 4786 )
 #endif
 
 #include <assert.h>
@@ -46,8 +47,9 @@ distribution.
 class TiXmlString
 {
   public :
-    // TiXmlString constructor, based on a string
-    TiXmlString (const char * instring);
+    // TiXmlString constructor, based on a string, mark explicit to force
+	// us to find unnecessary casting.
+    explicit TiXmlString (const char * instring);
 
     // TiXmlString empty constructor
     TiXmlString ()
@@ -58,7 +60,7 @@ class TiXmlString
     }
 
     // TiXmlString copy constructor
-    TiXmlString (const TiXmlString& copy);
+    explicit TiXmlString (const TiXmlString& copy);
 
     // TiXmlString destructor
     ~ TiXmlString ()
@@ -75,7 +77,7 @@ class TiXmlString
     }
 
     // Return the length of a TiXmlString
-    unsigned length () const
+    size_t length () const
 	{
 		return ( allocated ) ? current_length : 0;
 	}
@@ -107,6 +109,7 @@ class TiXmlString
 		return *this;
     }
     bool operator == (const TiXmlString & compare) const;
+    bool operator == (const char* compare) const;
     bool operator < (const TiXmlString & compare) const;
     bool operator > (const TiXmlString & compare) const;
 
@@ -158,20 +161,20 @@ class TiXmlString
     enum {	notfound = 0xffffffff,
             npos = notfound };
 
-    void append (const char *str, int len );
+    void append (const char *str, size_t len );
 
   protected :
 
     // The base string
     char * cstring;
     // Number of chars allocated
-    unsigned allocated;
+    size_t allocated;
     // Current string size
-    unsigned current_length;
+    size_t current_length;
 
     // New size computation. It is simplistic right now : it returns twice the amount
     // we need
-    unsigned assign_new_size (unsigned minimum_to_allocate)
+    size_t assign_new_size (size_t minimum_to_allocate)
     {
         return minimum_to_allocate * 2;
     }
@@ -237,6 +240,11 @@ public :
         return (* this);
     }
 } ;
+
+#ifdef _MSC_VER
+#pragma warning( default : 4530 )
+#pragma warning( default : 4786 )
+#endif
 
 #endif	// TIXML_STRING_INCLUDED
 #endif	// TIXML_USE_STL

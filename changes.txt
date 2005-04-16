@@ -183,3 +183,10 @@ Changes in version 2.1.5
   remove const in a method like this: TiXmlElement* Foo() const, where the returned element
   was a pointer to internal data. That is now: const TiXmlElement* Foo() const and
   TiXmlElement* Foo().
+
+2.3.4
+- Fixed additional const errors, thanks Kent Gibson.
+- Correctly re-enable warnings after tinyxml header. Thanks Cory Nelson.
+- Variety of type cleanup and warning fixes. Thanks Warren Stevens.
+- Cleaned up unneeded constructor calls in TinyString - thanks to Geoff Carlton and
+  the discussion group on sourceforge.

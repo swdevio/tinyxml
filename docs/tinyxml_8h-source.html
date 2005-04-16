@@ -79,7 +79,7 @@
 00072 
 00073 <span class="keyword">const</span> <span class="keywordtype">int</span> TIXML_MAJOR_VERSION = 2;
 00074 <span class="keyword">const</span> <span class="keywordtype">int</span> TIXML_MINOR_VERSION = 3;
-00075 <span class="keyword">const</span> <span class="keywordtype">int</span> TIXML_PATCH_VERSION = 3;
+00075 <span class="keyword">const</span> <span class="keywordtype">int</span> TIXML_PATCH_VERSION = 4;
 00076 
 00077 <span class="comment">/*  Internal structure for tracking location of items </span>
 00078 <span class="comment">    in the XML file.</span>
@@ -368,14 +368,14 @@
 <a name="l00466"></a><a class="code" href="classTiXmlNode.html#a18">00466</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a12">LastChild</a>( <span class="keyword">const</span> std::string&amp; _value )               {   <span class="keywordflow">return</span> <a class="code" href="classTiXmlNode.html#a12">LastChild</a> (_value.c_str ()); }   
 00467 <span class="preprocessor">    #endif</span>
 00468 <span class="preprocessor"></span>
-00485     <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a19">IterateChildren</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) <span class="keyword">const</span>;
+00485     <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a19">IterateChildren</a>( <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) <span class="keyword">const</span>;
 00486     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a19">IterateChildren</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous );
 00487 
-00489     <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a19">IterateChildren</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> * value, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) <span class="keyword">const</span>;
+00489     <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a19">IterateChildren</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> * value, <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) <span class="keyword">const</span>;
 00490     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a19">IterateChildren</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> * value, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous );
 00491 
 00492 <span class="preprocessor">    #ifdef TIXML_USE_STL</span>
-<a name="l00493"></a><a class="code" href="classTiXmlNode.html#a23">00493</a> <span class="preprocessor"></span>    <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a19">IterateChildren</a>( <span class="keyword">const</span> std::string&amp; _value, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous )<span class="keyword"> const    </span>{   <span class="keywordflow">return</span> <a class="code" href="classTiXmlNode.html#a19">IterateChildren</a> (_value.c_str (), previous); }   
+<a name="l00493"></a><a class="code" href="classTiXmlNode.html#a23">00493</a> <span class="preprocessor"></span>    <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a19">IterateChildren</a>( <span class="keyword">const</span> std::string&amp; _value, <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous )<span class="keyword"> const  </span>{   <span class="keywordflow">return</span> <a class="code" href="classTiXmlNode.html#a19">IterateChildren</a> (_value.c_str (), previous); }   
 <a name="l00494"></a><a class="code" href="classTiXmlNode.html#a24">00494</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#a19">IterateChildren</a>( <span class="keyword">const</span> std::string&amp; _value, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) {  <span class="keywordflow">return</span> <a class="code" href="classTiXmlNode.html#a19">IterateChildren</a> (_value.c_str (), previous); }   
 00495 <span class="preprocessor">    #endif</span>
 00496 <span class="preprocessor"></span>
@@ -985,10 +985,14 @@
 01417     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* node;
 01418 };
 01419 
-01420 
-01421 <span class="preprocessor">#endif</span>
-01422 <span class="preprocessor"></span>
-</pre></div><hr size="1"><address style="align: right;"><small>Generated on Sun Jan 30 16:45:12 2005 for TinyXml by
+01420 <span class="preprocessor">#ifdef _MSC_VER</span>
+01421 <span class="preprocessor"></span><span class="preprocessor">#pragma warning( default : 4530 )</span>
+01422 <span class="preprocessor"></span><span class="preprocessor">#pragma warning( default : 4786 )</span>
+01423 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+01424 <span class="preprocessor"></span>
+01425 <span class="preprocessor">#endif</span>
+01426 <span class="preprocessor"></span>
+</pre></div><hr size="1"><address style="align: right;"><small>Generated on Fri Apr 15 18:30:30 2005 for TinyXml by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border=0 > 
 </a>1.3.6 </small></address>

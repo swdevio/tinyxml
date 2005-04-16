@@ -72,7 +72,7 @@ class TiXmlParsingData;
 
 const int TIXML_MAJOR_VERSION = 2;
 const int TIXML_MINOR_VERSION = 3;
-const int TIXML_PATCH_VERSION = 3;
+const int TIXML_PATCH_VERSION = 4;
 
 /*	Internal structure for tracking location of items 
 	in the XML file.
@@ -482,15 +482,15 @@ public:
 		the next one. If the previous child is null, it returns the
 		first. IterateChildren will return null when done.
 	*/
-	const TiXmlNode* IterateChildren( TiXmlNode* previous ) const;
+	const TiXmlNode* IterateChildren( const TiXmlNode* previous ) const;
 	TiXmlNode* IterateChildren( TiXmlNode* previous );
 
 	/// This flavor of IterateChildren searches for children with a particular 'value'
-	const TiXmlNode* IterateChildren( const char * value, TiXmlNode* previous ) const;
+	const TiXmlNode* IterateChildren( const char * value, const TiXmlNode* previous ) const;
 	TiXmlNode* IterateChildren( const char * value, TiXmlNode* previous );
 
     #ifdef TIXML_USE_STL
-	const TiXmlNode* IterateChildren( const std::string& _value, TiXmlNode* previous ) const	{	return IterateChildren (_value.c_str (), previous);	}	///< STL std::string form.
+	const TiXmlNode* IterateChildren( const std::string& _value, const TiXmlNode* previous ) const	{	return IterateChildren (_value.c_str (), previous);	}	///< STL std::string form.
 	TiXmlNode* IterateChildren( const std::string& _value, TiXmlNode* previous ) {	return IterateChildren (_value.c_str (), previous);	}	///< STL std::string form.
 	#endif
 
@@ -1417,6 +1417,10 @@ private:
 	TiXmlNode* node;
 };
 
+#ifdef _MSC_VER
+#pragma warning( default : 4530 )
+#pragma warning( default : 4786 )
+#endif
 
 #endif
 
