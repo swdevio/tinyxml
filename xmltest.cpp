@@ -118,7 +118,7 @@ int main()
 	// The example parses from the character string (above):
 	#if defined( WIN32 ) && defined( TUNE )
 	QueryPerformanceCounter( (LARGE_INTEGER*) (&start) );
-	#endif
+	#endif	
 
 	{
 		// Write to a file and read it back, to check file I/O.
@@ -177,7 +177,7 @@ int main()
 	assert( itemElement );
 	itemElement->SetAttribute( "distance", "here" );
 
-	// Remove the "Look for Evil Dinosours!" item.
+	// Remove the "Look for Evil Dinosaurs!" item.
 	// It is 1 more sibling away. We ask the parent to remove
 	// a particular child.
 	itemElement = itemElement->NextSiblingElement();
@@ -291,7 +291,7 @@ int main()
 	XmlTest( "Top level nodes, using Last / Previous.", 3, count );
 
 	// Walk all the top level nodes of the document,
-	// using a different sytax.
+	// using a different syntax.
 	count = 0;
 	for( node = doc.IterateChildren( 0 );
 		 node;
@@ -559,7 +559,7 @@ int main()
 
 			// On most Western machines, this is an element that contains
 			// the word "resume" with the correct accents, in a latin encoding.
-			// It will be something else comletely on non-wester machines,
+			// It will be something else completely on non-wester machines,
 			// which is why TinyXml is switching to UTF-8.
 			const char latin[] = "<element>r\x82sum\x82</element>";
 
@@ -661,6 +661,74 @@ int main()
 #endif
 
 	//////////////////////////////////////////////////////
+	// GetText();
+	{
+		const char* str = "<foo>This is text</foo>";
+		TiXmlDocument doc;
+		doc.Parse( str );
+		const TiXmlElement* element = doc.RootElement();
+
+		XmlTest( "GetText() normal use.", "This is text", element->GetText() );
+
+		str = "<foo><b>This is text</b></foo>";
+		doc.Clear();
+		doc.Parse( str );
+		element = doc.RootElement();
+
+		XmlTest( "GetText() contained element.", element->GetText() == 0, true );
+
+		str = "<foo>This is <b>text</b></foo>";
+		doc.Clear();
+		TiXmlBase::SetCondenseWhiteSpace( false );
+		doc.Parse( str );
+		TiXmlBase::SetCondenseWhiteSpace( true );
+		element = doc.RootElement();
+
+		XmlTest( "GetText() partial.", "This is ", element->GetText() );
+	}
+
+
+	//////////////////////////////////////////////////////
+	// CDATA
+	{
+		const char* str =	"<xmlElement>"
+								"<![CDATA["
+									"I am > the rules!\n"
+									"...since I make symbolic puns"
+								"]]>"
+							"</xmlElement>";
+		TiXmlDocument doc;
+		doc.Parse( str );
+		//doc.Print();
+
+		XmlTest( "CDATA parse.", doc.FirstChildElement()->FirstChild()->Value(), 
+								 "I am > the rules!\n...since I make symbolic puns",
+								 true );
+
+		#ifdef TIXML_USE_STL
+		//cout << doc << '\n';
+
+		doc.Clear();
+
+		istringstream parse0( str );
+		parse0 >> doc;
+		//cout << doc << '\n';
+
+		XmlTest( "CDATA stream.", doc.FirstChildElement()->FirstChild()->Value(), 
+								 "I am > the rules!\n...since I make symbolic puns",
+								 true );
+		#endif
+
+		TiXmlDocument doc1 = doc;
+		//doc.Print();
+
+		XmlTest( "CDATA copy.", doc1.FirstChildElement()->FirstChild()->Value(), 
+								 "I am > the rules!\n...since I make symbolic puns",
+								 true );
+	}
+
+
+	//////////////////////////////////////////////////////
 	printf ("\n** Bug regression tests **\n");
 
 	// InsertBeforeChild and InsertAfterChild causes crash.
@@ -698,7 +766,7 @@ int main()
 
 			TiXmlText textSTL( name );
 		#else
-			// verifing some basic string functions:
+			// verifying some basic string functions:
 			TiXmlString a;
 			TiXmlString b( "Hello" );
 			TiXmlString c( "ooga" );
@@ -946,7 +1014,30 @@ int main()
 		TiXmlString    bar( "" );
 		XmlTest( "Empty tinyxml string compare equal", ( foo == bar ), true );
 	}
+
 	#endif
+	{
+		// Bug [ 1195696 ] from marlonism
+		TiXmlBase::SetCondenseWhiteSpace(false); 
+		TiXmlDocument xml; 
+		xml.Parse("<text><break/>This hangs</text>"); 
+		XmlTest( "Test safe error return.", xml.Error(), false );
+	}
+
+	{
+		// Bug [ 1243992 ] - another infinite loop
+		TiXmlDocument doc;
+		doc.SetCondenseWhiteSpace(false);
+		doc.Parse("<p><pb></pb>test</p>");
+	} 
+	{
+		// Low entities
+		TiXmlDocument xml;
+		xml.Parse( "<test>&#x0e;</test>" );
+		const char result[] = { 0x0e, 0 };
+		XmlTest( "Low entities.", xml.FirstChildElement()->GetText(), result );
+		xml.Print();
+	}
 
 	#if defined( WIN32 ) && defined( TUNE )
 	QueryPerformanceCounter( (LARGE_INTEGER*) (&end) );
