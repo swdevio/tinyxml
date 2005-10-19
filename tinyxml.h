@@ -93,7 +93,7 @@ class TiXmlParsingData;
 
 const int TIXML_MAJOR_VERSION = 2;
 const int TIXML_MINOR_VERSION = 4;
-const int TIXML_PATCH_VERSION = 0;
+const int TIXML_PATCH_VERSION = 1;
 
 /*	Internal structure for tracking location of items 
 	in the XML file.
@@ -955,7 +955,7 @@ public:
 		and accessing it directly.
 	
 		If the first child of 'this' is a TiXmlText, the GetText()
-		returs the character string of the Text node, else null is returned.
+		returns the character string of the Text node, else null is returned.
 
 		This is a convenient method for getting the text of simple contained text:
 		@verbatim
