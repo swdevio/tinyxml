@@ -93,7 +93,7 @@ class TiXmlParsingData;
 
 const int TIXML_MAJOR_VERSION = 2;
 const int TIXML_MINOR_VERSION = 4;
-const int TIXML_PATCH_VERSION = 1;
+const int TIXML_PATCH_VERSION = 2;
 
 /*	Internal structure for tracking location of items 
 	in the XML file.
@@ -622,7 +622,7 @@ public:
 		The possible types are: DOCUMENT, ELEMENT, COMMENT,
 								UNKNOWN, TEXT, and DECLARATION.
 	*/
-	virtual int Type() const	{ return type; }
+	int Type() const	{ return type; }
 
 	/** Return a pointer to the Document this node lives in.
 		Returns null if not in a document.

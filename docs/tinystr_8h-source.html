@@ -246,68 +246,70 @@
 <a name="l00239"></a>00239     {
 <a name="l00240"></a>00240         <span class="keywordflow">if</span> (rep_ != &amp;nullrep_)
 <a name="l00241"></a>00241         {
-<a name="l00242"></a>00242             <span class="keyword">delete</span> [] rep_;
-<a name="l00243"></a>00243         }
-<a name="l00244"></a>00244     }
-<a name="l00245"></a>00245 
-<a name="l00246"></a>00246     Rep * rep_;
-<a name="l00247"></a>00247     <span class="keyword">static</span> Rep nullrep_;
-<a name="l00248"></a>00248 
-<a name="l00249"></a>00249 } ;
+<a name="l00242"></a>00242             <span class="comment">// The rep_ is really an array of ints. (see the allocator, above).</span>
+<a name="l00243"></a>00243             <span class="comment">// Cast it back before delete, so the compiler won't incorrectly call destructors.</span>
+<a name="l00244"></a>00244             <span class="keyword">delete</span> [] ( reinterpret_cast&lt;int*&gt;( rep_ ) );
+<a name="l00245"></a>00245         }
+<a name="l00246"></a>00246     }
+<a name="l00247"></a>00247 
+<a name="l00248"></a>00248     Rep * rep_;
+<a name="l00249"></a>00249     <span class="keyword">static</span> Rep nullrep_;
 <a name="l00250"></a>00250 
-<a name="l00251"></a>00251 
-<a name="l00252"></a>00252 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b)
-<a name="l00253"></a>00253 {
-<a name="l00254"></a>00254     <span class="keywordflow">return</span>    ( a.length() == b.length() )              <span class="comment">// optimization on some platforms</span>
-<a name="l00255"></a>00255            &amp;&amp; ( strcmp(a.c_str(), b.c_str()) == 0 );    <span class="comment">// actual compare</span>
-<a name="l00256"></a>00256 }
-<a name="l00257"></a>00257 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator &lt; (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b)
-<a name="l00258"></a>00258 {
-<a name="l00259"></a>00259     <span class="keywordflow">return</span> strcmp(a.c_str(), b.c_str()) &lt; 0;
-<a name="l00260"></a>00260 }
-<a name="l00261"></a>00261 
-<a name="l00262"></a>00262 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator != (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b) { <span class="keywordflow">return</span> !(a == b); }
-<a name="l00263"></a>00263 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator &gt;  (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b) { <span class="keywordflow">return</span> b &lt; a; }
-<a name="l00264"></a>00264 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator &lt;= (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b) { <span class="keywordflow">return</span> !(b &lt; a); }
-<a name="l00265"></a>00265 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator &gt;= (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b) { <span class="keywordflow">return</span> !(a &lt; b); }
-<a name="l00266"></a>00266 
-<a name="l00267"></a>00267 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> <span class="keywordtype">char</span>* b) { <span class="keywordflow">return</span> strcmp(a.c_str(), b) == 0; }
-<a name="l00268"></a>00268 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> <span class="keywordtype">char</span>* a, <span class="keyword">const</span> TiXmlString &amp; b) { <span class="keywordflow">return</span> b == a; }
-<a name="l00269"></a>00269 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator != (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> <span class="keywordtype">char</span>* b) { <span class="keywordflow">return</span> !(a == b); }
-<a name="l00270"></a>00270 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator != (<span class="keyword">const</span> <span class="keywordtype">char</span>* a, <span class="keyword">const</span> TiXmlString &amp; b) { <span class="keywordflow">return</span> !(b == a); }
-<a name="l00271"></a>00271 
-<a name="l00272"></a>00272 TiXmlString operator + (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b);
-<a name="l00273"></a>00273 TiXmlString operator + (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> <span class="keywordtype">char</span>* b);
-<a name="l00274"></a>00274 TiXmlString operator + (<span class="keyword">const</span> <span class="keywordtype">char</span>* a, <span class="keyword">const</span> TiXmlString &amp; b);
-<a name="l00275"></a>00275 
-<a name="l00276"></a>00276 
-<a name="l00277"></a>00277 <span class="comment">/*</span>
-<a name="l00278"></a>00278 <span class="comment">   TiXmlOutStream is an emulation of std::ostream. It is based on TiXmlString.</span>
-<a name="l00279"></a>00279 <span class="comment">   Only the operators that we need for TinyXML have been developped.</span>
-<a name="l00280"></a>00280 <span class="comment">*/</span>
-<a name="l00281"></a>00281 <span class="keyword">class </span>TiXmlOutStream : <span class="keyword">public</span> TiXmlString
-<a name="l00282"></a>00282 {
-<a name="l00283"></a>00283 <span class="keyword">public</span> :
-<a name="l00284"></a>00284 
-<a name="l00285"></a>00285     <span class="comment">// TiXmlOutStream &lt;&lt; operator.</span>
-<a name="l00286"></a>00286     TiXmlOutStream &amp; operator &lt;&lt; (<span class="keyword">const</span> TiXmlString &amp; in)
-<a name="l00287"></a>00287     {
-<a name="l00288"></a>00288         *<span class="keyword">this</span> += in;
-<a name="l00289"></a>00289         <span class="keywordflow">return</span> *<span class="keyword">this</span>;
-<a name="l00290"></a>00290     }
-<a name="l00291"></a>00291 
-<a name="l00292"></a>00292     <span class="comment">// TiXmlOutStream &lt;&lt; operator.</span>
-<a name="l00293"></a>00293     TiXmlOutStream &amp; operator &lt;&lt; (<span class="keyword">const</span> <span class="keywordtype">char</span> * in)
-<a name="l00294"></a>00294     {
-<a name="l00295"></a>00295         *<span class="keyword">this</span> += in;
-<a name="l00296"></a>00296         <span class="keywordflow">return</span> *<span class="keyword">this</span>;
-<a name="l00297"></a>00297     }
-<a name="l00298"></a>00298 
-<a name="l00299"></a>00299 } ;
+<a name="l00251"></a>00251 } ;
+<a name="l00252"></a>00252 
+<a name="l00253"></a>00253 
+<a name="l00254"></a>00254 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b)
+<a name="l00255"></a>00255 {
+<a name="l00256"></a>00256     <span class="keywordflow">return</span>    ( a.length() == b.length() )              <span class="comment">// optimization on some platforms</span>
+<a name="l00257"></a>00257            &amp;&amp; ( strcmp(a.c_str(), b.c_str()) == 0 );    <span class="comment">// actual compare</span>
+<a name="l00258"></a>00258 }
+<a name="l00259"></a>00259 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator &lt; (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b)
+<a name="l00260"></a>00260 {
+<a name="l00261"></a>00261     <span class="keywordflow">return</span> strcmp(a.c_str(), b.c_str()) &lt; 0;
+<a name="l00262"></a>00262 }
+<a name="l00263"></a>00263 
+<a name="l00264"></a>00264 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator != (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b) { <span class="keywordflow">return</span> !(a == b); }
+<a name="l00265"></a>00265 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator &gt;  (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b) { <span class="keywordflow">return</span> b &lt; a; }
+<a name="l00266"></a>00266 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator &lt;= (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b) { <span class="keywordflow">return</span> !(b &lt; a); }
+<a name="l00267"></a>00267 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator &gt;= (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b) { <span class="keywordflow">return</span> !(a &lt; b); }
+<a name="l00268"></a>00268 
+<a name="l00269"></a>00269 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> <span class="keywordtype">char</span>* b) { <span class="keywordflow">return</span> strcmp(a.c_str(), b) == 0; }
+<a name="l00270"></a>00270 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> <span class="keywordtype">char</span>* a, <span class="keyword">const</span> TiXmlString &amp; b) { <span class="keywordflow">return</span> b == a; }
+<a name="l00271"></a>00271 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator != (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> <span class="keywordtype">char</span>* b) { <span class="keywordflow">return</span> !(a == b); }
+<a name="l00272"></a>00272 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator != (<span class="keyword">const</span> <span class="keywordtype">char</span>* a, <span class="keyword">const</span> TiXmlString &amp; b) { <span class="keywordflow">return</span> !(b == a); }
+<a name="l00273"></a>00273 
+<a name="l00274"></a>00274 TiXmlString operator + (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> TiXmlString &amp; b);
+<a name="l00275"></a>00275 TiXmlString operator + (<span class="keyword">const</span> TiXmlString &amp; a, <span class="keyword">const</span> <span class="keywordtype">char</span>* b);
+<a name="l00276"></a>00276 TiXmlString operator + (<span class="keyword">const</span> <span class="keywordtype">char</span>* a, <span class="keyword">const</span> TiXmlString &amp; b);
+<a name="l00277"></a>00277 
+<a name="l00278"></a>00278 
+<a name="l00279"></a>00279 <span class="comment">/*</span>
+<a name="l00280"></a>00280 <span class="comment">   TiXmlOutStream is an emulation of std::ostream. It is based on TiXmlString.</span>
+<a name="l00281"></a>00281 <span class="comment">   Only the operators that we need for TinyXML have been developped.</span>
+<a name="l00282"></a>00282 <span class="comment">*/</span>
+<a name="l00283"></a>00283 <span class="keyword">class </span>TiXmlOutStream : <span class="keyword">public</span> TiXmlString
+<a name="l00284"></a>00284 {
+<a name="l00285"></a>00285 <span class="keyword">public</span> :
+<a name="l00286"></a>00286 
+<a name="l00287"></a>00287     <span class="comment">// TiXmlOutStream &lt;&lt; operator.</span>
+<a name="l00288"></a>00288     TiXmlOutStream &amp; operator &lt;&lt; (<span class="keyword">const</span> TiXmlString &amp; in)
+<a name="l00289"></a>00289     {
+<a name="l00290"></a>00290         *<span class="keyword">this</span> += in;
+<a name="l00291"></a>00291         <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00292"></a>00292     }
+<a name="l00293"></a>00293 
+<a name="l00294"></a>00294     <span class="comment">// TiXmlOutStream &lt;&lt; operator.</span>
+<a name="l00295"></a>00295     TiXmlOutStream &amp; operator &lt;&lt; (<span class="keyword">const</span> <span class="keywordtype">char</span> * in)
+<a name="l00296"></a>00296     {
+<a name="l00297"></a>00297         *<span class="keyword">this</span> += in;
+<a name="l00298"></a>00298         <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00299"></a>00299     }
 <a name="l00300"></a>00300 
-<a name="l00301"></a>00301 <span class="preprocessor">#endif  // TIXML_STRING_INCLUDED</span>
-<a name="l00302"></a>00302 <span class="preprocessor"></span><span class="preprocessor">#endif  // TIXML_USE_STL</span>
-</pre></div><hr size="1"><address style="align: right;"><small>Generated on Tue Oct 18 20:58:44 2005 for TinyXml by&nbsp;
+<a name="l00301"></a>00301 } ;
+<a name="l00302"></a>00302 
+<a name="l00303"></a>00303 <span class="preprocessor">#endif  // TIXML_STRING_INCLUDED</span>
+<a name="l00304"></a>00304 <span class="preprocessor"></span><span class="preprocessor">#endif  // TIXML_USE_STL</span>
+</pre></div><hr size="1"><address style="align: right;"><small>Generated on Wed Oct 19 07:51:53 2005 for TinyXml by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.4 </small></address>
 </body>
