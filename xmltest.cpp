@@ -742,7 +742,69 @@ int main()
 								 "I am > the rules!\n...since I make symbolic puns",
 								 true );
 	}
+	{
+		// [ 1482728 ] Wrong wide char parsing
+		char buf[256];
+		buf[255] = 0;
+		for( int i=0; i<255; ++i ) buf[i] = i>=32 ? i : 32;
+		TIXML_STRING str( "<xmlElement><![CDATA[" );
+		str += buf;
+		str += "]]></xmlElement>";
 
+		TiXmlDocument doc;
+		doc.Parse( str.c_str() );
+
+		TiXmlPrinter printer;
+		printer.SetStreamPrinting();
+		doc.Accept( &printer );
+
+		XmlTest( "CDATA with all bytes #1.", str.c_str(), printer.CStr(), true );
+
+		#ifdef TIXML_USE_STL
+		doc.Clear();
+		istringstream iss( printer.Str() );
+		iss >> doc;
+		std::string out;
+		out << doc;
+		XmlTest( "CDATA with all bytes #2.", out.c_str(), printer.CStr(), true );
+		#endif
+	}
+	{
+		// [ 1480107 ] Bug-fix for STL-streaming of CDATA that contains tags
+		// CDATA streaming had a couple of bugs, that this tests for.
+		const char* str =	"<xmlElement>"
+								"<![CDATA["
+									"<b>I am > the rules!</b>\n"
+									"...since I make symbolic puns"
+								"]]>"
+							"</xmlElement>";
+		TiXmlDocument doc;
+		doc.Parse( str );
+		doc.Print();
+
+		XmlTest( "CDATA parse. [ 1480107 ]", doc.FirstChildElement()->FirstChild()->Value(), 
+								 "<b>I am > the rules!</b>\n...since I make symbolic puns",
+								 true );
+
+		#ifdef TIXML_USE_STL
+
+		doc.Clear();
+
+		istringstream parse0( str );
+		parse0 >> doc;
+
+		XmlTest( "CDATA stream. [ 1480107 ]", doc.FirstChildElement()->FirstChild()->Value(), 
+								 "<b>I am > the rules!</b>\n...since I make symbolic puns",
+								 true );
+		#endif
+
+		TiXmlDocument doc1 = doc;
+		//doc.Print();
+
+		XmlTest( "CDATA copy. [ 1480107 ]", doc1.FirstChildElement()->FirstChild()->Value(), 
+								 "<b>I am > the rules!</b>\n...since I make symbolic puns",
+								 true );
+	}
 	//////////////////////////////////////////////////////
 	// Visit()
 
@@ -1030,8 +1092,6 @@ int main()
             TiXmlDocument doc;
             doc.Parse( str );
 
-			//doc.Print( stdout, 0 );
-
             TiXmlHandle docHandle( &doc );
             TiXmlHandle aHandle = docHandle.FirstChildElement( "ä" );
             TiXmlHandle tHandle = aHandle.Child( 0 );
@@ -1109,6 +1169,28 @@ int main()
 		XmlTest( "QueryValueAttribute", (f==3.0f), true );
 	}
 	#endif
+
+	#ifdef TIXML_USE_STL
+	{
+		// [ 1505267 ] redundant malloc in TiXmlElement::Attribute
+		TiXmlDocument xml;
+		xml.Parse( "<foo bar='3' />" );
+		TiXmlElement* ele = xml.FirstChildElement();
+		double d;
+		int i;
+
+		std::string bar = "bar";
+
+		const std::string* atrrib = ele->Attribute( bar );
+		ele->Attribute( bar, &d );
+		ele->Attribute( bar, &i );
+
+		XmlTest( "Attribute", atrrib->empty(), false );
+		XmlTest( "Attribute", (d==3.0), true );
+		XmlTest( "Attribute", (i==3), true );
+	}
+	#endif
+
 	{
 		// [ 1356059 ] Allow TiXMLDocument to only be at the top level
 		TiXmlDocument xml, xml2;
@@ -1129,7 +1211,6 @@ int main()
 		xml.Print(stdout);
 	}
 	*/
-
 	#if defined( WIN32 ) && defined( TUNE )
 	_CrtMemCheckpoint( &endMemState );
 	//_CrtMemDumpStatistics( &endMemState );
