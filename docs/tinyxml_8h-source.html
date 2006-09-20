@@ -102,7 +102,7 @@
 <a name="l00088"></a>00088 
 <a name="l00089"></a>00089 <span class="keyword">const</span> <span class="keywordtype">int</span> TIXML_MAJOR_VERSION = 2;
 <a name="l00090"></a>00090 <span class="keyword">const</span> <span class="keywordtype">int</span> TIXML_MINOR_VERSION = 5;
-<a name="l00091"></a>00091 <span class="keyword">const</span> <span class="keywordtype">int</span> TIXML_PATCH_VERSION = 1;
+<a name="l00091"></a>00091 <span class="keyword">const</span> <span class="keywordtype">int</span> TIXML_PATCH_VERSION = 2;
 <a name="l00092"></a>00092 
 <a name="l00093"></a>00093 <span class="comment">/*  Internal structure for tracking location of items </span>
 <a name="l00094"></a>00094 <span class="comment">    in the XML file.</span>
@@ -412,18 +412,18 @@
 <a name="l00537"></a>00537 <span class="preprocessor">    #endif</span>
 <a name="l00538"></a>00538 <span class="preprocessor"></span>
 <a name="l00555"></a>00555     <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a>( <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) <span class="keyword">const</span>;
-<a name="l00556"></a>00556     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a>( <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) {
+<a name="l00556"></a>00556     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a>( <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) {
 <a name="l00557"></a>00557         <span class="keywordflow">return</span> const_cast&lt; TiXmlNode* &gt;( (const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>))-&gt;IterateChildren( previous ) );
 <a name="l00558"></a>00558     }
 <a name="l00559"></a>00559 
 <a name="l00561"></a>00561     <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> * value, <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) <span class="keyword">const</span>;
-<a name="l00562"></a>00562     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> * _value, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) {
-<a name="l00563"></a>00563         <span class="keywordflow">return</span> const_cast&lt; TiXmlNode* &gt;( const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>)-&gt;<a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a>( _value, previous ) );
+<a name="l00562"></a>00562     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> * _value, <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) {
+<a name="l00563"></a>00563         <span class="keywordflow">return</span> const_cast&lt; TiXmlNode* &gt;( (const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>))-&gt;IterateChildren( _value, previous ) );
 <a name="l00564"></a>00564     }
 <a name="l00565"></a>00565 
 <a name="l00566"></a>00566 <span class="preprocessor">    #ifdef TIXML_USE_STL</span>
 <a name="l00567"></a><a class="code" href="classTiXmlNode.html#1cbaaf8e82c09ad763d52616d75724df">00567</a> <span class="preprocessor"></span>    <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a>( <span class="keyword">const</span> std::string&amp; _value, <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous )<span class="keyword"> const  </span>{   <span class="keywordflow">return</span> <a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a> (_value.c_str (), previous); }   
-<a name="l00568"></a><a class="code" href="classTiXmlNode.html#5c33a074da24b6325f73a9dfae09442b">00568</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a>( <span class="keyword">const</span> std::string&amp; _value, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) {  <span class="keywordflow">return</span> <a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a> (_value.c_str (), previous); }   
+<a name="l00568"></a><a class="code" href="classTiXmlNode.html#16e9ad53e2f5445b14bf325c90aa862c">00568</a>     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a>( <span class="keyword">const</span> std::string&amp; _value, <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* previous ) {    <span class="keywordflow">return</span> <a class="code" href="classTiXmlNode.html#8621196ba3705fa226bef4a761cc51b6">IterateChildren</a> (_value.c_str (), previous); }   
 <a name="l00569"></a>00569 <span class="preprocessor">    #endif</span>
 <a name="l00570"></a>00570 <span class="preprocessor"></span>
 <a name="l00574"></a>00574     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#d7d4630e1a2a916edda16be22448a8ba">InsertEndChild</a>( <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>&amp; addThis );
@@ -444,7 +444,7 @@
 <a name="l00609"></a>00609 
 <a name="l00611"></a>00611     <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#c2cd892768726270e511b2ab32de4d10">PreviousSibling</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> * ) <span class="keyword">const</span>;
 <a name="l00612"></a>00612     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#c2cd892768726270e511b2ab32de4d10">PreviousSibling</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *_prev ) {
-<a name="l00613"></a>00613         <span class="keywordflow">return</span> const_cast&lt; TiXmlNode* &gt;( const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>)-&gt;<a class="code" href="classTiXmlNode.html#c2cd892768726270e511b2ab32de4d10">PreviousSibling</a>( _prev ) );
+<a name="l00613"></a>00613         <span class="keywordflow">return</span> const_cast&lt; TiXmlNode* &gt;( (const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>))-&gt;PreviousSibling( _prev ) );
 <a name="l00614"></a>00614     }
 <a name="l00615"></a>00615 
 <a name="l00616"></a>00616 <span class="preprocessor">    #ifdef TIXML_USE_STL</span>
@@ -459,17 +459,17 @@
 <a name="l00626"></a>00626 
 <a name="l00628"></a>00628     <span class="keyword">const</span> <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#f854baeba384f5fe9859f5aee03b548e">NextSibling</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> * ) <span class="keyword">const</span>;
 <a name="l00629"></a>00629     <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* <a class="code" href="classTiXmlNode.html#f854baeba384f5fe9859f5aee03b548e">NextSibling</a>( <span class="keyword">const</span> <span class="keywordtype">char</span>* _next ) {
-<a name="l00630"></a>00630         <span class="keywordflow">return</span> const_cast&lt; TiXmlNode* &gt;( const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>)-&gt;<a class="code" href="classTiXmlNode.html#f854baeba384f5fe9859f5aee03b548e">NextSibling</a>( _next ) );
+<a name="l00630"></a>00630         <span class="keywordflow">return</span> const_cast&lt; TiXmlNode* &gt;( (const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>))-&gt;NextSibling( _next ) );
 <a name="l00631"></a>00631     }
 <a name="l00632"></a>00632 
 <a name="l00637"></a>00637     <span class="keyword">const</span> <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#73acf929d49d10bd0e5fb3d31b0372d1">NextSiblingElement</a>() <span class="keyword">const</span>;
 <a name="l00638"></a>00638     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#73acf929d49d10bd0e5fb3d31b0372d1">NextSiblingElement</a>() {
-<a name="l00639"></a>00639         <span class="keywordflow">return</span> const_cast&lt; TiXmlElement* &gt;( const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>)-&gt;<a class="code" href="classTiXmlNode.html#73acf929d49d10bd0e5fb3d31b0372d1">NextSiblingElement</a>() );
+<a name="l00639"></a>00639         <span class="keywordflow">return</span> const_cast&lt; TiXmlElement* &gt;( (const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>))-&gt;NextSiblingElement() );
 <a name="l00640"></a>00640     }
 <a name="l00641"></a>00641 
 <a name="l00646"></a>00646     <span class="keyword">const</span> <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#73acf929d49d10bd0e5fb3d31b0372d1">NextSiblingElement</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> * ) <span class="keyword">const</span>;
 <a name="l00647"></a>00647     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#73acf929d49d10bd0e5fb3d31b0372d1">NextSiblingElement</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *_next ) {
-<a name="l00648"></a>00648         <span class="keywordflow">return</span> const_cast&lt; TiXmlElement* &gt;( const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>)-&gt;<a class="code" href="classTiXmlNode.html#73acf929d49d10bd0e5fb3d31b0372d1">NextSiblingElement</a>( _next ) );
+<a name="l00648"></a>00648         <span class="keywordflow">return</span> const_cast&lt; TiXmlElement* &gt;( (const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>))-&gt;NextSiblingElement( _next ) );
 <a name="l00649"></a>00649     }
 <a name="l00650"></a>00650 
 <a name="l00651"></a>00651 <span class="preprocessor">    #ifdef TIXML_USE_STL</span>
@@ -479,12 +479,12 @@
 <a name="l00655"></a>00655 <span class="preprocessor"></span>
 <a name="l00657"></a>00657     <span class="keyword">const</span> <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#f4fb652f6bd79ae0d5ce7d0f7d3c0fba">FirstChildElement</a>() <span class="keyword">const</span>;
 <a name="l00658"></a>00658     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#f4fb652f6bd79ae0d5ce7d0f7d3c0fba">FirstChildElement</a>() {
-<a name="l00659"></a>00659         <span class="keywordflow">return</span> const_cast&lt; TiXmlElement* &gt;( const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>)-&gt;<a class="code" href="classTiXmlNode.html#f4fb652f6bd79ae0d5ce7d0f7d3c0fba">FirstChildElement</a>() );
+<a name="l00659"></a>00659         <span class="keywordflow">return</span> const_cast&lt; TiXmlElement* &gt;( (const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>))-&gt;FirstChildElement() );
 <a name="l00660"></a>00660     }
 <a name="l00661"></a>00661 
 <a name="l00663"></a>00663     <span class="keyword">const</span> <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#f4fb652f6bd79ae0d5ce7d0f7d3c0fba">FirstChildElement</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> * _value ) <span class="keyword">const</span>;
 <a name="l00664"></a>00664     <a class="code" href="classTiXmlElement.html">TiXmlElement</a>* <a class="code" href="classTiXmlNode.html#f4fb652f6bd79ae0d5ce7d0f7d3c0fba">FirstChildElement</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> * _value ) {
-<a name="l00665"></a>00665         <span class="keywordflow">return</span> const_cast&lt; TiXmlElement* &gt;( const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>)-&gt;<a class="code" href="classTiXmlNode.html#f4fb652f6bd79ae0d5ce7d0f7d3c0fba">FirstChildElement</a>( _value ) );
+<a name="l00665"></a>00665         <span class="keywordflow">return</span> const_cast&lt; TiXmlElement* &gt;( (const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>))-&gt;FirstChildElement( _value ) );
 <a name="l00666"></a>00666     }
 <a name="l00667"></a>00667 
 <a name="l00668"></a>00668 <span class="preprocessor">    #ifdef TIXML_USE_STL</span>
@@ -496,7 +496,7 @@
 <a name="l00678"></a>00678 
 <a name="l00682"></a>00682     <span class="keyword">const</span> <a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>* <a class="code" href="classTiXmlNode.html#80e397fa973cf5323e33b07154b024f3">GetDocument</a>() <span class="keyword">const</span>;
 <a name="l00683"></a>00683     <a class="code" href="classTiXmlDocument.html">TiXmlDocument</a>* <a class="code" href="classTiXmlNode.html#80e397fa973cf5323e33b07154b024f3">GetDocument</a>() {
-<a name="l00684"></a>00684         <span class="keywordflow">return</span> const_cast&lt; TiXmlDocument* &gt;( const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>)-&gt;<a class="code" href="classTiXmlNode.html#80e397fa973cf5323e33b07154b024f3">GetDocument</a>() );
+<a name="l00684"></a>00684         <span class="keywordflow">return</span> const_cast&lt; TiXmlDocument* &gt;( (const_cast&lt; const TiXmlNode* &gt;(<span class="keyword">this</span>))-&gt;GetDocument() );
 <a name="l00685"></a>00685     }
 <a name="l00686"></a>00686 
 <a name="l00688"></a><a class="code" href="classTiXmlNode.html#eed21ad30630ef6e7faf096127edc9f3">00688</a>     <span class="keywordtype">bool</span> <a class="code" href="classTiXmlNode.html#eed21ad30630ef6e7faf096127edc9f3">NoChildren</a>()<span class="keyword"> const                     </span>{ <span class="keywordflow">return</span> !firstChild; }
@@ -607,12 +607,12 @@
 <a name="l00840"></a>00840 <span class="preprocessor"></span>
 <a name="l00842"></a>00842     <span class="keyword">const</span> <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* <a class="code" href="classTiXmlAttribute.html#1c78e92e223a40843f644ba48ef69f67">Next</a>() <span class="keyword">const</span>;
 <a name="l00843"></a>00843     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* <a class="code" href="classTiXmlAttribute.html#1c78e92e223a40843f644ba48ef69f67">Next</a>() {
-<a name="l00844"></a>00844         <span class="keywordflow">return</span> const_cast&lt; TiXmlAttribute* &gt;( const_cast&lt; const TiXmlAttribute* &gt;(<span class="keyword">this</span>)-&gt;<a class="code" href="classTiXmlAttribute.html#1c78e92e223a40843f644ba48ef69f67">Next</a>() ); 
+<a name="l00844"></a>00844         <span class="keywordflow">return</span> const_cast&lt; TiXmlAttribute* &gt;( (const_cast&lt; const TiXmlAttribute* &gt;(<span class="keyword">this</span>))-&gt;Next() ); 
 <a name="l00845"></a>00845     }
 <a name="l00846"></a>00846 
 <a name="l00848"></a>00848     <span class="keyword">const</span> <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* <a class="code" href="classTiXmlAttribute.html#6ebbfe333fe76cd834bd6cbcca3130cf">Previous</a>() <span class="keyword">const</span>;
 <a name="l00849"></a>00849     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* <a class="code" href="classTiXmlAttribute.html#6ebbfe333fe76cd834bd6cbcca3130cf">Previous</a>() {
-<a name="l00850"></a>00850         <span class="keywordflow">return</span> const_cast&lt; TiXmlAttribute* &gt;( const_cast&lt; const TiXmlAttribute* &gt;(<span class="keyword">this</span>)-&gt;<a class="code" href="classTiXmlAttribute.html#6ebbfe333fe76cd834bd6cbcca3130cf">Previous</a>() ); 
+<a name="l00850"></a>00850         <span class="keywordflow">return</span> const_cast&lt; TiXmlAttribute* &gt;( (const_cast&lt; const TiXmlAttribute* &gt;(<span class="keyword">this</span>))-&gt;Previous() ); 
 <a name="l00851"></a>00851     }
 <a name="l00852"></a>00852 
 <a name="l00853"></a>00853     <span class="keywordtype">bool</span> operator==( <span class="keyword">const</span> <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>&amp; rhs )<span class="keyword"> const </span>{ <span class="keywordflow">return</span> rhs.<a class="code" href="classTiXmlAttribute.html#fcbe165f33f08cf9b24daa33f0ee951a">name</a> == name; }
@@ -674,12 +674,12 @@
 <a name="l00909"></a>00909 
 <a name="l00910"></a>00910     <span class="keyword">const</span> <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>*   Find( <span class="keyword">const</span> <span class="keywordtype">char</span>* _name ) <span class="keyword">const</span>;
 <a name="l00911"></a>00911     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* Find( <span class="keyword">const</span> <span class="keywordtype">char</span>* _name ) {
-<a name="l00912"></a>00912         <span class="keywordflow">return</span> const_cast&lt; TiXmlAttribute* &gt;( const_cast&lt; const TiXmlAttributeSet* &gt;(<span class="keyword">this</span>)-&gt;Find( _name ) );
+<a name="l00912"></a>00912         <span class="keywordflow">return</span> const_cast&lt; TiXmlAttribute* &gt;( (const_cast&lt; const TiXmlAttributeSet* &gt;(<span class="keyword">this</span>))-&gt;Find( _name ) );
 <a name="l00913"></a>00913     }
 <a name="l00914"></a>00914 <span class="preprocessor">    #ifdef TIXML_USE_STL</span>
 <a name="l00915"></a>00915 <span class="preprocessor"></span>    <span class="keyword">const</span> <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>*   Find( <span class="keyword">const</span> std::string&amp; _name ) <span class="keyword">const</span>;
 <a name="l00916"></a>00916     <a class="code" href="classTiXmlAttribute.html">TiXmlAttribute</a>* Find( <span class="keyword">const</span> std::string&amp; _name ) {
-<a name="l00917"></a>00917         <span class="keywordflow">return</span> const_cast&lt; TiXmlAttribute* &gt;( const_cast&lt; const TiXmlAttributeSet* &gt;(<span class="keyword">this</span>)-&gt;Find( _name ) );
+<a name="l00917"></a>00917         <span class="keywordflow">return</span> const_cast&lt; TiXmlAttribute* &gt;( (const_cast&lt; const TiXmlAttributeSet* &gt;(<span class="keyword">this</span>))-&gt;Find( _name ) );
 <a name="l00918"></a>00918     }
 <a name="l00919"></a>00919 
 <a name="l00920"></a>00920 <span class="preprocessor">    #endif</span>
@@ -1028,8 +1028,8 @@
 <a name="l01434"></a>01434 
 <a name="l01438"></a><a class="code" href="classTiXmlDocument.html#f96fc2f3f9ec6422782bfe916c9e778f">01438</a>     <span class="keywordtype">int</span> <a class="code" href="classTiXmlDocument.html#f96fc2f3f9ec6422782bfe916c9e778f">ErrorId</a>()<span class="keyword">   const               </span>{ <span class="keywordflow">return</span> errorId; }
 <a name="l01439"></a>01439 
-<a name="l01447"></a><a class="code" href="classTiXmlDocument.html#156383ee53a7add46fe2c56c704b919a">01447</a>     <span class="keywordtype">int</span> <a class="code" href="classTiXmlDocument.html#156383ee53a7add46fe2c56c704b919a">ErrorRow</a>()  { <span class="keywordflow">return</span> errorLocation.row+1; }
-<a name="l01448"></a><a class="code" href="classTiXmlDocument.html#ea0408a06f03081ca091a39bba6dd7b1">01448</a>     <span class="keywordtype">int</span> <a class="code" href="classTiXmlDocument.html#ea0408a06f03081ca091a39bba6dd7b1">ErrorCol</a>()  { <span class="keywordflow">return</span> errorLocation.col+1; } 
+<a name="l01447"></a><a class="code" href="classTiXmlDocument.html#f30efc75e804aa2e92fb8be3a8cb676e">01447</a>     <span class="keywordtype">int</span> <a class="code" href="classTiXmlDocument.html#f30efc75e804aa2e92fb8be3a8cb676e">ErrorRow</a>()<span class="keyword"> const    </span>{ <span class="keywordflow">return</span> errorLocation.row+1; }
+<a name="l01448"></a><a class="code" href="classTiXmlDocument.html#a90bc630ee5203c6109ca5fad3323649">01448</a>     <span class="keywordtype">int</span> <a class="code" href="classTiXmlDocument.html#a90bc630ee5203c6109ca5fad3323649">ErrorCol</a>()<span class="keyword"> const    </span>{ <span class="keywordflow">return</span> errorLocation.col+1; } 
 <a name="l01449"></a>01449 
 <a name="l01474"></a><a class="code" href="classTiXmlDocument.html#51dac56316f89b35bdb7d0d433ba988e">01474</a>     <span class="keywordtype">void</span> <a class="code" href="classTiXmlDocument.html#51dac56316f89b35bdb7d0d433ba988e">SetTabSize</a>( <span class="keywordtype">int</span> _tabsize )     { tabsize = _tabsize; }
 <a name="l01475"></a>01475 
@@ -1173,7 +1173,7 @@
 <a name="l01774"></a>01774 <span class="preprocessor"></span>
 <a name="l01775"></a>01775 <span class="preprocessor">#endif</span>
 <a name="l01776"></a>01776 <span class="preprocessor"></span>
-</pre></div><hr size="1"><address style="align: right;"><small>Generated on Sun Aug 27 16:52:12 2006 for TinyXml by&nbsp;
+</pre></div><hr size="1"><address style="align: right;"><small>Generated on Tue Sep 19 19:04:34 2006 for TinyXml by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.7 </small></address>
 </body>

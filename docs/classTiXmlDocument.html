@@ -88,16 +88,16 @@ const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTiXmlDocument.html#f96fc2f3f9ec6422782bfe916c9e778f">ErrorId</a> () const </td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Generally, you probably want the error string ( <a class="el" href="classTiXmlDocument.html#9d0f689f6e09ea494ea547be8d79c25e">ErrorDesc()</a> ).  <a href="#f96fc2f3f9ec6422782bfe916c9e778f"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTiXmlDocument.html#156383ee53a7add46fe2c56c704b919a">ErrorRow</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTiXmlDocument.html#f30efc75e804aa2e92fb8be3a8cb676e">ErrorRow</a> () const </td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the location (if known) of the error.  <a href="#156383ee53a7add46fe2c56c704b919a"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="ea0408a06f03081ca091a39bba6dd7b1"></a><!-- doxytag: member="TiXmlDocument::ErrorCol" ref="ea0408a06f03081ca091a39bba6dd7b1" args="()" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTiXmlDocument.html#ea0408a06f03081ca091a39bba6dd7b1">ErrorCol</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the location (if known) of the error.  <a href="#f30efc75e804aa2e92fb8be3a8cb676e"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="a90bc630ee5203c6109ca5fad3323649"></a><!-- doxytag: member="TiXmlDocument::ErrorCol" ref="a90bc630ee5203c6109ca5fad3323649" args="() const " -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTiXmlDocument.html#a90bc630ee5203c6109ca5fad3323649">ErrorCol</a> () const </td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The column where the error occured. See <a class="el" href="classTiXmlDocument.html#156383ee53a7add46fe2c56c704b919a">ErrorRow()</a>. <br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The column where the error occured. See <a class="el" href="classTiXmlDocument.html#f30efc75e804aa2e92fb8be3a8cb676e">ErrorRow()</a>. <br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTiXmlDocument.html#51dac56316f89b35bdb7d0d433ba988e">SetTabSize</a> (int _tabsize)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><a class="el" href="classTiXmlDocument.html#51dac56316f89b35bdb7d0d433ba988e">SetTabSize()</a> allows the error reporting functions (<a class="el" href="classTiXmlDocument.html#156383ee53a7add46fe2c56c704b919a">ErrorRow()</a> and <a class="el" href="classTiXmlDocument.html#ea0408a06f03081ca091a39bba6dd7b1">ErrorCol()</a>) to report the correct values for row and column.  <a href="#51dac56316f89b35bdb7d0d433ba988e"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><a class="el" href="classTiXmlDocument.html#51dac56316f89b35bdb7d0d433ba988e">SetTabSize()</a> allows the error reporting functions (<a class="el" href="classTiXmlDocument.html#f30efc75e804aa2e92fb8be3a8cb676e">ErrorRow()</a> and <a class="el" href="classTiXmlDocument.html#a90bc630ee5203c6109ca5fad3323649">ErrorCol()</a>) to report the correct values for row and column.  <a href="#51dac56316f89b35bdb7d0d433ba988e"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTiXmlDocument.html#c66b8c28db86363315712a3574e87c35">ClearError</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">If you have handled the error, it can be reset with this call.  <a href="#c66b8c28db86363315712a3574e87c35"></a><br></td></tr>
@@ -195,7 +195,7 @@ Implements <a class="el" href="classTiXmlNode.html#4508cc3a2d7a98e96a54cc09c37a7
 If an error occurs, Error will be set to true. 
 <p>
 Also,<ul>
-<li>The <a class="el" href="classTiXmlDocument.html#f96fc2f3f9ec6422782bfe916c9e778f">ErrorId()</a> will contain the integer identifier of the error (not generally useful)</li><li>The <a class="el" href="classTiXmlDocument.html#9d0f689f6e09ea494ea547be8d79c25e">ErrorDesc()</a> method will return the name of the error. (very useful)</li><li>The <a class="el" href="classTiXmlDocument.html#156383ee53a7add46fe2c56c704b919a">ErrorRow()</a> and <a class="el" href="classTiXmlDocument.html#ea0408a06f03081ca091a39bba6dd7b1">ErrorCol()</a> will return the location of the error (if known) </li></ul>
+<li>The <a class="el" href="classTiXmlDocument.html#f96fc2f3f9ec6422782bfe916c9e778f">ErrorId()</a> will contain the integer identifier of the error (not generally useful)</li><li>The <a class="el" href="classTiXmlDocument.html#9d0f689f6e09ea494ea547be8d79c25e">ErrorDesc()</a> method will return the name of the error. (very useful)</li><li>The <a class="el" href="classTiXmlDocument.html#f30efc75e804aa2e92fb8be3a8cb676e">ErrorRow()</a> and <a class="el" href="classTiXmlDocument.html#a90bc630ee5203c6109ca5fad3323649">ErrorCol()</a> will return the location of the error (if known) </li></ul>
 
 </div>
 </div><p>
@@ -220,7 +220,7 @@ Generally, you probably want the error string ( <a class="el" href="classTiXmlDo
 But if you prefer the ErrorId, this function will fetch it. 
 </div>
 </div><p>
-<a class="anchor" name="156383ee53a7add46fe2c56c704b919a"></a><!-- doxytag: member="TiXmlDocument::ErrorRow" ref="156383ee53a7add46fe2c56c704b919a" args="()" -->
+<a class="anchor" name="f30efc75e804aa2e92fb8be3a8cb676e"></a><!-- doxytag: member="TiXmlDocument::ErrorRow" ref="f30efc75e804aa2e92fb8be3a8cb676e" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -229,7 +229,7 @@ But if you prefer the ErrorId, this function will fetch it.
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%"><code> [inline]</code></td>
+          <td width="100%"> const<code> [inline]</code></td>
         </tr>
       </table>
 </div>
@@ -407,7 +407,7 @@ In well formed XML, there should only be one. TinyXml is tolerant of multiple el
 <div class="memdoc">
 
 <p>
-<a class="el" href="classTiXmlDocument.html#51dac56316f89b35bdb7d0d433ba988e">SetTabSize()</a> allows the error reporting functions (<a class="el" href="classTiXmlDocument.html#156383ee53a7add46fe2c56c704b919a">ErrorRow()</a> and <a class="el" href="classTiXmlDocument.html#ea0408a06f03081ca091a39bba6dd7b1">ErrorCol()</a>) to report the correct values for row and column. 
+<a class="el" href="classTiXmlDocument.html#51dac56316f89b35bdb7d0d433ba988e">SetTabSize()</a> allows the error reporting functions (<a class="el" href="classTiXmlDocument.html#f30efc75e804aa2e92fb8be3a8cb676e">ErrorRow()</a> and <a class="el" href="classTiXmlDocument.html#a90bc630ee5203c6109ca5fad3323649">ErrorCol()</a>) to report the correct values for row and column. 
 <p>
 It does not change the output or input in any way.<p>
 By calling this method, with a tab size greater than 0, the row and column of each node and attribute is stored when the file is loaded. Very useful for tracking the DOM back in to the source file.<p>
@@ -423,7 +423,7 @@ The tab size needs to be enabled before the parse or load. Correct usage: <div c
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="tinyxml_8h-source.html">tinyxml.h</a></ul>
-<hr size="1"><address style="align: right;"><small>Generated on Sun Aug 27 16:52:13 2006 for TinyXml by&nbsp;
+<hr size="1"><address style="align: right;"><small>Generated on Tue Sep 19 19:04:34 2006 for TinyXml by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.7 </small></address>
 </body>
