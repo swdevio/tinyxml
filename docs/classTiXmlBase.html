@@ -68,6 +68,9 @@ const void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 static bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTiXmlBase.html#d4b1472531c647a25b1840a87ae42438">IsWhiteSpaceCondensed</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return the current white space setting. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTiXmlBase.html#6bd8c315c1acb09e34107b8736505948">EncodeString</a> (const TIXML_STRING &amp;str, TIXML_STRING *out)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Expands entities in a string.  <a href="#6bd8c315c1acb09e34107b8736505948"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="b242c01590191f644569fa89a080d97c"></a><!-- doxytag: member="TiXmlBase::userData" ref="b242c01590191f644569fa89a080d97c" args="" -->
 void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTiXmlBase.html#b242c01590191f644569fa89a080d97c">userData</a></td></tr>
@@ -104,6 +107,37 @@ In XML, the document and elements can contain other elements and other types of 
 	</pre></div> 
 <p>
 <hr><h2>Member Function Documentation</h2>
+<a class="anchor" name="6bd8c315c1acb09e34107b8736505948"></a><!-- doxytag: member="TiXmlBase::EncodeString" ref="6bd8c315c1acb09e34107b8736505948" args="(const TIXML_STRING &amp;str, TIXML_STRING *out)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void TiXmlBase::EncodeString           </td>
+          <td>(</td>
+          <td class="paramtype">const TIXML_STRING &amp;&nbsp;</td>
+          <td class="paramname"> <em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TIXML_STRING *&nbsp;</td>
+          <td class="paramname"> <em>out</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Expands entities in a string. 
+<p>
+Note this should not contian the tag's '&lt;', '&gt;', etc, or they will be transformed into entities! 
+</div>
+</div><p>
 <a class="anchor" name="0de56b3f2ef14c65091a3b916437b512"></a><!-- doxytag: member="TiXmlBase::Print" ref="0de56b3f2ef14c65091a3b916437b512" args="(FILE *cfile, int depth) const =0" -->
 <div class="memitem">
 <div class="memproto">
@@ -189,7 +223,7 @@ In order to make everyone happy, these global, static functions are provided to 
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="tinyxml_8h-source.html">tinyxml.h</a></ul>
-<hr size="1"><address style="align: right;"><small>Generated on Tue Sep 19 19:04:34 2006 for TinyXml by&nbsp;
+<hr size="1"><address style="align: right;"><small>Generated on Sun May 6 15:41:23 2007 for TinyXml by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.7 </small></address>
 </body>
